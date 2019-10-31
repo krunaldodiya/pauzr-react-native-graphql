@@ -15,8 +15,7 @@ import {GET_AUTH_USER, LOAD_COUNTRIES} from '../graphql/query';
 const SelectCountry = (props: any) => {
   const [keywords, setKeywords] = useState('');
 
-  const {data, error} = useQuery(LOAD_COUNTRIES);
-  console.log(error);
+  const {data} = useQuery(LOAD_COUNTRIES);
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
   const [setAuthUser] = useMutation(SET_AUTH_USER);
