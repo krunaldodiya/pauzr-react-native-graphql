@@ -5,8 +5,8 @@ export const cache = new InMemoryCache();
 cache.writeData({
   data: {
     initialScreen: 'Auth',
-    authToken: '',
-    authUser: {
+    token: '',
+    user: {
       id: '',
       name: '',
       email: '',
@@ -19,7 +19,7 @@ cache.writeData({
         shortname: 'IN',
         __typename: 'Country',
       },
-      __typename: 'AuthUser',
+      __typename: 'User',
     },
   },
 });

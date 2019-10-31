@@ -3,13 +3,13 @@ import {GET_AUTH_USER, GET_INITIAL_SCREEN, GET_AUTH_TOKEN} from './query';
 
 export const typeDefs = gql`
   type Query {
-    getAuthUser: AuthUser!
+    getAuthUser: User!
     getAuthToken: String!
     getInitialScreen: String!
   }
 
   type Mutation {
-    setAuthUser: AuthUser!
+    setAuthUser: User!
     setAuthToken: String!
     setInitialScreen: String!
   }
@@ -21,7 +21,7 @@ export const typeDefs = gql`
     shortname: String!
   }
 
-  type AuthUser {
+  type User {
     id: ID!
     name: String!
     email: String!

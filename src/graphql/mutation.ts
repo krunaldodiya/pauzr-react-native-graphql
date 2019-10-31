@@ -49,7 +49,7 @@ export const LOGIN = gql`
 `;
 
 export const SET_AUTH_USER = gql`
-  mutation SetAuthUser($authUser: AuthUser) {
+  mutation SetAuthUser($authUser: User) {
     setAuthUser(authUser: $authUser) @client {
       id
       name

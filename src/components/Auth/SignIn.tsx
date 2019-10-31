@@ -22,15 +22,17 @@ const SignIn = (props: any) => {
         },
       });
 
-      console.log(data.login.token);
+      console.log(data);
 
       bag.setSubmitting(false);
     } catch (error) {
-      if (error.response.status == 422) {
-        Object.keys(error.response.data.errors).forEach(key => {
-          bag.setErrors({[key]: error.response.data.errors[key][0]});
-        });
-      }
+      console.log(error.response);
+
+      // if (error.response.status == 422) {
+      //   Object.keys(error.response.data.errors).forEach(key => {
+      //     bag.setErrors({[key]: error.response.data.errors[key][0]});
+      //   });
+      // }
 
       bag.setSubmitting(false);
     }
