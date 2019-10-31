@@ -3,13 +3,13 @@ import {GET_AUTH_USER, GET_INITIAL_SCREEN} from './query';
 
 export const typeDefs = gql`
   type Query {
-    GetAuthUser: AuthUser!
-    GetInitialScreen: String!
+    getAuthUser: AuthUser!
+    getInitialScreen: String!
   }
 
   type Mutation {
-    SetAuthUser: AuthUser!
-    SetInitialScreen: String!
+    setAuthUser: AuthUser!
+    setInitialScreen: String!
   }
 
   type Country {
