@@ -52,3 +52,9 @@ export const GET_INITIAL_SCREEN = gql`
     getInitialScreen
   }
 `;
+
+export const GET_AUTH_TOKEN = gql`
+  query GetAuthToken @client {
+    getAuthToken
+  }
+`;

@@ -5,13 +5,13 @@ export const cache = new InMemoryCache();
 cache.writeData({
   data: {
     initialScreen: 'Auth',
-    authToken: null,
+    authToken: '',
     authUser: {
-      id: null,
-      name: null,
-      email: null,
-      mobile: null,
-      language: null,
+      id: '',
+      name: '',
+      email: '',
+      mobile: '',
+      language: '',
       country: {
         id: 'e1c417cf-550a-4457-b744-1db7fd5c86fb',
         name: 'India',

@@ -1,14 +1,16 @@
 import {gql} from 'apollo-boost';
-import {GET_AUTH_USER, GET_INITIAL_SCREEN} from './query';
+import {GET_AUTH_USER, GET_INITIAL_SCREEN, GET_AUTH_TOKEN} from './query';
 
 export const typeDefs = gql`
   type Query {
     getAuthUser: AuthUser!
+    getAuthToken: String!
     getInitialScreen: String!
   }
 
   type Mutation {
     setAuthUser: AuthUser!
+    setAuthToken: String!
     setInitialScreen: String!
   }
 
@@ -54,6 +56,15 @@ export const resolvers = {
     setInitialScreen: (_root: any, _args: any, {cache}: any) => {
       cache.writeQuery({
         query: GET_INITIAL_SCREEN,
+        data: _args,
+      });
+
+      return _args;
+    },
+
+    setAuthToken: (_root: any, _args: any, {cache}: any) => {
+      cache.writeQuery({
+        query: GET_AUTH_TOKEN,
         data: _args,
       });
 

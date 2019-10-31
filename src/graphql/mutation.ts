@@ -71,3 +71,9 @@ export const SET_INITIAL_SCREEN = gql`
     setInitialScreen
   }
 `;
+
+export const SET_AUTH_TOKEN = gql`
+  query SetAuthToken @client {
+    setAuthToken
+  }
+`;
