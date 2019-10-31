@@ -11,24 +11,32 @@ export const typeDefs = gql`
   }
 
   type Country {
-    id: Int!
+    id: ID!
     name: String!
     phonecode: String!
     shortname: String!
   }
 
-  input CountryInput {
-    id: Int!
+  type AuthUser {
+    id: ID!
     name: String!
-    phonecode: String!
-    shortname: String!
+    email: String!
+    mobile: String!
+    language: String!
+    country: Country!
   }
 
   type Auth {
     initialScreen: String!
     authToken: String
-    selectedCountry: Country
-    selectedLanguage: String
+    authUser: AuthUser
+  }
+
+  input CountryInput {
+    id: ID!
+    name: String!
+    phonecode: String!
+    shortname: String!
   }
 `;
 

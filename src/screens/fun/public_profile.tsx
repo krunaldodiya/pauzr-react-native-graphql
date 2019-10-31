@@ -13,7 +13,7 @@ import {Icon} from 'react-native-elements';
 import getAssets from '../../libs/image';
 import theme from '../../libs/theme';
 import {useQuery} from '@apollo/react-hooks';
-import {GET_AUTH_USER} from 'src/graphql/query';
+import {GET_AUTH_USER} from '../../graphql/query';
 
 interface PublicProfileProps {
   navigation: NavigationScreenProp<any, any>;

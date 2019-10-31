@@ -1,22 +1,29 @@
+import {useMutation} from '@apollo/react-hooks';
 import {Formik} from 'formik';
 import React, {Fragment, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input, Overlay} from 'react-native-elements';
 import * as Yup from 'yup';
+import {LOGIN} from '../../graphql/mutation';
 import Otp from './Otp';
 
 const SignIn = (props: any) => {
   const [overlay, setOverlay] = useState(false);
-
-  const doSignInApi = async (values: any) => {
-    //
-  };
+  const [processLogin] = useMutation(LOGIN);
 
   const doSignIn = async (values: any, bag: any) => {
     bag.setSubmitting(true);
 
     try {
-      await doSignInApi(values);
+      const {data} = await processLogin({
+        variables: {
+          email: values.email,
+          password: values.password,
+        },
+      });
+
+      console.log(data.login.token);
+
       bag.setSubmitting(false);
     } catch (error) {
       if (error.response.status == 422) {

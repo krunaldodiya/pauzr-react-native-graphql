@@ -14,18 +14,16 @@ export const LOAD_COUNTRIES = gql`
 export const GET_USERS = gql`
   query GetUsers($first: Int!, $page: Int!) {
     users(first: $first, page: $page) {
-      data {
+      id
+      name
+      email
+      mobile
+      language
+      country {
         id
         name
-        email
-        created_at
-      }
-      paginatorInfo {
-        perPage
-        total
-        hasMorePages
-        currentPage
-        lastPage
+        phonecode
+        shortname
       }
     }
   }
@@ -36,13 +34,19 @@ export const GET_AUTH_USER = gql`
     auth {
       initialScreen
       authToken
-      selectedCountry {
+      authUser {
         id
         name
-        phonecode
-        shortname
+        email
+        mobile
+        language
+        country {
+          id
+          name
+          phonecode
+          shortname
+        }
       }
-      selectedLanguage
     }
   }
 `;

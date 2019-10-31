@@ -9,10 +9,40 @@ export const REQUEST_OTP = gql`
 export const VERIFY_OTP = gql`
   mutation verifyOtp($otp: String, $country: CountryInput) {
     auth: verifyOtp(otp: $otp, country: $country) {
-      access_token
+      token
       user {
         id
         name
+        email
+        mobile
+        language
+        country {
+          id
+          name
+          phonecode
+          shortname
+        }
+      }
+    }
+  }
+`;
+
+export const LOGIN = gql`
+  mutation Login($email: String, $password: String) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        id
+        name
+        email
+        mobile
+        language
+        country {
+          id
+          name
+          phonecode
+          shortname
+        }
       }
     }
   }
@@ -22,14 +52,12 @@ export const SET_AUTH_USER = gql`
   mutation SetAuthUser(
     $initialScreen: String
     $authToken: String
-    $selectedCountry: Country
-    $selectedLanguage: String
+    $authUser: AuthUser
   ) {
     setAuthUser(
       initialScreen: $initialScreen
       authToken: $authToken
-      selectedCountry: $selectedCountry
-      selectedLanguage: $selectedLanguage
+      authUser: $authUser
     ) @client
   }
 `;

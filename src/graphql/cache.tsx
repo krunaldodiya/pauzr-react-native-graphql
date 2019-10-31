@@ -7,14 +7,21 @@ cache.writeData({
     auth: {
       initialScreen: 'Auth',
       authToken: null,
-      selectedCountry: {
-        id: '101',
-        name: 'India',
-        phonecode: '91',
-        shortname: 'IN',
-        __typename: 'Country',
+      authUser: {
+        id: null,
+        name: null,
+        email: null,
+        mobile: null,
+        language: null,
+        country: {
+          id: 'e1c417cf-550a-4457-b744-1db7fd5c86fb',
+          name: 'India',
+          phonecode: '91',
+          shortname: 'IN',
+          __typename: 'Country',
+        },
+        __typename: 'AuthUser',
       },
-      selectedLanguage: 'en',
       __typename: 'Auth',
     },
   },
