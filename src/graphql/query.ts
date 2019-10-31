@@ -30,23 +30,21 @@ export const GET_USERS = gql`
 `;
 
 export const GET_AUTH_USER = gql`
-  query AuthUser @client {
-    auth {
-      initialScreen
-      authToken
-      authUser {
-        id
-        name
-        email
-        mobile
-        language
-        country {
-          id
-          name
-          phonecode
-          shortname
-        }
-      }
+  query GetAuthUser @client {
+    id
+    name
+    email
+    mobile
+    language
+    country {
+      id
+      name
+      phonecode
+      shortname
     }
   }
+`;
+
+export const GET_INITIAL_SCREEN = gql`
+  query GetInitialScreen @client
 `;

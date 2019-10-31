@@ -49,15 +49,23 @@ export const LOGIN = gql`
 `;
 
 export const SET_AUTH_USER = gql`
-  mutation SetAuthUser(
-    $initialScreen: String
-    $authToken: String
-    $authUser: AuthUser
-  ) {
-    setAuthUser(
-      initialScreen: $initialScreen
-      authToken: $authToken
-      authUser: $authUser
-    ) @client
+  mutation SetAuthUser($authUser: AuthUser) {
+    setAuthUser(authUser: $authUser) @client {
+      id
+      name
+      email
+      mobile
+      language
+      country {
+        id
+        name
+        phonecode
+        shortname
+      }
+    }
   }
+`;
+
+export const SET_INITIAL_SCREEN = gql`
+  query SetInitialScreen @client
 `;
