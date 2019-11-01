@@ -31,7 +31,7 @@ export const GET_USERS = gql`
 
 export const GET_AUTH_USER = gql`
   query GetAuthUser @client {
-    getAuthUser {
+    user {
       id
       name
       email
@@ -49,12 +49,12 @@ export const GET_AUTH_USER = gql`
 
 export const GET_INITIAL_SCREEN = gql`
   query GetInitialScreen @client {
-    getInitialScreen
+    initialScreen
   }
 `;
 
 export const GET_AUTH_TOKEN = gql`
   query GetAuthToken @client {
-    getAuthToken
+    token
   }
 `;

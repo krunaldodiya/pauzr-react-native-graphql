@@ -28,7 +28,7 @@ export const VERIFY_OTP = gql`
 `;
 
 export const LOGIN = gql`
-  mutation Login($email: String, $password: String) {
+  mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
       user {
@@ -48,32 +48,55 @@ export const LOGIN = gql`
   }
 `;
 
-export const SET_AUTH_USER = gql`
-  mutation SetAuthUser($authUser: User) {
-    setAuthUser(authUser: $authUser) @client {
-      id
-      name
-      email
-      mobile
-      language
-      country {
+export const REGISTER = gql`
+  mutation Login($email: String!, $password: String!) {
+    register(email: $email, password: $password) {
+      token
+      user {
         id
         name
-        phonecode
-        shortname
+        email
+        mobile
+        language
+        country {
+          id
+          name
+          phonecode
+          shortname
+        }
+      }
+    }
+  }
+`;
+
+export const SET_AUTH_USER = gql`
+  mutation SetAuthUser($authUser: User) @client {
+    setAuthUser(authUser: $authUser) {
+      user {
+        id
+        name
+        email
+        mobile
+        language
+        country {
+          id
+          name
+          phonecode
+          shortname
+        }
       }
     }
   }
 `;
 
 export const SET_INITIAL_SCREEN = gql`
-  mutation SetInitialScreen @client {
-    setInitialScreen
+  mutation SetInitialScreen($initialScreen: String!) @client {
+    setInitialScreen(initialScreen: $initialScreen)
   }
 `;
 
 export const SET_AUTH_TOKEN = gql`
-  query SetAuthToken @client {
-    setAuthToken
+  query SetAuthToken($token: String!) @client {
+    setAuthToken(token: $token)
   }
 `;

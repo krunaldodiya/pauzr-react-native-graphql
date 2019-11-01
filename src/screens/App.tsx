@@ -5,11 +5,12 @@ import {cache} from '../graphql/cache';
 import {getApolloClient} from '../graphql/client';
 import {PersistGate} from '../graphql/gate';
 import getStackNavigator from '../libs/route';
+import {GET_AUTH_TOKEN, GET_INITIAL_SCREEN} from '../graphql/query';
 
-const authToken: string = '';
-const initialScreen: string = '';
+const {token}: any = cache.readQuery({query: GET_AUTH_TOKEN});
+const {initialScreen}: any = cache.readQuery({query: GET_INITIAL_SCREEN});
 
-const client = getApolloClient(authToken, cache);
+const client = getApolloClient(token, cache);
 
 const App = () => {
   const AppNavigator = getStackNavigator(initialScreen);

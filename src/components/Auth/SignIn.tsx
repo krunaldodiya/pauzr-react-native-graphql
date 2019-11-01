@@ -15,7 +15,7 @@ const SignIn = (props: any) => {
     bag.setSubmitting(true);
 
     try {
-      const {data} = await processLogin({
+      const data = await processLogin({
         variables: {
           email: values.email,
           password: values.password,

@@ -8,7 +8,7 @@ import {GET_AUTH_USER} from '../../graphql/query';
 import screens from '../../libs/screens';
 
 const SignUp = (props: any) => {
-  const {data: authUser} = useQuery(GET_AUTH_USER);
+  const {data: authUser}: any = useQuery(GET_AUTH_USER);
 
   const doSignUpApi = async (values: any) => {
     //
@@ -39,7 +39,7 @@ const SignUp = (props: any) => {
           password: '',
           name: '',
           mobile: '',
-          country: authUser.auth.selectedCountry,
+          country: authUser.user.country,
         }}
         onSubmit={doSignUp}
         validationSchema={Yup.object().shape({
@@ -104,7 +104,7 @@ const SignUp = (props: any) => {
                   <Icon type="ionicons" name="phone" size={20} />
                   <Text
                     style={{fontSize: 17, marginLeft: 15, letterSpacing: 0.5}}>
-                    +{authUser.auth.selectedCountry.phonecode}
+                    +{authUser.user.country.phonecode}
                   </Text>
                 </TouchableOpacity>
               </View>

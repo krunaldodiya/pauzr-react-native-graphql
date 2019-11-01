@@ -2,15 +2,14 @@ import {ApolloClient, ApolloLink, HttpLink} from 'apollo-boost';
 import {resolvers, typeDefs} from './resolvers';
 
 export function getApolloClient(authToken: string, cache: any) {
-  const url = 'https://pauzr-graphql.herokuapp.com/v1/graphql';
+  const url = 'https://merciful-grass-v7r1ruytwj6z.vapor-farm-a1.com/graphql';
 
   const httpLink = new HttpLink({
     uri: url,
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: authToken ? `Bearer ${authToken}` : null,
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'x-hasura-admin-secret': 'krunal@1987',
     },
   });
 
