@@ -16,7 +16,6 @@ const SelectCountry = (props: any) => {
   const [keywords, setKeywords] = useState('');
 
   const {data} = useQuery(LOAD_COUNTRIES);
-
   const {data: authUser} = useQuery(GET_AUTH_USER);
   const [setAuthUser] = useMutation(SET_AUTH_USER);
 
