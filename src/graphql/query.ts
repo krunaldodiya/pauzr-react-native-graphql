@@ -37,6 +37,8 @@ export const GET_AUTH_USER = gql`
       email
       mobile
       language
+      token
+      initialScreen
       country {
         id
         name
@@ -44,17 +46,5 @@ export const GET_AUTH_USER = gql`
         shortname
       }
     }
-  }
-`;
-
-export const GET_INITIAL_SCREEN = gql`
-  query GetInitialScreen @client {
-    initialScreen
-  }
-`;
-
-export const GET_AUTH_TOKEN = gql`
-  query GetAuthToken @client {
-    token
   }
 `;

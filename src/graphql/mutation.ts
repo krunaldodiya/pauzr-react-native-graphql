@@ -78,6 +78,8 @@ export const SET_AUTH_USER = gql`
         email
         mobile
         language
+        token
+        initialScreen
         country {
           id
           name
@@ -89,14 +91,8 @@ export const SET_AUTH_USER = gql`
   }
 `;
 
-export const SET_INITIAL_SCREEN = gql`
-  mutation SetInitialScreen($initialScreen: String!) @client {
-    setInitialScreen(initialScreen: $initialScreen)
-  }
-`;
-
-export const SET_AUTH_TOKEN = gql`
-  query SetAuthToken($token: String!) @client {
-    setAuthToken(token: $token)
+export const HELLO = gql`
+  mutation Hello($authUser: User) @client {
+    hello(authUser: $authUser)
   }
 `;

@@ -4,16 +4,15 @@ import {createAppContainer} from 'react-navigation';
 import {cache} from '../graphql/cache';
 import {getApolloClient} from '../graphql/client';
 import {PersistGate} from '../graphql/gate';
+import {GET_AUTH_USER} from '../graphql/query';
 import getStackNavigator from '../libs/route';
-import {GET_AUTH_TOKEN, GET_INITIAL_SCREEN} from '../graphql/query';
 
-const {token}: any = cache.readQuery({query: GET_AUTH_TOKEN});
-const {initialScreen}: any = cache.readQuery({query: GET_INITIAL_SCREEN});
+const {user}: any = cache.readQuery({query: GET_AUTH_USER});
 
-const client = getApolloClient(token, cache);
+const client = getApolloClient(user.token, cache);
 
 const App = () => {
-  const AppNavigator = getStackNavigator(initialScreen);
+  const AppNavigator = getStackNavigator(user.initialScreen);
   const AppContainer = createAppContainer(AppNavigator);
 
   return (

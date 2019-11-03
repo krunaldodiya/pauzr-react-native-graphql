@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SET_AUTH_USER} from '../graphql/mutation';
+import {SET_AUTH_USER, HELLO} from '../graphql/mutation';
 import {GET_AUTH_USER, LOAD_COUNTRIES} from '../graphql/query';
 
 const SelectCountry = (props: any) => {
@@ -17,17 +17,27 @@ const SelectCountry = (props: any) => {
 
   const {data} = useQuery(LOAD_COUNTRIES);
   const {data: authUser} = useQuery(GET_AUTH_USER);
-  const [setAuthUser] = useMutation(SET_AUTH_USER);
+  // const [setAuthUser] = useMutation(SET_AUTH_USER);
+  const [hello] = useMutation(HELLO);
 
   const setCountry = useCallback((item: any) => {
-    setAuthUser({
-      variables: {
-        ...authUser.auth,
-        selectedCountry: item,
-      },
-    });
+    try {
+      hello({
+        variables: {
+          authUser: null,
+        },
+      });
+      // setAuthUser({
+      //   variables: {
+      //     ...authUser.auth,
+      //     country: item,
+      //   },
+      // });
 
-    props.navigation.pop();
+      props.navigation.pop();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   const countries = data ? data.countries : [];
@@ -42,7 +52,17 @@ const SelectCountry = (props: any) => {
     const {item} = data;
 
     return (
-      <TouchableOpacity style={{padding: 10}} onPress={() => setCountry(item)}>
+      <TouchableOpacity
+        style={{padding: 10}}
+        onPress={() => {
+          hello({
+            variables: {
+              authUser: item,
+            },
+          });
+
+          // setCountry(item);
+        }}>
         <Text style={{color: '#000'}}>{item.name}</Text>
       </TouchableOpacity>
     );
