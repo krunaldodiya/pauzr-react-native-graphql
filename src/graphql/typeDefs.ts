@@ -7,7 +7,6 @@ export const typeDefs = gql`
 
   type Mutation {
     setAuthUser: User!
-    hello: String
   }
 
   extend type User {

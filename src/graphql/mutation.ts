@@ -70,8 +70,8 @@ export const REGISTER = gql`
 `;
 
 export const SET_AUTH_USER = gql`
-  mutation SetAuthUser($authUser: User) @client {
-    setAuthUser(authUser: $authUser) {
+  mutation SetAuthUser($authUser: User) {
+    setAuthUser(authUser: $authUser) @client {
       user {
         id
         name
@@ -88,11 +88,5 @@ export const SET_AUTH_USER = gql`
         }
       }
     }
-  }
-`;
-
-export const HELLO = gql`
-  mutation Hello($authUser: User) @client {
-    hello(authUser: $authUser)
   }
 `;

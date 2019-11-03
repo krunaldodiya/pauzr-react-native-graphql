@@ -23,8 +23,10 @@ const SelectCountry = (props: any) => {
     try {
       setAuthUser({
         variables: {
-          ...authUser.auth,
-          country: item,
+          authUser: {
+            ...authUser.user,
+            country: item,
+          },
         },
       });
 
