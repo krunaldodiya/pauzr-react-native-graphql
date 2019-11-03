@@ -1,42 +1,4 @@
-import {gql} from 'apollo-boost';
 import {GET_AUTH_USER, GET_INITIAL_SCREEN, GET_AUTH_TOKEN} from './query';
-
-export const typeDefs = gql`
-  type Query {
-    getAuthUser: User!
-    getAuthToken: String!
-    getInitialScreen: String!
-  }
-
-  type Mutation {
-    setAuthUser: User!
-    setAuthToken: String!
-    setInitialScreen: String!
-  }
-
-  type Country {
-    id: ID!
-    name: String!
-    phonecode: String!
-    shortname: String!
-  }
-
-  type User {
-    id: ID!
-    name: String!
-    email: String!
-    mobile: String!
-    language: String!
-    country: Country!
-  }
-
-  input CountryInput {
-    id: ID!
-    name: String!
-    phonecode: String!
-    shortname: String!
-  }
-`;
 
 export const resolvers = {
   Mutation: {

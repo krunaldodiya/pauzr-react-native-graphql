@@ -1,5 +1,6 @@
 import {ApolloClient, ApolloLink, HttpLink} from 'apollo-boost';
-import {resolvers, typeDefs} from './resolvers';
+import {resolvers} from './resolvers';
+import {typeDefs} from './typeDefs';
 
 export function getApolloClient(authToken: string, cache: any) {
   const url = 'https://merciful-grass-v7r1ruytwj6z.vapor-farm-a1.com/graphql';
