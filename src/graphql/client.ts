@@ -3,7 +3,7 @@ import {resolvers} from './resolvers';
 import {typeDefs} from './typeDefs';
 
 export function getApolloClient(authToken: string, cache: any) {
-  const url = 'https://merciful-grass-v7r1ruytwj6z.vapor-farm-a1.com/graphql';
+  const url = 'https://pauzr.tk/graphql';
   // const url = 'https://vapor.test/graphql-playground';
 
   const httpLink = new HttpLink({

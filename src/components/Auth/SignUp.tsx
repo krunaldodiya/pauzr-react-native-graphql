@@ -1,31 +1,42 @@
-import {useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import {Formik} from 'formik';
 import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input} from 'react-native-elements';
 import * as Yup from 'yup';
+import {REGISTER} from '../../graphql/mutation';
 import {GET_AUTH_USER} from '../../graphql/query';
 import screens from '../../libs/screens';
 
 const SignUp = (props: any) => {
   const {data: authUser}: any = useQuery(GET_AUTH_USER);
-
-  const doSignUpApi = async (values: any) => {
-    //
-  };
+  const [processRegister] = useMutation(REGISTER);
 
   const doSignUp = async (values: any, bag: any) => {
     bag.setSubmitting(true);
 
     try {
-      await doSignUpApi(values);
+      const data = await processRegister({
+        variables: {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+          mobile: values.mobile,
+          country_id: values.country.id,
+        },
+      });
+
+      console.log(data);
+
       bag.setSubmitting(false);
     } catch (error) {
-      if (error.response.status == 422) {
-        Object.keys(error.response.data.errors).forEach(key => {
-          bag.setErrors({[key]: error.response.data.errors[key][0]});
-        });
-      }
+      console.log(error);
+
+      // if (error.response.status == 422) {
+      //   Object.keys(error.response.data.errors).forEach(key => {
+      //     bag.setErrors({[key]: error.response.data.errors[key][0]});
+      //   });
+      // }
 
       bag.setSubmitting(false);
     }

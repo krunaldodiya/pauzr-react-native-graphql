@@ -1,14 +1,14 @@
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import {Formik} from 'formik';
-import React, {Fragment, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import {Button, Icon, Input, Overlay} from 'react-native-elements';
+import React, {Fragment} from 'react';
+import {View} from 'react-native';
+import {Button, Input} from 'react-native-elements';
 import * as Yup from 'yup';
 import {LOGIN} from '../../graphql/mutation';
-import Otp from './Otp';
+import {GET_AUTH_USER} from '../../graphql/query';
 
 const SignIn = (props: any) => {
-  const [overlay, setOverlay] = useState(false);
+  const {data: authUser}: any = useQuery(GET_AUTH_USER);
   const [processLogin] = useMutation(LOGIN);
 
   const doSignIn = async (values: any, bag: any) => {
@@ -26,7 +26,7 @@ const SignIn = (props: any) => {
 
       bag.setSubmitting(false);
     } catch (error) {
-      console.log(error.response);
+      console.log(error.graphQLErrors);
 
       // if (error.response.status == 422) {
       //   Object.keys(error.response.data.errors).forEach(key => {
@@ -41,7 +41,13 @@ const SignIn = (props: any) => {
   return (
     <Fragment>
       <Formik
-        initialValues={{email: '', password: ''}}
+        initialValues={{
+          email: '',
+          password: '',
+          name: '',
+          mobile: '',
+          country: authUser.user.country,
+        }}
         onSubmit={doSignIn}
         validationSchema={Yup.object().shape({
           email: Yup.string()
@@ -49,7 +55,7 @@ const SignIn = (props: any) => {
             .required('email is required'),
 
           password: Yup.string()
-            .min(8, 'password should be minimum 8 digit')
+            .min(4, 'password should be minimum 4 digit')
             .required('password is required'),
         })}>
         {formikProps => (
@@ -114,42 +120,6 @@ const SignIn = (props: any) => {
           </View>
         )}
       </Formik>
-
-      <Overlay isVisible={overlay} height={350} width={350}>
-        <View style={{flex: 1}}>
-          <View
-            style={{
-              padding: 10,
-              flexDirection: 'row',
-            }}>
-            <Icon
-              type="ionicons"
-              name="arrow-back"
-              size={18}
-              iconStyle={{marginRight: 20}}
-              onPress={() => setOverlay(false)}
-            />
-            <Text style={{textAlign: 'center', textTransform: 'uppercase'}}>
-              Request OTP
-            </Text>
-          </View>
-          <View style={{flex: 1}}>
-            <Otp />
-          </View>
-        </View>
-      </Overlay>
-
-      <TouchableOpacity style={{padding: 15}} onPress={() => setOverlay(true)}>
-        <Text
-          style={{
-            fontSize: 16,
-            color: 'white',
-            textAlign: 'center',
-            textTransform: 'uppercase',
-          }}>
-          Login with Otp
-        </Text>
-      </TouchableOpacity>
     </Fragment>
   );
 };
