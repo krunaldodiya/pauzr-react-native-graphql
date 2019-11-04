@@ -4,25 +4,38 @@ import React, {Fragment} from 'react';
 import {View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import * as Yup from 'yup';
-import {LOGIN} from '../../graphql/mutation';
+import {LOGIN, SET_AUTH_USER} from '../../graphql/mutation';
 import {GET_AUTH_USER} from '../../graphql/query';
 
 const SignIn = (props: any) => {
   const {data: authUser}: any = useQuery(GET_AUTH_USER);
+  const [setAuthUser] = useMutation(SET_AUTH_USER);
   const [processLogin] = useMutation(LOGIN);
 
   const doSignIn = async (values: any, bag: any) => {
     bag.setSubmitting(true);
 
     try {
-      const data = await processLogin({
+      const {data} = await processLogin({
         variables: {
           email: values.email,
           password: values.password,
         },
       });
 
-      console.log(data);
+      console.log('this is authUser', authUser);
+
+      setAuthUser({
+        variables: {
+          authUser: {
+            ...authUser.user,
+            ...data.login.user,
+            token: data.login.token,
+            initialScreen:
+              data.login.user.language == null ? 'SelectLanguage' : 'Home',
+          },
+        },
+      });
 
       bag.setSubmitting(false);
     } catch (error) {

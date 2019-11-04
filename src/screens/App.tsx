@@ -11,14 +11,21 @@ const {user}: any = cache.readQuery({query: GET_AUTH_USER});
 
 const client = getApolloClient(user.token, cache);
 
-const App = () => {
-  const AppNavigator = getStackNavigator(user.initialScreen);
+const Main = () => {
+  const data = client.readQuery({query: GET_AUTH_USER});
+  console.log(data.user.initialScreen);
+
+  const AppNavigator = getStackNavigator(data.user.initialScreen);
   const AppContainer = createAppContainer(AppNavigator);
 
+  return <AppContainer />;
+};
+
+const App = () => {
   return (
     <ApolloProvider client={client}>
       <PersistGate client={client}>
-        <AppContainer />
+        <Main />
       </PersistGate>
     </ApolloProvider>
   );
