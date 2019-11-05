@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {ApolloClient, ApolloLink, HttpLink} from 'apollo-boost';
+import {setContext} from 'apollo-link-context';
 import {RetryLink} from 'apollo-link-retry';
 import {resolvers} from './resolvers';
 import {typeDefs} from './typeDefs';
@@ -10,16 +11,15 @@ const getApolloClient = (cache: any) => {
 
   const retryLink = new RetryLink({attempts: {max: Infinity}});
 
-  const contextLink = new ApolloLink((operation, forward) => {
-    const token = AsyncStorage.getItem('token') || null;
+  const authMiddleware = setContext(async (req, {headers}) => {
+    const token = await AsyncStorage.getItem('token');
 
-    operation.setContext({
+    return {
       headers: {
-        Authorization: token ? `Bearer ${token}` : null,
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
       },
-    });
-
-    return forward(operation);
+    };
   });
 
   const httpLink = new HttpLink({
@@ -30,7 +30,7 @@ const getApolloClient = (cache: any) => {
     },
   });
 
-  const link = ApolloLink.from([retryLink, contextLink, httpLink]);
+  const link = ApolloLink.from([retryLink, authMiddleware, httpLink]);
 
   const client = new ApolloClient({
     link,

@@ -52,13 +52,19 @@ const SelectLanguage = (props: any) => {
   };
 
   const browseRequestOtp = async () => {
-    await editProfile({
-      variables: {
-        language: authUser.user.language,
-      },
-    });
+    console.log(authUser.user.language);
 
-    navigation.replace(screens.Home);
+    try {
+      await editProfile({
+        variables: {
+          language: authUser.user.language,
+        },
+      });
+
+      navigation.replace(screens.Home);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const setSelectedLanguage = useCallback((item: any) => {
