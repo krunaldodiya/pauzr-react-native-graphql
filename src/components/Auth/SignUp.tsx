@@ -4,14 +4,14 @@ import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input} from 'react-native-elements';
 import * as Yup from 'yup';
-import {REGISTER} from '../../graphql/mutation';
+import {REGISTER, SET_AUTH_USER} from '../../graphql/mutation';
 import {GET_AUTH_USER} from '../../graphql/query';
 import screens from '../../libs/screens';
-import {setAuth} from '../../libs/setAuth';
 
 const SignUp = (props: any) => {
   const {data: authUser}: any = useQuery(GET_AUTH_USER);
   const [processRegister] = useMutation(REGISTER);
+  const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   const doSignUp = async (values: any, bag: any) => {
     bag.setSubmitting(true);
@@ -29,7 +29,21 @@ const SignUp = (props: any) => {
 
       bag.setSubmitting(false);
 
-      setAuth(data.register, authUser, props);
+      const initialScreen =
+        data.register.user.language == null ? 'SelectLanguage' : 'Home';
+
+      setAuthUser({
+        variables: {
+          authUser: {
+            ...authUser.user,
+            ...data.register.user,
+            token: data.register.token,
+            initialScreen,
+          },
+        },
+      });
+
+      props.navigation.replace(initialScreen);
     } catch (error) {
       bag.setSubmitting(false);
     }

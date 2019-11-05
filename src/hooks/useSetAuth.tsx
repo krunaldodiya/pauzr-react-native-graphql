@@ -1,7 +1,7 @@
 import {useMutation} from '@apollo/react-hooks';
 import {SET_AUTH_USER} from '../graphql/mutation';
 
-export const setAuth = ({user, token}: any, authUser: any, props: any) => {
+export const useSetAuth = ({user, token}: any, authUser: any) => {
   const [setAuthUser] = useMutation(SET_AUTH_USER);
   const initialScreen = user.language == null ? 'SelectLanguage' : 'Home';
 
@@ -10,11 +10,11 @@ export const setAuth = ({user, token}: any, authUser: any, props: any) => {
       authUser: {
         ...authUser.user,
         ...user,
-        token: token,
+        token,
         initialScreen,
       },
     },
   });
 
-  props.navigation.replace(initialScreen);
+  return {initialScreen};
 };

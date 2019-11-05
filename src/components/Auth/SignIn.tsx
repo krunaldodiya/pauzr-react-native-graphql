@@ -4,13 +4,13 @@ import React, {Fragment} from 'react';
 import {View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import * as Yup from 'yup';
-import {LOGIN} from '../../graphql/mutation';
+import {LOGIN, SET_AUTH_USER} from '../../graphql/mutation';
 import {GET_AUTH_USER} from '../../graphql/query';
-import {setAuth} from '../../libs/setAuth';
 
 const SignIn = (props: any) => {
   const {data: authUser}: any = useQuery(GET_AUTH_USER);
   const [processLogin] = useMutation(LOGIN);
+  const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   const doSignIn = async (values: any, bag: any) => {
     bag.setSubmitting(true);
@@ -25,7 +25,21 @@ const SignIn = (props: any) => {
 
       bag.setSubmitting(false);
 
-      setAuth(data.login, authUser, props);
+      const initialScreen =
+        data.login.user.language == null ? 'SelectLanguage' : 'Home';
+
+      setAuthUser({
+        variables: {
+          authUser: {
+            ...authUser.user,
+            ...data.login.user,
+            token: data.login.token,
+            initialScreen,
+          },
+        },
+      });
+
+      props.navigation.replace(initialScreen);
     } catch (error) {
       bag.setSubmitting(false);
     }

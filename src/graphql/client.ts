@@ -10,9 +10,8 @@ const getApolloClient = (cache: any) => {
 
   const retryLink = new RetryLink({attempts: {max: Infinity}});
 
-  const user = cache.readQuery({query: GET_AUTH_USER});
-  console.log(user);
-  const authToken = '';
+  const data = cache.readQuery({query: GET_AUTH_USER});
+  const authToken = data.user.token;
 
   const httpLink = new HttpLink({
     uri: url,
