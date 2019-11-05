@@ -1,7 +1,6 @@
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useCallback} from 'react';
 import {
-  Button,
   FlatList,
   SafeAreaView,
   StatusBar,
@@ -10,7 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SET_AUTH_USER} from '../graphql/mutation';
+import {Button} from 'react-native-elements';
+import {LOGIN, SET_AUTH_USER} from '../graphql/mutation';
 import {GET_AUTH_USER} from '../graphql/query';
 import screens from '../libs/screens';
 import theme from '../libs/theme';
@@ -21,17 +21,18 @@ const languages = [
   {name: 'હિન્દી', shortname: 'hi'},
 ];
 
-const Language = (props: any) => {
+const SelectLanguage = (props: any) => {
   const {navigation} = props;
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
   const [setAuthUser] = useMutation(SET_AUTH_USER);
+  const [updateUser, {loading}] = useMutation(LOGIN);
 
   const renderItem = (data: any) => {
     const {item} = data;
 
     const selectedColor =
-      authUser.auth.selectedLanguage == item.shortname ? 'red' : 'black';
+      authUser.user.language == item.shortname ? 'red' : 'black';
 
     return (
       <TouchableOpacity
@@ -50,18 +51,28 @@ const Language = (props: any) => {
     );
   };
 
-  const browseRequestOtp = () => {
-    navigation.replace(screens.RequestOtp);
+  const browseRequestOtp = async () => {
+    await updateUser({
+      variables: {
+        language: authUser.user.language,
+      },
+    });
+
+    navigation.replace(screens.Home);
   };
 
   const setSelectedLanguage = useCallback((item: any) => {
     setAuthUser({
       variables: {
-        ...authUser.auth,
-        selectedLanguage: item,
+        authUser: {
+          ...authUser.user,
+          language: item,
+        },
       },
     });
   }, []);
+
+  const keyExtractor = (item: any, index: number) => index.toString();
 
   return (
     <Fragment>
@@ -79,11 +90,17 @@ const Language = (props: any) => {
             data={languages}
             extraData={authUser}
             renderItem={renderItem}
+            keyExtractor={keyExtractor}
           />
         </View>
 
         <View style={{padding: 10}}>
-          <Button title="Continue" onPress={browseRequestOtp} />
+          <Button
+            title="Continue"
+            onPress={browseRequestOtp}
+            loading={loading}
+            disabled={loading}
+          />
         </View>
       </SafeAreaView>
     </Fragment>
@@ -105,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(Language);
+export default React.memo(SelectLanguage);

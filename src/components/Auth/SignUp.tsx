@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import {REGISTER} from '../../graphql/mutation';
 import {GET_AUTH_USER} from '../../graphql/query';
 import screens from '../../libs/screens';
+import {setAuth} from '../../libs/setAuth';
 
 const SignUp = (props: any) => {
   const {data: authUser}: any = useQuery(GET_AUTH_USER);
@@ -16,7 +17,7 @@ const SignUp = (props: any) => {
     bag.setSubmitting(true);
 
     try {
-      const data = await processRegister({
+      const {data} = await processRegister({
         variables: {
           name: values.name,
           email: values.email,
@@ -26,18 +27,10 @@ const SignUp = (props: any) => {
         },
       });
 
-      console.log(data);
-
       bag.setSubmitting(false);
+
+      setAuth(data.register, authUser, props);
     } catch (error) {
-      console.log(error);
-
-      // if (error.response.status == 422) {
-      //   Object.keys(error.response.data.errors).forEach(key => {
-      //     bag.setErrors({[key]: error.response.data.errors[key][0]});
-      //   });
-      // }
-
       bag.setSubmitting(false);
     }
   };
