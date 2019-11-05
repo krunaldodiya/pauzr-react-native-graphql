@@ -48,6 +48,40 @@ export const LOGIN = gql`
   }
 `;
 
+export const EDIT_PROFILE = gql`
+  mutation EditProfile(
+    $name: String
+    $language: String
+    $dob: String
+    $gender: String
+    $avatar: String
+    $bio: String
+    $username: String
+  ) {
+    editProfile(
+      name: $name
+      language: $language
+      dob: $dob
+      gender: $gender
+      avatar: $avatar
+      bio: $bio
+      username: $username
+    ) {
+      id
+      name
+      email
+      mobile
+      language
+      country {
+        id
+        name
+        phonecode
+        shortname
+      }
+    }
+  }
+`;
+
 export const REGISTER = gql`
   mutation Register(
     $email: String!
@@ -90,7 +124,6 @@ export const SET_AUTH_USER = gql`
         email
         mobile
         language
-        token
         initialScreen
         country {
           id

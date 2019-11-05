@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import {Button} from 'react-native-elements';
-import {LOGIN, SET_AUTH_USER} from '../graphql/mutation';
+import {EDIT_PROFILE, SET_AUTH_USER} from '../graphql/mutation';
 import {GET_AUTH_USER} from '../graphql/query';
 import screens from '../libs/screens';
 import theme from '../libs/theme';
@@ -26,7 +26,7 @@ const SelectLanguage = (props: any) => {
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
   const [setAuthUser] = useMutation(SET_AUTH_USER);
-  const [updateUser, {loading}] = useMutation(LOGIN);
+  const [editProfile, {loading}] = useMutation(EDIT_PROFILE);
 
   const renderItem = (data: any) => {
     const {item} = data;
@@ -52,7 +52,7 @@ const SelectLanguage = (props: any) => {
   };
 
   const browseRequestOtp = async () => {
-    await updateUser({
+    await editProfile({
       variables: {
         language: authUser.user.language,
       },

@@ -1,4 +1,5 @@
 import {useMutation, useQuery} from '@apollo/react-hooks';
+import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
 import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
@@ -16,12 +17,13 @@ const SignUp = (props: any) => {
   const setAuth = ({user, token}: any, authUser: any) => {
     const initialScreen = user.language == null ? 'SelectLanguage' : 'Home';
 
+    AsyncStorage.setItem('token', token);
+
     setAuthUser({
       variables: {
         authUser: {
           ...authUser.user,
           ...user,
-          token,
           initialScreen,
         },
       },

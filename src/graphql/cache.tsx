@@ -10,7 +10,6 @@ cache.writeData({
       email: '',
       mobile: '',
       language: '',
-      token: '',
       initialScreen: 'Auth',
       country: {
         id: 'e1c417cf-550a-4457-b744-1db7fd5c86fb',

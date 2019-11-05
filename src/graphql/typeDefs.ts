@@ -10,7 +10,6 @@ export const typeDefs = gql`
   }
 
   extend type User {
-    token: String
     initialScreen: String
   }
 `;

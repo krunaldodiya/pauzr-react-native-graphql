@@ -37,7 +37,6 @@ export const GET_AUTH_USER = gql`
       email
       mobile
       language
-      token
       initialScreen
       country {
         id
