@@ -13,6 +13,23 @@ const SignUp = (props: any) => {
   const [processRegister] = useMutation(REGISTER);
   const [setAuthUser] = useMutation(SET_AUTH_USER);
 
+  const setAuth = ({user, token}: any, authUser: any) => {
+    const initialScreen = user.language == null ? 'SelectLanguage' : 'Home';
+
+    setAuthUser({
+      variables: {
+        authUser: {
+          ...authUser.user,
+          ...user,
+          token,
+          initialScreen,
+        },
+      },
+    });
+
+    return {initialScreen};
+  };
+
   const doSignUp = async (values: any, bag: any) => {
     bag.setSubmitting(true);
 
@@ -28,21 +45,7 @@ const SignUp = (props: any) => {
       });
 
       bag.setSubmitting(false);
-
-      const initialScreen =
-        data.register.user.language == null ? 'SelectLanguage' : 'Home';
-
-      setAuthUser({
-        variables: {
-          authUser: {
-            ...authUser.user,
-            ...data.register.user,
-            token: data.register.token,
-            initialScreen,
-          },
-        },
-      });
-
+      const {initialScreen} = setAuth(data.register, authUser);
       props.navigation.replace(initialScreen);
     } catch (error) {
       bag.setSubmitting(false);
