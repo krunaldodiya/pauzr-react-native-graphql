@@ -21,7 +21,7 @@ const Main = () => {
   });
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
-  const [setAuthUSer] = useMutation(SET_AUTH_USER);
+  const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   if (!data) {
     return (
@@ -68,8 +68,8 @@ const Main = () => {
       <SafeAreaView style={{flex: 1}}>
         <TouchableOpacity
           style={{padding: 10}}
-          onPress={() => {
-            setAuthUSer({
+          onPress={async () => {
+            await setAuthUser({
               variables: {
                 ...authUser.auth,
                 authToken: 'abcd',

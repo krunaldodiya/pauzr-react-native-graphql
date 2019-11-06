@@ -31,8 +31,8 @@ const SelectLanguage = (props: any) => {
   const renderItem = (data: any) => {
     const {item} = data;
 
-    const selectedColor =
-      authUser.user.language == item.shortname ? 'red' : 'black';
+    const selectedLanguage = authUser.user.language;
+    const selectedColor = selectedLanguage == item.shortname ? 'red' : 'black';
 
     return (
       <TouchableOpacity
@@ -52,12 +52,19 @@ const SelectLanguage = (props: any) => {
   };
 
   const browseRequestOtp = async () => {
-    console.log(authUser.user.language);
-
     try {
       await editProfile({
         variables: {
           language: authUser.user.language,
+        },
+      });
+
+      await setAuthUser({
+        variables: {
+          authUser: {
+            ...authUser.user,
+            initialScreen: 'Home',
+          },
         },
       });
 
@@ -67,8 +74,8 @@ const SelectLanguage = (props: any) => {
     }
   };
 
-  const setSelectedLanguage = useCallback((item: any) => {
-    setAuthUser({
+  const setSelectedLanguage = useCallback(async (item: any) => {
+    await setAuthUser({
       variables: {
         authUser: {
           ...authUser.user,

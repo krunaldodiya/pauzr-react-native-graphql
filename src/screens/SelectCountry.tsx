@@ -19,9 +19,9 @@ const SelectCountry = (props: any) => {
   const {data: authUser} = useQuery(GET_AUTH_USER);
   const [setAuthUser] = useMutation(SET_AUTH_USER);
 
-  const setCountry = useCallback((item: any) => {
+  const setCountry = useCallback(async (item: any) => {
     try {
-      setAuthUser({
+      await setAuthUser({
         variables: {
           authUser: {
             ...authUser.user,
