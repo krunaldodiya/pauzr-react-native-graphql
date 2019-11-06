@@ -5,6 +5,7 @@ const screens = {
   Home: 'Home',
   EditProfile: 'EditProfile',
   Auth: 'Auth',
+  Groups: 'Groups',
 };
 
 export default screens;

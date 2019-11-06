@@ -5,9 +5,9 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import Groups from './focus/groups';
-import Scoreboard from './focus/scoreboard';
-import Timer from './focus/timer';
+import Groups from './focus/Groups';
+import Scoreboard from './focus/Scoreboard';
+import Timer from './focus/Timer';
 
 const DrawerMenu = (props: any) => {
   const onPress = useCallback(() => console.log('props', props), []);

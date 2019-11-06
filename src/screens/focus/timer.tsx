@@ -35,7 +35,33 @@ const Timer = (props: any) => {
   }, [tab]);
 
   const loading = false;
-  const quotes: any = [];
+  const quotes: any = [
+    {
+      title: 'hello',
+      image:
+        'https://api.pauzr.com/storage/2WEPeFhawg3RfStxt92n1lb3GiirWeAZHY3TmK0e.jpeg',
+    },
+    {
+      title: 'hello',
+      image:
+        'https://api.pauzr.com/storage/pMuSo0C9ADpLiwdmGZSfLz4TQfChDWhtMYIDDeiH.jpeg',
+    },
+    {
+      title: 'hello',
+      image:
+        'https://api.pauzr.com/storage/jPzwScDAbvPI4OYwGisIryfLQK8yj5kZphcKZLPG.jpeg',
+    },
+    {
+      title: 'hello',
+      image:
+        'https://api.pauzr.com/storage/ENpyNC1THCp6sOn9OCmawM9WoSyP4vcnbZhchqWv.jpeg',
+    },
+    {
+      title: 'hello',
+      image:
+        'https://api.pauzr.com/storage/7NCvBBEO47h7r8vRH19J2p2wC1Ii6ye08eIdn2Pf.jpeg',
+    },
+  ];
   const currentQuote = quotes[tab];
 
   const tps = [
@@ -88,6 +114,7 @@ const Timer = (props: any) => {
                       width,
                       backgroundColor: index == tab ? 'black' : 'grey',
                       marginHorizontal: 2,
+                      marginVertical: 5,
                     }}
                   />
                 );
