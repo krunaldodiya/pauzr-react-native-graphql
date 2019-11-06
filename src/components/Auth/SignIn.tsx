@@ -15,6 +15,7 @@ const SignIn = (props: any) => {
 
   const setAuth = ({user, token}: any, authUser: any) => {
     const initialScreen = user.language == null ? 'SelectLanguage' : 'Home';
+    console.log(user);
 
     AsyncStorage.setItem('token', token);
 
@@ -44,6 +45,7 @@ const SignIn = (props: any) => {
 
       bag.setSubmitting(false);
       const {initialScreen} = setAuth(data.login, authUser);
+
       props.navigation.replace(initialScreen);
     } catch (error) {
       bag.setSubmitting(false);

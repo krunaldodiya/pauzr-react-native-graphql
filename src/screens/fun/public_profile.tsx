@@ -262,7 +262,7 @@ const PublicProfile = (props: PublicProfileProps) => {
                     padding: 20,
                   }}>
                   <Icon
-                    name="grid"
+                    name="grid-on"
                     type="SimpleLineIcons"
                     style={{color: tab === 0 ? '#555' : '#aaa', fontSize: 18}}
                   />
@@ -282,7 +282,7 @@ const PublicProfile = (props: PublicProfileProps) => {
                     padding: 20,
                   }}>
                   <Icon
-                    name="heart"
+                    name="favorite"
                     type="SimpleLineIcons"
                     style={{color: tab === 1 ? '#555' : '#aaa', fontSize: 18}}
                   />

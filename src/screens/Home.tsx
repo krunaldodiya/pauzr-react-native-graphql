@@ -10,6 +10,7 @@ const Home = createMaterialTopTabNavigator(
   {
     defaultNavigationOptions: {
       tabBarVisible: false,
+      swipeEnabled: true,
     },
   },
 );

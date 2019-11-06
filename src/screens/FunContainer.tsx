@@ -15,8 +15,8 @@ const FunTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="EvilIcons"
-            name="camera"
+            type="SimpleLineIcons"
+            name="grid-on"
             style={{color: tintColor, fontSize: 36}}
           />
         ),
@@ -27,8 +27,8 @@ const FunTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="EvilIcons"
-            name="trophy"
+            type="SimpleLineIcons"
+            name="search"
             style={{color: tintColor, fontSize: 36}}
           />
         ),
@@ -39,8 +39,8 @@ const FunTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="EvilIcons"
-            name="user"
+            type="SimpleLineIcons"
+            name="shop"
             style={{color: tintColor, fontSize: 36}}
           />
         ),
@@ -51,8 +51,8 @@ const FunTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="EvilIcons"
-            name="search"
+            type="SimpleLineIcons"
+            name="favorite"
             style={{color: tintColor, fontSize: 36}}
           />
         ),
@@ -63,8 +63,8 @@ const FunTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="EvilIcons"
-            name="heart"
+            type="SimpleLineIcons"
+            name="settings"
             style={{color: tintColor, fontSize: 36}}
           />
         ),
@@ -80,14 +80,29 @@ const FunTabNavigator = createBottomTabNavigator(
   },
 );
 
+const HeaderLeft = (navigation: any) => {
+  const knowMore = useCallback(() => navigation.push('Profile'), []);
+
+  return (
+    <Icon
+      type="SimpleLineIcons"
+      name="add-a-photo"
+      style={{fontSize: 22}}
+      iconStyle={{marginLeft: 10}}
+      onPress={knowMore}
+    />
+  );
+};
+
 const HeaderRight = (navigation: any) => {
   const knowMore = useCallback(() => navigation.push('Profile'), []);
 
   return (
     <Icon
       type="SimpleLineIcons"
-      name="bulb"
-      style={{marginRight: 10, fontSize: 22}}
+      name="person"
+      style={{fontSize: 22}}
+      iconStyle={{marginRight: 10}}
       onPress={knowMore}
     />
   );
@@ -102,6 +117,7 @@ const FunStackNavigator = createStackNavigator(
     defaultNavigationOptions: ({navigation}: any) => {
       return {
         title: navigation.state.routes[navigation.state.index].routeName,
+        headerLeft: <HeaderLeft navigation={navigation} />,
         headerRight: <HeaderRight navigation={navigation} />,
       };
     },

@@ -30,8 +30,8 @@ const FocusTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="Ionicons"
-            name="ios-people"
+            type="ionicons"
+            name="person"
             style={{color: tintColor, fontSize: 28}}
           />
         ),
@@ -42,8 +42,8 @@ const FocusTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="Ionicons"
-            name="ios-pause"
+            type="ionicons"
+            name="pause"
             style={{color: tintColor, fontSize: 28}}
           />
         ),
@@ -54,8 +54,8 @@ const FocusTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="Ionicons"
-            name="ios-stats"
+            type="ionicons"
+            name="lock"
             style={{color: tintColor, fontSize: 28}}
           />
         ),
@@ -78,7 +78,8 @@ const HeaderLeft = (navigation: any) => {
     <Icon
       type="SimpleLineIcons"
       name="menu"
-      style={{marginLeft: 10, fontSize: 22}}
+      style={{fontSize: 22}}
+      iconStyle={{marginLeft: 10}}
       onPress={openDrawer}
     />
   );
@@ -90,8 +91,9 @@ const HeaderRight = (navigation: any) => {
   return (
     <Icon
       type="SimpleLineIcons"
-      name="bulb"
-      style={{marginRight: 10, fontSize: 22}}
+      name="lightbulb-outline"
+      style={{fontSize: 22}}
+      iconStyle={{marginRight: 10}}
       onPress={knowMore}
     />
   );
