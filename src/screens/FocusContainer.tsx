@@ -71,16 +71,14 @@ const FocusTabNavigator = createBottomTabNavigator(
   },
 );
 
-const HeaderLeft = (navigation: any) => {
-  const openDrawer = useCallback(() => navigation.openDrawer(), []);
-
+const HeaderLeft = (props: any) => {
   return (
     <Icon
       type="SimpleLineIcons"
       name="menu"
       style={{fontSize: 22}}
       iconStyle={{marginLeft: 10}}
-      onPress={openDrawer}
+      onPress={() => props.navigation.openDrawer()}
     />
   );
 };
