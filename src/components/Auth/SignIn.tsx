@@ -2,7 +2,7 @@ import {useMutation, useQuery} from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
 import React, {Fragment} from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import * as Yup from 'yup';
 import {LOGIN, SET_AUTH_USER} from '../../graphql/mutation';
@@ -15,8 +15,6 @@ const SignIn = (props: any) => {
 
   const setAuth = async ({user, token}: any, authUser: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-
-    console.log(initialScreen);
 
     await setAuthUser({
       variables: {
@@ -34,28 +32,22 @@ const SignIn = (props: any) => {
   };
 
   const doSignIn = async (values: any, bag: any) => {
-    console.log('test');
+    bag.setSubmitting(true);
 
-    // bag.setSubmitting(true);
+    try {
+      const {data} = await processLogin({
+        variables: {
+          email: values.email,
+          password: values.password,
+        },
+      });
 
-    // try {
-    //   const {data} = await processLogin({
-    //     variables: {
-    //       email: values.email,
-    //       password: values.password,
-    //     },
-    //   });
-
-    //   console.log(data);
-
-    //   bag.setSubmitting(false);
-    //   const {initialScreen} = await setAuth(data.login, authUser);
-    //   props.navigation.replace(initialScreen);
-    // } catch (error) {
-    //   console.log(error);
-
-    //   bag.setSubmitting(false);
-    // }
+      bag.setSubmitting(false);
+      const {initialScreen} = await setAuth(data.login, authUser);
+      props.navigation.replace(initialScreen);
+    } catch (error) {
+      bag.setSubmitting(false);
+    }
   };
 
   return (
@@ -68,9 +60,7 @@ const SignIn = (props: any) => {
           mobile: '',
           country: authUser.user.country,
         }}
-        onSubmit={() => {
-          console.log('test');
-        }}
+        onSubmit={doSignIn}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email('invalid email')
@@ -133,10 +123,7 @@ const SignIn = (props: any) => {
             <View style={{margin: 20}}>
               <Button
                 title="login"
-                onPress={() => {
-                  console.log('testing');
-                }}
-                // onPress={formikProps.handleSubmit}
+                onPress={formikProps.handleSubmit}
                 titleStyle={{textTransform: 'uppercase'}}
                 loading={formikProps.isSubmitting}
                 disabled={!formikProps.isValid || formikProps.isSubmitting}
@@ -145,15 +132,6 @@ const SignIn = (props: any) => {
           </View>
         )}
       </Formik>
-
-      <Button
-        title="test"
-        onPress={() => {
-          console.log('test');
-        }}
-        // onPress={formikProps.handleSubmit}
-        titleStyle={{textTransform: 'uppercase'}}
-      />
     </Fragment>
   );
 };
