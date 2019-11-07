@@ -2,11 +2,11 @@ import React, {useCallback} from 'react';
 import {Icon} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import Feeds from './fun/feeds';
-import LotteryWinners from './fun/lottery_winners';
-import Notifications from './fun/notifications';
-import PublicProfile from './fun/public_profile';
-import Search from './fun/search';
+import Bazaar from './fun/Bazaar';
+import Chat from './fun/Chat';
+import Feeds from './fun/Feeds';
+import Notifications from './fun/Notifications';
+import Search from './fun/Search';
 
 const FunTabNavigator = createBottomTabNavigator(
   {
@@ -22,8 +22,8 @@ const FunTabNavigator = createBottomTabNavigator(
         ),
       },
     },
-    Lottery: {
-      screen: LotteryWinners,
+    Search: {
+      screen: Search,
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
@@ -34,8 +34,8 @@ const FunTabNavigator = createBottomTabNavigator(
         ),
       },
     },
-    Profile: {
-      screen: PublicProfile,
+    Bazaar: {
+      screen: Bazaar,
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
@@ -46,13 +46,13 @@ const FunTabNavigator = createBottomTabNavigator(
         ),
       },
     },
-    Search: {
-      screen: Search,
+    Chat: {
+      screen: Chat,
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
             type="SimpleLineIcons"
-            name="favorite"
+            name="message"
             style={{color: tintColor, fontSize: 36}}
           />
         ),
@@ -64,7 +64,7 @@ const FunTabNavigator = createBottomTabNavigator(
         tabBarIcon: ({tintColor}: any) => (
           <Icon
             type="SimpleLineIcons"
-            name="settings"
+            name="favorite"
             style={{color: tintColor, fontSize: 36}}
           />
         ),
@@ -76,7 +76,7 @@ const FunTabNavigator = createBottomTabNavigator(
       showLabel: false,
       activeTintColor: 'red',
     },
-    initialRouteName: 'Profile',
+    initialRouteName: 'Bazaar',
   },
 );
 
@@ -94,8 +94,8 @@ const HeaderLeft = (navigation: any) => {
   );
 };
 
-const HeaderRight = (navigation: any) => {
-  const knowMore = useCallback(() => navigation.push('Profile'), []);
+const HeaderRight = (props: any) => {
+  const knowMore = useCallback(() => props.navigation.push('Profile'), []);
 
   return (
     <Icon

@@ -15,11 +15,11 @@ import theme from '../../libs/theme';
 import {useQuery} from '@apollo/react-hooks';
 import {GET_AUTH_USER} from '../../graphql/query';
 
-interface PublicProfileProps {
+interface ProfileProps {
   navigation: NavigationScreenProp<any, any>;
 }
 
-const PublicProfile = (props: PublicProfileProps) => {
+const Profile = (props: ProfileProps) => {
   const [tab, setTab] = useState(0);
   const {data: authUser} = useQuery(GET_AUTH_USER);
   const postsList: any = [];
@@ -310,4 +310,4 @@ const PublicProfile = (props: PublicProfileProps) => {
   );
 };
 
-export default React.memo(PublicProfile);
+export default React.memo(Profile);
