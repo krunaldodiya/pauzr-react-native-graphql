@@ -1,25 +1,31 @@
-import axios from 'axios';
+import {useMutation} from '@apollo/react-hooks';
 import React, {Fragment, useState} from 'react';
 import {View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {REQUEST_OTP, VERIFY_OTP} from '../../graphql/mutation';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Otp = (props: any) => {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('request_otp');
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
+  const [processRequestOtp] = useMutation(REQUEST_OTP);
+  const [processVerifyOtp] = useMutation(VERIFY_OTP);
+
+  const setAuth = async ({user, token}: any, props: any) => {
+    const initialScreen = user.language ? 'Home' : 'SelectLanguage';
+    AsyncStorage.setItem('token', token);
+    props.navigation.replace(initialScreen);
+  };
 
   const requestOtp = async () => {
     setLoading(true);
-
     try {
-      const {data} = await axios.post('https://pauzr.tk/api/otp/request', {
-        mobile,
-      });
-
-      setLoading(false);
+      await processRequestOtp({variables: {mobile}});
       setType('verify_otp');
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -28,15 +34,10 @@ const Otp = (props: any) => {
 
   const verifyOtp = async () => {
     setLoading(true);
-
     try {
-      const {data} = await axios.post('https://pauzr.tk/api/otp/verify', {
-        mobile,
-        otp,
-      });
-
+      const {data} = await processVerifyOtp({variables: {mobile}});
+      await setAuth(data.verifyOtp, props);
       setLoading(false);
-      setType('verify_otp');
     } catch (error) {
       console.log(error);
       setLoading(false);

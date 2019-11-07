@@ -10,22 +10,10 @@ import {LOGIN} from '../../graphql/mutation';
 const SignIn = (props: any) => {
   const [processLogin] = useMutation(LOGIN);
 
-  const setAuth = async ({user, token}: any, authUser: any) => {
+  const setAuth = async ({user, token}: any, props: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-
-    // await setAuthUser({
-    //   variables: {
-    //     authUser: {
-    //       ...authUser.user,
-    //       ...user,
-    //       initialScreen,
-    //     },
-    //   },
-    // });
-
     AsyncStorage.setItem('token', token);
-
-    return {initialScreen};
+    props.navigation.replace(initialScreen);
   };
 
   const doSignIn = async (values: any, bag: any) => {
@@ -40,8 +28,7 @@ const SignIn = (props: any) => {
       });
 
       bag.setSubmitting(false);
-      const {initialScreen} = await setAuth(data.login, null);
-      props.navigation.replace(initialScreen);
+      await setAuth(data.login, props);
     } catch (error) {
       bag.setSubmitting(false);
     }

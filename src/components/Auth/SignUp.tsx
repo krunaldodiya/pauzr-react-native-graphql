@@ -13,22 +13,10 @@ const SignUp = (props: any) => {
   const {data}: any = useQuery(GET_COUNTRY);
   const [processRegister] = useMutation(REGISTER);
 
-  const setAuth = async ({user, token}: any, authUser: any) => {
+  const setAuth = async ({user, token}: any, props: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-
-    // await setAuthUser({
-    //   variables: {
-    //     authUser: {
-    //       ...authUser.user,
-    //       ...user,
-    //       initialScreen,
-    //     },
-    //   },
-    // });
-
     AsyncStorage.setItem('token', token);
-
-    return {initialScreen};
+    props.navigation.replace(initialScreen);
   };
 
   const doSignUp = async (values: any, bag: any) => {
@@ -46,8 +34,7 @@ const SignUp = (props: any) => {
       });
 
       bag.setSubmitting(false);
-      const {initialScreen} = await setAuth(data.register, null);
-      props.navigation.replace(initialScreen);
+      await setAuth(data.register, props);
     } catch (error) {
       bag.setSubmitting(false);
     }
