@@ -15,7 +15,7 @@ const SignUp = (props: any) => {
   const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   const setAuth = async ({user, token}: any, authUser: any) => {
-    const initialScreen = user.language.length ? 'Home' : 'SelectLanguage';
+    const initialScreen = user.language ? 'Home' : 'SelectLanguage';
 
     await setAuthUser({
       variables: {

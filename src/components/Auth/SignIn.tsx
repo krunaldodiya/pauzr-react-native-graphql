@@ -14,7 +14,9 @@ const SignIn = (props: any) => {
   const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   const setAuth = async ({user, token}: any, authUser: any) => {
-    const initialScreen = user.language.length ? 'Home' : 'SelectLanguage';
+    const initialScreen = user.language ? 'Home' : 'SelectLanguage';
+
+    console.log(initialScreen);
 
     await setAuthUser({
       variables: {
@@ -32,22 +34,28 @@ const SignIn = (props: any) => {
   };
 
   const doSignIn = async (values: any, bag: any) => {
-    bag.setSubmitting(true);
+    console.log('test');
 
-    try {
-      const {data} = await processLogin({
-        variables: {
-          email: values.email,
-          password: values.password,
-        },
-      });
+    // bag.setSubmitting(true);
 
-      bag.setSubmitting(false);
-      const {initialScreen} = await setAuth(data.login, authUser);
-      props.navigation.replace(initialScreen);
-    } catch (error) {
-      bag.setSubmitting(false);
-    }
+    // try {
+    //   const {data} = await processLogin({
+    //     variables: {
+    //       email: values.email,
+    //       password: values.password,
+    //     },
+    //   });
+
+    //   console.log(data);
+
+    //   bag.setSubmitting(false);
+    //   const {initialScreen} = await setAuth(data.login, authUser);
+    //   props.navigation.replace(initialScreen);
+    // } catch (error) {
+    //   console.log(error);
+
+    //   bag.setSubmitting(false);
+    // }
   };
 
   return (
@@ -60,7 +68,9 @@ const SignIn = (props: any) => {
           mobile: '',
           country: authUser.user.country,
         }}
-        onSubmit={doSignIn}
+        onSubmit={() => {
+          console.log('test');
+        }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email('invalid email')
@@ -123,7 +133,10 @@ const SignIn = (props: any) => {
             <View style={{margin: 20}}>
               <Button
                 title="login"
-                onPress={formikProps.handleSubmit}
+                onPress={() => {
+                  console.log('testing');
+                }}
+                // onPress={formikProps.handleSubmit}
                 titleStyle={{textTransform: 'uppercase'}}
                 loading={formikProps.isSubmitting}
                 disabled={!formikProps.isValid || formikProps.isSubmitting}
@@ -132,6 +145,15 @@ const SignIn = (props: any) => {
           </View>
         )}
       </Formik>
+
+      <Button
+        title="test"
+        onPress={() => {
+          console.log('test');
+        }}
+        // onPress={formikProps.handleSubmit}
+        titleStyle={{textTransform: 'uppercase'}}
+      />
     </Fragment>
   );
 };
