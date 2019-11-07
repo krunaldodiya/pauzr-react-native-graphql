@@ -115,23 +115,14 @@ export const REGISTER = gql`
   }
 `;
 
-export const SET_AUTH_USER = gql`
-  mutation SetAuthUser($authUser: User) {
-    setAuthUser(authUser: $authUser) @client {
-      user {
-        id
-        name
-        email
-        mobile
-        language
-        initialScreen
-        country {
-          id
-          name
-          phonecode
-          shortname
-        }
-      }
-    }
+export const SET_INITIAL_SCREEN = gql`
+  mutation SetInitialScreen($initialScreen: String) {
+    setInitialScreen(initialScreen: $initialScreen) @client
+  }
+`;
+
+export const SET_COUNTRY = gql`
+  mutation SetCountry($country: Country) {
+    setCountry(country: $country) @client
   }
 `;

@@ -17,7 +17,6 @@ export const PersistGate = (props: any) => {
       >,
       maxSize: false,
       debug: true,
-      debounce: 0,
     })
       .then(() => setStatus('success'))
       .catch(() => setStatus('failed'));

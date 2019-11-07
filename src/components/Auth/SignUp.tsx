@@ -5,27 +5,26 @@ import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input} from 'react-native-elements';
 import * as Yup from 'yup';
-import {REGISTER, SET_AUTH_USER} from '../../graphql/mutation';
-import {GET_AUTH_USER} from '../../graphql/query';
+import {REGISTER} from '../../graphql/mutation';
+import {GET_COUNTRY} from '../../graphql/query';
 import screens from '../../libs/screens';
 
 const SignUp = (props: any) => {
-  const {data: authUser}: any = useQuery(GET_AUTH_USER);
+  const {data}: any = useQuery(GET_COUNTRY);
   const [processRegister] = useMutation(REGISTER);
-  const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   const setAuth = async ({user, token}: any, authUser: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
 
-    await setAuthUser({
-      variables: {
-        authUser: {
-          ...authUser.user,
-          ...user,
-          initialScreen,
-        },
-      },
-    });
+    // await setAuthUser({
+    //   variables: {
+    //     authUser: {
+    //       ...authUser.user,
+    //       ...user,
+    //       initialScreen,
+    //     },
+    //   },
+    // });
 
     AsyncStorage.setItem('token', token);
 
@@ -47,7 +46,7 @@ const SignUp = (props: any) => {
       });
 
       bag.setSubmitting(false);
-      const {initialScreen} = await setAuth(data.register, authUser);
+      const {initialScreen} = await setAuth(data.register, null);
       props.navigation.replace(initialScreen);
     } catch (error) {
       bag.setSubmitting(false);
@@ -62,7 +61,7 @@ const SignUp = (props: any) => {
           password: '',
           name: '',
           mobile: '',
-          country: authUser.user.country,
+          country: data.country,
         }}
         onSubmit={doSignUp}
         validationSchema={Yup.object().shape({
@@ -127,7 +126,7 @@ const SignUp = (props: any) => {
                   <Icon type="ionicons" name="phone" size={20} />
                   <Text
                     style={{fontSize: 17, marginLeft: 15, letterSpacing: 0.5}}>
-                    +{authUser.user.country.phonecode}
+                    +{data.country.phonecode}
                   </Text>
                 </TouchableOpacity>
               </View>

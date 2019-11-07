@@ -1,19 +1,22 @@
-import {GET_AUTH_USER} from './query';
+import {GET_COUNTRY, GET_INITIAL_SCREEN} from './query';
 
 export const resolvers = {
   Mutation: {
-    setAuthUser: (_root: any, _args: any, {cache}: any) => {
-      const data = {
-        user: _args.authUser,
-        __typename: 'User',
-      };
-
+    setInitialScreen: (_root: any, {initialScreen}: any, {cache}: any) => {
       cache.writeQuery({
-        query: GET_AUTH_USER,
-        data,
+        query: GET_INITIAL_SCREEN,
+        data: {initialScreen},
       });
 
-      return data;
+      return initialScreen;
+    },
+    setCountry: (_root: any, {country}: any, {cache}: any) => {
+      cache.writeQuery({
+        query: GET_COUNTRY,
+        data: {country},
+      });
+
+      return country;
     },
   },
 };

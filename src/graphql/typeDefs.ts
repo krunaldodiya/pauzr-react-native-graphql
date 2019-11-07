@@ -2,14 +2,12 @@ import {gql} from 'apollo-boost';
 
 export const typeDefs = gql`
   type Query {
-    getAuthUser: User!
+    getInitialScreen: String!
+    getCountry: Country!
   }
 
   type Mutation {
-    setAuthUser: User!
-  }
-
-  extend type User {
-    initialScreen: String
+    getInitialScreen: String!
+    getCountry: Country!
   }
 `;

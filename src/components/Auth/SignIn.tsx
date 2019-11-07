@@ -1,30 +1,27 @@
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation} from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
 import React, {Fragment} from 'react';
-import {Alert, View} from 'react-native';
+import {View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import * as Yup from 'yup';
-import {LOGIN, SET_AUTH_USER} from '../../graphql/mutation';
-import {GET_AUTH_USER} from '../../graphql/query';
+import {LOGIN} from '../../graphql/mutation';
 
 const SignIn = (props: any) => {
-  const {data: authUser}: any = useQuery(GET_AUTH_USER);
   const [processLogin] = useMutation(LOGIN);
-  const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   const setAuth = async ({user, token}: any, authUser: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
 
-    await setAuthUser({
-      variables: {
-        authUser: {
-          ...authUser.user,
-          ...user,
-          initialScreen,
-        },
-      },
-    });
+    // await setAuthUser({
+    //   variables: {
+    //     authUser: {
+    //       ...authUser.user,
+    //       ...user,
+    //       initialScreen,
+    //     },
+    //   },
+    // });
 
     AsyncStorage.setItem('token', token);
 
@@ -43,7 +40,7 @@ const SignIn = (props: any) => {
       });
 
       bag.setSubmitting(false);
-      const {initialScreen} = await setAuth(data.login, authUser);
+      const {initialScreen} = await setAuth(data.login, null);
       props.navigation.replace(initialScreen);
     } catch (error) {
       bag.setSubmitting(false);
@@ -53,13 +50,7 @@ const SignIn = (props: any) => {
   return (
     <Fragment>
       <Formik
-        initialValues={{
-          email: '',
-          password: '',
-          name: '',
-          mobile: '',
-          country: authUser.user.country,
-        }}
+        initialValues={{email: '', password: ''}}
         onSubmit={doSignIn}
         validationSchema={Yup.object().shape({
           email: Yup.string()
