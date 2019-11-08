@@ -3,12 +3,18 @@ import AsyncStorage from '@react-native-community/async-storage';
 import React, {Fragment, useState} from 'react';
 import {View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
-import {REQUEST_OTP, VERIFY_OTP} from '../../graphql/mutation';
+import {
+  REQUEST_OTP,
+  SET_INITIAL_SCREEN,
+  VERIFY_OTP,
+} from '../../graphql/mutation';
 
 const Otp = (props: any) => {
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
   const [serverOtp, setServerOtp] = useState('');
+
+  const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
   const [processRequestOtp, {loading: loadingRequestOtp}] = useMutation(
     REQUEST_OTP,
@@ -20,7 +26,8 @@ const Otp = (props: any) => {
 
   const setAuth = async ({user, token}: any, props: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-    AsyncStorage.setItem('token', token);
+    await setInitialScreen({variables: {initialScreen}});
+    await AsyncStorage.setItem('token', token);
     props.navigation.replace(initialScreen);
   };
 

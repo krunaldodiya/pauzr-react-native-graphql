@@ -5,17 +5,19 @@ import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input} from 'react-native-elements';
 import * as Yup from 'yup';
-import {REGISTER} from '../../graphql/mutation';
+import {REGISTER, SET_INITIAL_SCREEN} from '../../graphql/mutation';
 import {GET_COUNTRY} from '../../graphql/query';
 import screens from '../../libs/screens';
 
 const SignUp = (props: any) => {
   const {data}: any = useQuery(GET_COUNTRY);
   const [processRegister] = useMutation(REGISTER);
+  const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
   const setAuth = async ({user, token}: any, props: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-    AsyncStorage.setItem('token', token);
+    await setInitialScreen({variables: {initialScreen}});
+    await AsyncStorage.setItem('token', token);
     props.navigation.replace(initialScreen);
   };
 

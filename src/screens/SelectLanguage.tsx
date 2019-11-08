@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/react-hooks';
-import React, {Fragment, useCallback} from 'react';
+import React, {Fragment, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -10,28 +10,32 @@ import {
   View,
 } from 'react-native';
 import {Button} from 'react-native-elements';
-import {EDIT_PROFILE, SET_AUTH_USER} from '../graphql/mutation';
-import {GET_AUTH_USER} from '../graphql/query';
+import {EDIT_PROFILE} from '../graphql/mutation';
+import {GET_AUTH_USER, GET_LANGUAGES} from '../graphql/query';
 import screens from '../libs/screens';
 import theme from '../libs/theme';
-
-const languages = [
-  {name: 'English', shortname: 'en'},
-  {name: 'ગુજરાતી', shortname: 'gu'},
-  {name: 'હિન્દી', shortname: 'hi'},
-];
 
 const SelectLanguage = (props: any) => {
   const {navigation} = props;
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
-  const [setAuthUser] = useMutation(SET_AUTH_USER);
+  const {data: languages} = useQuery(GET_LANGUAGES);
   const [editProfile, {loading}] = useMutation(EDIT_PROFILE);
+
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    authUser.me.language,
+  );
+
+  const setLanguage = () => {
+    editProfile();
+    navigation.replace(screens.Home);
+  };
+
+  const keyExtractor = (item: any, index: number) => index.toString();
 
   const renderItem = (data: any) => {
     const {item} = data;
 
-    const selectedLanguage = authUser.user.language;
     const selectedColor = selectedLanguage == item.shortname ? 'red' : 'black';
 
     return (
@@ -51,42 +55,6 @@ const SelectLanguage = (props: any) => {
     );
   };
 
-  const browseRequestOtp = async () => {
-    try {
-      await editProfile({
-        variables: {
-          language: authUser.user.language,
-        },
-      });
-
-      await setAuthUser({
-        variables: {
-          authUser: {
-            ...authUser.user,
-            initialScreen: 'Home',
-          },
-        },
-      });
-
-      navigation.replace(screens.Home);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const setSelectedLanguage = useCallback(async (item: any) => {
-    await setAuthUser({
-      variables: {
-        authUser: {
-          ...authUser.user,
-          language: item,
-        },
-      },
-    });
-  }, []);
-
-  const keyExtractor = (item: any, index: number) => index.toString();
-
   return (
     <Fragment>
       <StatusBar backgroundColor="#0D62A2" barStyle="light-content" />
@@ -100,7 +68,7 @@ const SelectLanguage = (props: any) => {
 
         <View style={{flex: 1, padding: 10}}>
           <FlatList
-            data={languages}
+            data={languages.languages}
             extraData={authUser}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
@@ -110,7 +78,7 @@ const SelectLanguage = (props: any) => {
         <View style={{padding: 10}}>
           <Button
             title="Continue"
-            onPress={browseRequestOtp}
+            onPress={setLanguage}
             loading={loading}
             disabled={loading}
           />

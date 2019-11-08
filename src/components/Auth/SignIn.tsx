@@ -5,16 +5,18 @@ import React, {Fragment, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input, Overlay, Text} from 'react-native-elements';
 import * as Yup from 'yup';
-import {LOGIN} from '../../graphql/mutation';
+import {LOGIN, SET_INITIAL_SCREEN} from '../../graphql/mutation';
 import Otp from './Otp';
 
 const SignIn = (props: any) => {
   const [overlay, setOverlay] = useState(false);
   const [processLogin] = useMutation(LOGIN);
+  const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
   const setAuth = async ({user, token}: any, props: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-    AsyncStorage.setItem('token', token);
+    await setInitialScreen({variables: {initialScreen}});
+    await AsyncStorage.setItem('token', token);
     props.navigation.replace(initialScreen);
   };
 

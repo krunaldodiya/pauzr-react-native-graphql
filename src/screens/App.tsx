@@ -10,14 +10,18 @@ import getStackNavigator from '../libs/route';
 export const client = getApolloClient(cache);
 
 const App = () => {
-  const data = client.readQuery({query: GET_INITIAL_SCREEN});
-  const AppNavigator = getStackNavigator(data.initialScreen);
-  const AppContainer = createAppContainer(AppNavigator);
+  const Main = () => {
+    const data = client.readQuery({query: GET_INITIAL_SCREEN});
+    const AppNavigator = getStackNavigator(data.initialScreen);
+    const AppContainer = createAppContainer(AppNavigator);
+
+    return <AppContainer />;
+  };
 
   return (
     <ApolloProvider client={client}>
       <PersistGate client={client}>
-        <AppContainer />
+        <Main />
       </PersistGate>
     </ApolloProvider>
   );

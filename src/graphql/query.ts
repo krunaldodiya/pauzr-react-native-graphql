@@ -63,3 +63,16 @@ export const GET_COUNTRY = gql`
     }
   }
 `;
+
+export const GET_LANGUAGES = gql`
+  query LoadLanguages {
+    languages {
+      id
+      name
+      nickname
+      shortname
+      background_image
+      background_color
+    }
+  }
+`;
