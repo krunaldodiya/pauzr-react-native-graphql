@@ -26,8 +26,21 @@ const SelectLanguage = (props: any) => {
     authUser.me.language,
   );
 
-  const setLanguage = () => {
-    editProfile();
+  const setLanguage = async () => {
+    await editProfile({
+      variables: {
+        language: selectedLanguage,
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        editProfile: {
+          __typename: 'User',
+          ...authUser.me,
+          language: selectedLanguage,
+        },
+      },
+    });
+
     navigation.replace(screens.Home);
   };
 
