@@ -1,13 +1,15 @@
 import {useMutation} from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
-import React, {Fragment} from 'react';
-import {View} from 'react-native';
-import {Button, Input} from 'react-native-elements';
+import React, {Fragment, useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
+import {Button, Icon, Input, Overlay, Text} from 'react-native-elements';
 import * as Yup from 'yup';
 import {LOGIN} from '../../graphql/mutation';
+import Otp from './Otp';
 
 const SignIn = (props: any) => {
+  const [overlay, setOverlay] = useState(false);
   const [processLogin] = useMutation(LOGIN);
 
   const setAuth = async ({user, token}: any, props: any) => {
@@ -110,6 +112,42 @@ const SignIn = (props: any) => {
           </View>
         )}
       </Formik>
+
+      <Overlay isVisible={overlay} height={350} width={350}>
+        <View style={{flex: 1}}>
+          <View
+            style={{
+              padding: 10,
+              flexDirection: 'row',
+            }}>
+            <Icon
+              type="ionicons"
+              name="arrow-back"
+              size={18}
+              iconStyle={{marginRight: 20}}
+              onPress={() => setOverlay(false)}
+            />
+            <Text style={{textAlign: 'center', textTransform: 'uppercase'}}>
+              Request OTP
+            </Text>
+          </View>
+          <View style={{flex: 1}}>
+            <Otp {...props} />
+          </View>
+        </View>
+      </Overlay>
+
+      <TouchableOpacity style={{padding: 15}} onPress={() => setOverlay(true)}>
+        <Text
+          style={{
+            fontSize: 16,
+            color: 'white',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+          }}>
+          Login with Otp
+        </Text>
+      </TouchableOpacity>
     </Fragment>
   );
 };

@@ -1,14 +1,14 @@
 import {gql} from 'apollo-boost';
 
 export const REQUEST_OTP = gql`
-  mutation RequestOtp($mobile: String, $country: CountryInput) {
-    otp: requestOtp(mobile: $mobile, country: $country)
+  mutation RequestOtp($mobile: String!) {
+    requestOtp(mobile: $mobile)
   }
 `;
 
 export const VERIFY_OTP = gql`
-  mutation VerifyOtp($otp: String, $country: CountryInput) {
-    auth: verifyOtp(otp: $otp, country: $country) {
+  mutation VerifyOtp($mobile: String!, $otp: Int!) {
+    verifyOtp(mobile: $mobile, otp: $otp) {
       token
       user {
         id
