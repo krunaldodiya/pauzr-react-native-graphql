@@ -11,7 +11,11 @@ export const client = getApolloClient(cache);
 
 const App = () => {
   const data = client.readQuery({query: GET_INITIAL_SCREEN});
-  const AppNavigator = getStackNavigator(data.initialScreen);
+  // const AppNavigator = getStackNavigator(data.initialScreen);
+
+  // temp for debug:
+  const AppNavigator = getStackNavigator('Feeds');
+
   const AppContainer = createAppContainer(AppNavigator);
 
   return (

@@ -4,6 +4,7 @@ import Profile from '../screens/fun/Profile';
 import Home from '../screens/Home';
 import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
+import Feeds from '../screens/fun/Feeds';
 
 const getStackNavigator = (initialRouteName: string) => {
   return createStackNavigator(
@@ -13,6 +14,7 @@ const getStackNavigator = (initialRouteName: string) => {
       Home: {screen: Home},
       SelectCountry: {screen: SelectCountry},
       Profile: {screen: Profile},
+      Feeds: {screen: Feeds}
     },
     {
       initialRouteName,

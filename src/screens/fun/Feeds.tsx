@@ -7,7 +7,7 @@ const Feeds = (props: any) => {
     // dispatch.post.getFeeds(null);
   }, []);
 
-  const feedsList: any = [];
+  const feedsList: any = [{}, {}];
 
   const renderItem = (data: any) => {
     const {item} = data;
