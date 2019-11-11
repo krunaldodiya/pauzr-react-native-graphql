@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {FlatList, SafeAreaView, StatusBar, View, Text} from 'react-native';
-import ImagePost from '../../components/Posts/image_post';
+import ImagePost from '../../components/Posts/ImagePost';
 
 const Feeds = (props: any) => {
   useEffect(() => {
