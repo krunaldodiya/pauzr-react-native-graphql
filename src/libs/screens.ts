@@ -6,6 +6,7 @@ const screens = {
   EditProfile: 'EditProfile',
   Auth: 'Auth',
   Groups: 'Groups',
+  SelectLanguage: 'SelectLanguage',
 };
 
 export default screens;

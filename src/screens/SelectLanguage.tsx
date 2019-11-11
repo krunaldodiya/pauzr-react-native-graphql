@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import {Button} from 'react-native-elements';
-import {EDIT_PROFILE} from '../graphql/mutation';
+import {EDIT_PROFILE, SET_INITIAL_SCREEN} from '../graphql/mutation';
 import {GET_AUTH_USER, GET_LANGUAGES} from '../graphql/query';
 import screens from '../libs/screens';
 import theme from '../libs/theme';
@@ -26,6 +26,8 @@ const SelectLanguage = (props: any) => {
     authUser.me.language,
   );
 
+  const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
+
   const setLanguage = async () => {
     await editProfile({
       variables: {
@@ -40,6 +42,8 @@ const SelectLanguage = (props: any) => {
         },
       },
     });
+
+    await setInitialScreen({variables: {initialScreen: screens.Home}});
 
     navigation.replace(screens.Home);
   };
