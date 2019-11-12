@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import {EDIT_PROFILE, SET_INITIAL_SCREEN} from '../graphql/mutation';
@@ -19,12 +20,10 @@ const SelectLanguage = (props: any) => {
   const {navigation} = props;
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
-  const {data: languages} = useQuery(GET_LANGUAGES);
+  const {data: languages, loading: loadingLanguages} = useQuery(GET_LANGUAGES);
   const [editProfile, {loading}] = useMutation(EDIT_PROFILE);
 
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    authUser.me.language,
-  );
+  const [selectedLanguage, setSelectedLanguage] = useState();
 
   const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
@@ -71,6 +70,10 @@ const SelectLanguage = (props: any) => {
       </TouchableOpacity>
     );
   };
+
+  if (loadingLanguages) {
+    return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
+  }
 
   return (
     <Fragment>
