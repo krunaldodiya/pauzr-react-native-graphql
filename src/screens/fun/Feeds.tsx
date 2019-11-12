@@ -1,13 +1,13 @@
 import React, {Fragment, useEffect} from 'react';
 import {FlatList, SafeAreaView, StatusBar, View, Text} from 'react-native';
-import ImagePost from '../../components/Posts/image_post';
+import ImagePost from '../../components/Posts/ImagePost';
 
 const Feeds = (props: any) => {
   useEffect(() => {
     // dispatch.post.getFeeds(null);
   }, []);
 
-  const feedsList: any = [];
+  const feedsList: any = [{}, {}];
 
   const renderItem = (data: any) => {
     const {item} = data;
