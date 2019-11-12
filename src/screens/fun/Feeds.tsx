@@ -9,26 +9,17 @@ const Feeds = (props: any) => {
 
   const feedsList: any = [{}, {}];
 
-  const renderItem = (data: any) => {
-    const {item} = data;
+  const renderItem = (data: any) =>
+    data && data.item
+      ? <ImagePost data={data} />
+      : <View>
+          <Text>hello</Text>
+        </View>
 
-    return (
-      <Fragment>
-        {item ? (
-          <ImagePost data={data} />
-        ) : (
-          <View>
-            <Text>hello</Text>
-          </View>
-        )}
-      </Fragment>
-    );
-  };
-
-  const keyExtractor = (item: any, index: number) => index.toString();
-  const ItemSeparatorComponent = () => (
-    <View style={{height: 10, backgroundColor: '#ccc'}} />
-  );
+  const keyExtractor = (item: any, index: number) => index.toString(); // todo replace with id when it's (back-end) ready
+  // const ItemSeparatorComponent = () => (
+  //   <View style={{height: 10, backgroundColor: '#ccc'}} />
+  // );
 
   return (
     <Fragment>
@@ -40,7 +31,7 @@ const Feeds = (props: any) => {
             data={feedsList}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-            ItemSeparatorComponent={ItemSeparatorComponent}
+            // ItemSeparatorComponent={ItemSeparatorComponent}
           />
         </View>
       </SafeAreaView>

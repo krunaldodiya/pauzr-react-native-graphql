@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
-import {Dimensions, Image, Text, View, StyleSheet} from 'react-native';
-import getAssets from '../../libs/image';
+import React, { useState } from 'react'
+import { Dimensions, Image, Text, View, StyleSheet } from 'react-native'
+import { Icon } from 'react-native-elements';
+import getAssets from '../../libs/image'
+import ss, { u, U } from './imagePostStyle'
 
 // temp as base64:
 import {
@@ -56,77 +58,45 @@ const sampleData = {
   }
 }
 
-// todo move to global style utils
-const {width} = Dimensions.get('window')
-const U = width / 16
-const u = width / 64
 
 export default (props: any) => {
-  const {data} = props;
-  const {post} = sampleData;
 
-  const {width} = Dimensions.get('window'); // todo padding
-  const [height, setHeight] = useState(width);
+  const { post } = sampleData
 
+  const width = Dimensions.get('window').width - U * 2
+  const [ height, setHeight ] = useState(width)
 
   const avatarAsset = post.author.avatar // getAssets(..)
 
+  // refactor
   Image.getSize(
     post.imageUrl,
-    (w, h) => {
-      setHeight((width / h) * w);
-    },
+    (w, h) => setHeight((width / h) * w),
     () => null
-  );
-
-  console.log(width)
+  )
 
   return (
     <View style={ss.postContainer}>
-      <View style={ss.authorPlaneContainer}>
-        <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />
-        <View style={{}}>
-          <Text>{post.author.name}</Text>
-          <Text>{post.timestamp}</Text>
+
+      <View style={ss.postContentContainer}>
+        <Image style={[ss.image, {width, height}]} source={{uri: post.imageUrl}} />
+
+        <View style={ss.postContentContainer__bottomPlane}>
+          <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />
+          <Text style={ss.authorName}>{post.author.name}</Text>
+          <Icon name="favorite" type="SimpleLineIcons" 
+                color='hsl(341, 97%, 67%)' size={2 * 0.64 * U}
+                containerStyle={{marginRight: 0.64 * U / 2}} />
         </View>
       </View>
 
       {post.description && (
         <View style={{padding: 10}}>
           <Text>{post.description}</Text>
+          <Text>{post.timestamp}</Text>
         </View>
       )}
 
-      <Image style={[ss.image, {width, height}]} source={{uri: post.imageUrl}} />
     </View>
-  );
-};
-
-const ss = StyleSheet.create({
-  postContainer: {
-    borderRadius: U,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-
-    elevation: 32, // todo ios ; todo plugin for android for svg shadow (or what is uses now)
-  },
-  authorPlaneContainer: {
-    flexDirection: 'row', 
-    padding: 0.5 *U,
-    
-    borderRadius: U,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    elevation: 12, 
-  },
-  authorAvatar: {
-    width: 2 *U,
-    height: 2 *U,
-    borderRadius: U - u,
-    overflow: 'hidden',
-  },
-
-  image: {
-    borderRadius: U,
-  },
-})
+  )
+}
