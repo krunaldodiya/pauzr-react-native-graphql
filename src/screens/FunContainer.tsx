@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import {Icon} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
+import screens from '../libs/screens';
 import Bazaar from './fun/Bazaar';
 import Chat from './fun/Chat';
 import Feeds from './fun/Feeds';
@@ -80,8 +81,10 @@ const FunTabNavigator = createBottomTabNavigator(
   },
 );
 
-const HeaderLeft = (navigation: any) => {
-  const knowMore = useCallback(() => navigation.push('Profile'), []);
+const HeaderLeft = (props: any) => {
+  const createFeed = useCallback(() => {
+    props.navigation.push(screens.Picker);
+  }, []);
 
   return (
     <Icon
@@ -89,13 +92,15 @@ const HeaderLeft = (navigation: any) => {
       name="add-a-photo"
       style={{fontSize: 22}}
       iconStyle={{marginLeft: 10}}
-      onPress={knowMore}
+      onPress={createFeed}
     />
   );
 };
 
 const HeaderRight = (props: any) => {
-  const knowMore = useCallback(() => props.navigation.push('Profile'), []);
+  const userProfile = useCallback(() => {
+    props.navigation.push(screens.Profile);
+  }, []);
 
   return (
     <Icon
@@ -103,7 +108,7 @@ const HeaderRight = (props: any) => {
       name="person"
       style={{fontSize: 22}}
       iconStyle={{marginRight: 10}}
-      onPress={knowMore}
+      onPress={userProfile}
     />
   );
 };

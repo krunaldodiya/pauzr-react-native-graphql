@@ -7,6 +7,8 @@ const screens = {
   Auth: 'Auth',
   Groups: 'Groups',
   SelectLanguage: 'SelectLanguage',
+  Profile: 'Profile',
+  Picker: 'Picker',
 };
 
 export default screens;

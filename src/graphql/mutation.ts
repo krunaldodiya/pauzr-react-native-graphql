@@ -6,6 +6,19 @@ export const REQUEST_OTP = gql`
   }
 `;
 
+export const CREATE_POST = gql`
+  mutation CreatePost(
+    $category: String!
+    $files: [Upload!]!
+    $type: String!
+    $title: String
+  ) {
+    createPost(category: $category, files: $files, type: $type, title: $title) {
+      id
+    }
+  }
+`;
+
 export const VERIFY_OTP = gql`
   mutation VerifyOtp($mobile: String!, $otp: Int!) {
     verifyOtp(mobile: $mobile, otp: $otp) {

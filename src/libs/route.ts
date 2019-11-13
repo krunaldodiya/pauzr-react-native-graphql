@@ -1,10 +1,11 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import Auth from '../screens/Auth';
+import Feeds from '../screens/fun/Feeds';
 import Profile from '../screens/fun/Profile';
 import Home from '../screens/Home';
+import Picker from '../screens/Picker';
 import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
-import Feeds from '../screens/fun/Feeds';
 
 const getStackNavigator = (initialRouteName: string) => {
   return createStackNavigator(
@@ -14,7 +15,8 @@ const getStackNavigator = (initialRouteName: string) => {
       Home: {screen: Home},
       SelectCountry: {screen: SelectCountry},
       Profile: {screen: Profile},
-      Feeds: {screen: Feeds}
+      Picker: {screen: Picker},
+      Feeds: {screen: Feeds},
     },
     {
       initialRouteName,
