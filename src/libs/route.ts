@@ -1,5 +1,6 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import Auth from '../screens/Auth';
+import CreatePost from '../screens/CreatePost';
 import Feeds from '../screens/fun/Feeds';
 import Profile from '../screens/fun/Profile';
 import Home from '../screens/Home';
@@ -17,6 +18,7 @@ const getStackNavigator = (initialRouteName: string) => {
       Profile: {screen: Profile},
       Picker: {screen: Picker},
       Feeds: {screen: Feeds},
+      CreatePost: {screen: CreatePost},
     },
     {
       initialRouteName,

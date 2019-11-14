@@ -100,7 +100,7 @@ const HeaderLeft = (props: any) => {
           case 0:
             ImagePicker.openCamera(pickerSettings.capturePhoto)
               .then((image: any) => {
-                props.navigation.push(screens.Picker, {files: image});
+                props.navigation.push(screens.CreatePost, {files: [image]});
               })
               .catch(e => {
                 console.log(e);
@@ -110,7 +110,7 @@ const HeaderLeft = (props: any) => {
           case 1:
             ImagePicker.openCamera(pickerSettings.recordVideo)
               .then((image: any) => {
-                props.navigation.push(screens.Picker, {files: image});
+                props.navigation.push(screens.CreatePost, {files: [image]});
               })
               .catch(e => {
                 console.log(e);
@@ -120,7 +120,9 @@ const HeaderLeft = (props: any) => {
           case 2:
             ImagePicker.openPicker(pickerSettings.galleryFiles)
               .then((image: any) => {
-                props.navigation.push(screens.Picker, {files: image});
+                console.log(image);
+
+                props.navigation.push(screens.CreatePost, {files: image});
               })
               .catch(e => {
                 console.log(e);

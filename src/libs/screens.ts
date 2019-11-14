@@ -9,6 +9,7 @@ const screens = {
   SelectLanguage: 'SelectLanguage',
   Profile: 'Profile',
   Picker: 'Picker',
+  CreatePost: 'CreatePost',
 };
 
 export default screens;
