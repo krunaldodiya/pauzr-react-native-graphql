@@ -1,10 +1,11 @@
 import React, {Fragment, useState} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
-import {Header, Input, Image} from 'react-native-elements';
+import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
   const [description, setDescription] = useState();
+  const [overlay, setOverlay] = useState(false);
 
   console.log(params);
 
@@ -49,27 +50,51 @@ const CreatePost = (props: any) => {
               />
             </View>
 
-            <View style={{flex: 1, padding: 10}}>
-              <Text style={{fontSize: 18}}>Select a category</Text>
+            <View style={{flex: 1, padding: 10, justifyContent: 'center'}}>
+              <Text
+                style={{fontSize: 16, textTransform: 'uppercase'}}
+                onPress={() => setOverlay(true)}>
+                Select a category
+              </Text>
             </View>
           </View>
-          <View>
+
+          <View style={{marginTop: 5}}>
             <Input
               placeholder="Description"
-              leftIcon={{
-                type: 'ionicons',
-                name: 'note',
-                size: 20,
-              }}
               leftIconContainerStyle={{marginRight: 10}}
               value={description}
               onChangeText={value => setDescription(value)}
               errorStyle={{color: 'red'}}
               autoCorrect={false}
               autoCapitalize="none"
-              multiline
+              multiline={true}
             />
           </View>
+
+          <Overlay isVisible={overlay} width={300}>
+            <View style={{flex: 1}}>
+              <View
+                style={{
+                  padding: 10,
+                  flexDirection: 'row',
+                }}>
+                <Icon
+                  type="ionicons"
+                  name="arrow-back"
+                  size={18}
+                  iconStyle={{marginRight: 20}}
+                  onPress={() => setOverlay(false)}
+                />
+                <Text style={{textAlign: 'center', textTransform: 'uppercase'}}>
+                  Request OTP
+                </Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text>hello</Text>
+              </View>
+            </View>
+          </Overlay>
         </View>
       </SafeAreaView>
     </Fragment>
