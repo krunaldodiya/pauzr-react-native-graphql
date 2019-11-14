@@ -1,19 +1,33 @@
 import {useMutation} from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useReducer, useState} from 'react';
 import {FlatList, SafeAreaView, StatusBar, View} from 'react-native';
 import Upload from 'react-native-background-upload';
 import {Button, Text} from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 import {CREATE_POST} from '../graphql/mutation';
+import {pickerSettings} from '../libs/vars';
 
-const settings = {
-  capturePhoto: {cropping: true, mediaType: 'photo'},
-  recordVideo: {mediaType: 'video'},
-  galleryFiles: {multiple: true},
+const draftInitialState = {
+  id: null,
+  description: null,
+  tag_id: null,
+  user_id: null,
+  published: false,
+  files: [],
+};
+
+const draftReducer = (state: any, action: any) => {
+  if (action.type === 'SET_DRAFT') {
+    return {...state, ...action.payload};
+  }
+
+  return state;
 };
 
 const Picker = () => {
+  const [items, dispatch] = useReducer(draftReducer, draftInitialState);
+
   const [queues, setQueues] = useState({});
 
   const [createPostMutation] = useMutation(CREATE_POST);
@@ -63,7 +77,7 @@ const Picker = () => {
   };
 
   const capturePhoto = () => {
-    ImagePicker.openCamera(settings.capturePhoto)
+    ImagePicker.openCamera(pickerSettings.capturePhoto)
       .then((image: any) => {
         uploadFiles([image]);
       })
@@ -73,7 +87,7 @@ const Picker = () => {
   };
 
   const recordVideo = () => {
-    ImagePicker.openCamera(settings.recordVideo)
+    ImagePicker.openCamera(pickerSettings.recordVideo)
       .then((image: any) => {
         uploadFiles([image]);
       })
@@ -83,7 +97,7 @@ const Picker = () => {
   };
 
   const galleryFiles = () => {
-    ImagePicker.openPicker(settings.galleryFiles)
+    ImagePicker.openPicker(pickerSettings.galleryFiles)
       .then((image: any) => {
         uploadFiles(image);
       })

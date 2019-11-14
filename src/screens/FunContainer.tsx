@@ -1,8 +1,11 @@
 import React, {useCallback} from 'react';
+import ActionSheet from 'react-native-action-sheet';
 import {Icon} from 'react-native-elements';
+import ImagePicker from 'react-native-image-crop-picker';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import screens from '../libs/screens';
+import {pickerSettings} from '../libs/vars';
 import Bazaar from './fun/Bazaar';
 import Chat from './fun/Chat';
 import Feeds from './fun/Feeds';
@@ -82,9 +85,54 @@ const FunTabNavigator = createBottomTabNavigator(
 );
 
 const HeaderLeft = (props: any) => {
-  const createFeed = useCallback(() => {
-    props.navigation.push(screens.Picker);
-  }, []);
+  const createFeed = async () => {
+    const options = ['PHOTO', 'VIDEO', 'GALLERY'];
+
+    ActionSheet.showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex: 3,
+        destructiveButtonIndex: 4,
+        tintColor: 'blue',
+      },
+      async (buttonIndex: number) => {
+        switch (buttonIndex) {
+          case 0:
+            ImagePicker.openCamera(pickerSettings.capturePhoto)
+              .then((image: any) => {
+                props.navigation.push(screens.Picker, {files: image});
+              })
+              .catch(e => {
+                console.log(e);
+              });
+            break;
+
+          case 1:
+            ImagePicker.openCamera(pickerSettings.recordVideo)
+              .then((image: any) => {
+                props.navigation.push(screens.Picker, {files: image});
+              })
+              .catch(e => {
+                console.log(e);
+              });
+            break;
+
+          case 2:
+            ImagePicker.openPicker(pickerSettings.galleryFiles)
+              .then((image: any) => {
+                props.navigation.push(screens.Picker, {files: image});
+              })
+              .catch(e => {
+                console.log(e);
+              });
+            break;
+
+          default:
+            break;
+        }
+      },
+    );
+  };
 
   return (
     <Icon

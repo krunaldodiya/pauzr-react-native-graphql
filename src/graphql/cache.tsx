@@ -12,14 +12,5 @@ cache.writeData({
       shortname: 'IN',
       __typename: 'Country',
     },
-    draft: {
-      id: null,
-      description: null,
-      tag_id: null,
-      user_id: null,
-      published: false,
-      files: [],
-      __typename: 'Draft',
-    },
   },
 });

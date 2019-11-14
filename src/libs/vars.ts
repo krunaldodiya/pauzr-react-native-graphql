@@ -12,6 +12,10 @@ const themeUrlProd = 'https://www.pauzr.com';
 const httpUrl = httpUrlProd;
 const wsUrl = wsUrlProd;
 
-const awesomeThemeSecretKey = 'zekFUtG3Kp4HNpVe';
+export {baseUrlProd, httpUrl, wsUrl, themeUrlProd};
 
-export {baseUrlProd, httpUrl, wsUrl, themeUrlProd, awesomeThemeSecretKey};
+export const pickerSettings = {
+  capturePhoto: {cropping: true, mediaType: 'photo'},
+  recordVideo: {mediaType: 'video'},
+  galleryFiles: {multiple: true},
+};

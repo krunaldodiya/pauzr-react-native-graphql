@@ -21,6 +21,7 @@
     "lodash": "^4.17.15",
     "react": "16.11.0",
     "react-native": "0.61.4",
+    "react-native-action-sheet": "^2.2.0",
     "react-native-background-upload": "^5.1.0",
     "react-native-elements": "^1.2.6",
     "react-native-gesture-handler": "^1.4.1",
