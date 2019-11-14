@@ -39,8 +39,13 @@ const CreatePost = (props: any) => {
           <View style={{flexDirection: 'row'}}>
             <View style={{padding: 10}}>
               <Image
-                source={{uri: params.thumbnail}}
-                style={{width: 50, height: 50}}
+                source={{uri: params.files[0].thumbnail}}
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderWidth: 1,
+                  borderColor: '#ccc',
+                }}
               />
             </View>
 

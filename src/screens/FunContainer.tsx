@@ -87,21 +87,23 @@ const FunTabNavigator = createBottomTabNavigator(
 
 const HeaderLeft = (props: any) => {
   const browseCreateFeed = async (files: any[]) => {
-    const filesThumb: any = [];
+    const data = Promise.all(
+      files.map(async file => {
+        const isVideo = file.mime.includes('video');
 
-    files.forEach(async file => {
-      const isVideo = file.mime.includes('video');
+        if (isVideo) {
+          const data = await RNThumbnail.get(file.path);
 
-      if (isVideo) {
-        const data = await RNThumbnail.get(file.path);
+          return {...file, thumbnail: data.path};
+        } else {
+          return {...file, thumbnail: file.path};
+        }
+      }),
+    );
 
-        filesThumb.push({...file, thumbnail: data.path});
-      } else {
-        filesThumb.push({...file, thumbnail: file.path});
-      }
+    data.then((files: any) => {
+      props.navigation.push(screens.CreatePost, {files});
     });
-
-    props.navigation.push(screens.CreatePost, {files: filesThumb});
   };
 
   const createFeed = async () => {
