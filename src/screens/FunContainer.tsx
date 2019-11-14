@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import ActionSheet from 'react-native-action-sheet';
 import {Icon} from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
+import RNThumbnail from 'react-native-thumbnail';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import screens from '../libs/screens';
@@ -85,6 +86,24 @@ const FunTabNavigator = createBottomTabNavigator(
 );
 
 const HeaderLeft = (props: any) => {
+  const browseCreateFeed = async (files: any[]) => {
+    const filesThumb: any = [];
+
+    files.forEach(async file => {
+      const isVideo = file.mime.includes('video');
+
+      if (isVideo) {
+        const data = await RNThumbnail.get(file.path);
+
+        filesThumb.push({...file, thumbnail: data.path});
+      } else {
+        filesThumb.push({...file, thumbnail: file.path});
+      }
+    });
+
+    props.navigation.push(screens.CreatePost, {files: filesThumb});
+  };
+
   const createFeed = async () => {
     const options = ['PHOTO', 'VIDEO', 'GALLERY'];
 
@@ -99,8 +118,8 @@ const HeaderLeft = (props: any) => {
         switch (buttonIndex) {
           case 0:
             ImagePicker.openCamera(pickerSettings.capturePhoto)
-              .then((image: any) => {
-                props.navigation.push(screens.CreatePost, {files: [image]});
+              .then((files: any) => {
+                browseCreateFeed([files]);
               })
               .catch(e => {
                 console.log(e);
@@ -109,8 +128,8 @@ const HeaderLeft = (props: any) => {
 
           case 1:
             ImagePicker.openCamera(pickerSettings.recordVideo)
-              .then((image: any) => {
-                props.navigation.push(screens.CreatePost, {files: [image]});
+              .then((files: any) => {
+                browseCreateFeed([files]);
               })
               .catch(e => {
                 console.log(e);
@@ -119,10 +138,8 @@ const HeaderLeft = (props: any) => {
 
           case 2:
             ImagePicker.openPicker(pickerSettings.galleryFiles)
-              .then((image: any) => {
-                console.log(image);
-
-                props.navigation.push(screens.CreatePost, {files: image});
+              .then((files: any) => {
+                browseCreateFeed(files);
               })
               .catch(e => {
                 console.log(e);
