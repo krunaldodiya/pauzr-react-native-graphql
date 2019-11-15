@@ -1,18 +1,16 @@
-const baseUrlProd = 'https://api.pauzr.com';
-const httpUrlProd = 'https://api.pauzr.com/api/v1';
-const wsUrlProd = 'ws://api.pauzr.com';
-const themeUrlProd = 'https://www.pauzr.com';
+const baseUrlProd = 'https://pauzr.tk';
+const httpUrlProd = 'https://pauzr.tk/graphql';
+const wsUrlProd = 'wss://pauzr.tk/graphql';
 
-// const httpUrlDev = 'http://pauzr-backend.test';
-// const wsUrlDev = 'ws://pauzr-backend.test';
+const baseUrlDev = 'https://pauzr.tk';
+const httpUrlDev = 'https://vapor.test';
+const wsUrlDev = 'wss://vapor.test';
 
-// const httpUrl = __DEV__ ? httpUrlDev : httpUrlProd;
-// const wsUrl = __DEV__ ? wsUrlDev : wsUrlProd;
+const baseUrl = __DEV__ ? baseUrlDev : baseUrlProd;
+const httpUrl = __DEV__ ? httpUrlDev : httpUrlProd;
+const wsUrl = __DEV__ ? wsUrlDev : wsUrlProd;
 
-const httpUrl = httpUrlProd;
-const wsUrl = wsUrlProd;
-
-export {baseUrlProd, httpUrl, wsUrl, themeUrlProd};
+export {baseUrl, httpUrl, wsUrl, httpUrlProd, wsUrlProd};
 
 export const pickerSettings = {
   capturePhoto: {cropping: true, mediaType: 'photo'},

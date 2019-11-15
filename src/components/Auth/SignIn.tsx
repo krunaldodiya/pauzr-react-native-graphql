@@ -116,24 +116,33 @@ const SignIn = (props: any) => {
         )}
       </Formik>
 
-      <Overlay isVisible={overlay} height={350} width={350}>
+      <Overlay isVisible={overlay} width={350} overlayStyle={{padding: 0}}>
         <View style={{flex: 1}}>
           <View
             style={{
-              padding: 10,
               flexDirection: 'row',
+              backgroundColor: '#eee',
+              padding: 10,
             }}>
             <Icon
               type="ionicons"
               name="arrow-back"
-              size={18}
-              iconStyle={{marginRight: 20}}
+              size={24}
+              iconStyle={{marginRight: 10}}
               onPress={() => setOverlay(false)}
             />
-            <Text style={{textAlign: 'center', textTransform: 'uppercase'}}>
-              Request OTP
+
+            <Text
+              style={{
+                textAlign: 'center',
+                textTransform: 'uppercase',
+                fontSize: 14,
+                textAlignVertical: 'center',
+              }}>
+              Request Otp
             </Text>
           </View>
+
           <View style={{flex: 1}}>
             <Otp {...props} />
           </View>

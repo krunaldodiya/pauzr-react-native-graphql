@@ -76,3 +76,14 @@ export const GET_LANGUAGES = gql`
     }
   }
 `;
+
+export const GET_CATEGORIES = gql`
+  query LoadCategories {
+    categories {
+      id
+      name
+      background_image
+      background_color
+    }
+  }
+`;

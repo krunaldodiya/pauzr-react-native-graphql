@@ -2,13 +2,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {ApolloClient, ApolloLink, HttpLink} from 'apollo-boost';
 import {setContext} from 'apollo-link-context';
 import {RetryLink} from 'apollo-link-retry';
+import {httpUrlProd} from '../libs/vars';
 import {resolvers} from './resolvers';
 import {typeDefs} from './typeDefs';
 
 const getApolloClient = (cache: any) => {
-  const url = 'https://pauzr.tk/graphql';
-  // const url = 'https://vapor.test/graphql-playground';
-
   const retryLink = new RetryLink({attempts: {max: Infinity}});
 
   const authMiddleware = setContext(async (req, {headers}) => {
@@ -23,7 +21,7 @@ const getApolloClient = (cache: any) => {
   });
 
   const httpLink = new HttpLink({
-    uri: url,
+    uri: httpUrlProd,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
