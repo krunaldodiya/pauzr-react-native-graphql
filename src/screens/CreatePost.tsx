@@ -9,8 +9,6 @@ const uuidv4 = require('uuid/v4');
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
 
-  console.log(params);
-
   const [category, setCategory] = useState();
   const [description, setDescription] = useState();
   const [overlay, setOverlay] = useState(false);
