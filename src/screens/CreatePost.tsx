@@ -6,6 +6,7 @@ import {GET_CATEGORIES} from '../graphql/query';
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
+  const [category, setCategory] = useState();
   const [description, setDescription] = useState();
   const [overlay, setOverlay] = useState(false);
 
@@ -18,7 +19,14 @@ const CreatePost = (props: any) => {
 
     return (
       <View style={{flex: 1}}>
-        <Text style={{fontSize: 18, padding: 5}}>{item.name}</Text>
+        <Text
+          style={{fontSize: 18, padding: 5}}
+          onPress={() => {
+            setCategory(item);
+            setOverlay(false);
+          }}>
+          {item.name}
+        </Text>
       </View>
     );
   };
@@ -68,7 +76,7 @@ const CreatePost = (props: any) => {
               <Text
                 style={{fontSize: 16, textTransform: 'uppercase'}}
                 onPress={() => setOverlay(true)}>
-                Select a category
+                {category ? category.name : 'Select a Category'}
               </Text>
             </View>
           </View>
@@ -109,7 +117,7 @@ const CreatePost = (props: any) => {
                     fontSize: 14,
                     textAlignVertical: 'center',
                   }}>
-                  Select a Category
+                  Select a category
                 </Text>
               </View>
 
