@@ -25,7 +25,7 @@ export default StyleSheet.create({
     overflow: 'hidden',
     elevation: 12,
   },
-  postContentContainer__bottomPlane: { // todo rename
+  postContentContainer__topPlane: { // todo rename
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
@@ -54,6 +54,14 @@ export default StyleSheet.create({
     marginRight: 0.64 * U / 2,
   },
 
+  timestampAndCategory: {
+    // margin: u,
+    margin: 0.5 * U,
+    marginBottom: 0,
+
+    flexDirection: 'row',
+  },
+
   button: {
     marginRight: 0.64 * U / 2,
   },
@@ -70,8 +78,8 @@ export default StyleSheet.create({
     // margin: 0.5 * U,
     // // marginBottom: -0.25 * U,
     // marginBottom: 0 * U,
-    // marginTop: 0.75 * U,
     margin: U,
+    marginTop: 0.75 * U,
     marginBottom: 0,
     marginRight: 2 * U,
 
@@ -84,9 +92,16 @@ export default StyleSheet.create({
     // margin: 0.5 * U,
 
     color: 'hsl(0, 0%, 36%)',
-    fontSize: 0.36 * U,
+    fontSize: 0.44 * U,
     fontFamily: 'MPLUSRounded1c-Regular',
     // textAlign: 'center',
+  },
+  category: {
+    marginLeft: U,
+
+    color: 'hsl(0, 0%, 36%)',
+    fontSize: 0.44 * U,
+    fontFamily: 'MPLUSRounded1c-Regular',
   },
   button_bottom: {
     marginRight: 0,
