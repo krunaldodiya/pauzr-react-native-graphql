@@ -28,6 +28,7 @@ const sampleData = {
     },
     imageUrl: randomImage1,
     likes: 327,
+    category: 'Automobiles',
     description: 'Hello! It\'s me, trying to run my dog across the field! Cheers! :)',
     timestamp: '3 hours ago',
     comments: [
@@ -84,41 +85,48 @@ export default ({data, navigation}) => {
 
       <View style={ss.postContentContainer}>
 
+      <View style={ss.postContentContainer__topPlane}>
+          <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Text style={ss.authorName}>{post.author.name}</Text>
+
+            {/* unfollowedAuthor -- it's just for example. Dont know how is better to know can we follow it or not */}
+            {/* to play around with displaying -- toggl this '!' */}
+            {!post.unfollowedAuthor && <FollowLabel style={{marginLeft: 1.22 * U}} />}
+          </View>
+        </View>
+
         {/* todo if post is only quote (nor image or video), there can only be a text */}
         {(true || post.type == 'image' || post.type == 'video') &&
           (post.type == 'image' || true)
             ? <Image style={[ss.image, {width, height}]} source={{uri: post.imageUrl}} />
             : null /* : Video */}
+        
+      </View>
 
-        <View style={ss.postContentContainer__bottomPlane}>
-          <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />
-          <View style={{flex: 1}}>
-            <Text style={ss.authorName}>{post.author.name}</Text>
+      {post.description && <Text style={ss.description}>{post.description}</Text>}
 
-            {/* unfollowedAuthor -- it's just for example. Dont know how is better to know can we follow it or not */}
-            {/* to play around with displaying -- toggl this '!' */}
-            {!!post.unfollowedAuthor && <FollowLabel style={{marginLeft: 1.22 * U}} />}
-          </View>
-          <Text style={ss.totalLikes} onPress={()=>
+      <View style={ss.timestampAndCategory}>
+        <Text style={ss.timestamp}> {post.timestamp} </Text>
+        <Text style={ss.category}>Category: {post.category}</Text>
+      </View>
+
+      <View style={ss.bottomContainer}>
+
+      <View style={{flex: 1 /*5*/, flexDirection: 'row', alignItems: 'center'}}>
+        <Icon name="favorite" type="SimpleLineIcons" 
+              color='hsl(341, 97%, 67%)' size={2 * 0.64 * U}
+              containerStyle={ss.button} />
+        <Text style={ss.totalLikes} onPress={()=>
                   navigation.push(
                     'TotalLikes',
                     // { backButtonHidden: false }, // todo
                     { postId: post.id }
                   )
                 }>
-            {post.likes}</Text>
-          <Icon name="favorite" type="SimpleLineIcons" 
-                color='hsl(341, 97%, 67%)' size={2 * 0.64 * U}
-                containerStyle={ss.button} />
-        </View>
-      </View>
+          {post.likes}</Text>
 
-      {post.description && <Text style={ss.description}>{post.description}</Text>}
-
-      <View style={ss.bottomContainer}>
-        <View style={{flex: 1 /*5*/}}>
           {/* {post.description && <Text style={ss.description}> {post.description}</Text>} */}
-          <Text style={ss.timestamp}> {post.timestamp} </Text>
         </View>
         <Icon name='comment' type="evilicon" 
               color='hsl(0, 0%, 24%)' size={2 * 0.64 * U}
