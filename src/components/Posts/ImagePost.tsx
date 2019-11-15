@@ -79,7 +79,12 @@ export default (props: any) => {
     <View style={ss.postContainer}>
 
       <View style={ss.postContentContainer}>
-        <Image style={[ss.image, {width, height}]} source={{uri: post.imageUrl}} />
+
+        {/* todo if post is only quote (nor image or video), there can only be a text */}
+        {(true || post.type == 'image' || post.type == 'video') &&
+          (post.type == 'image' || true)
+            ? <Image style={[ss.image, {width, height}]} source={{uri: post.imageUrl}} />
+            : null /* : Video */}
 
         <View style={ss.postContentContainer__bottomPlane}>
           <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />

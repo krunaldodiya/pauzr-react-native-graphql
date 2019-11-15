@@ -26,8 +26,9 @@ const Feeds = (props: any) => {
       <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
 
       <SafeAreaView style={{flex: 1}}>
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, /*flexDirection: 'row', alignItems: 'stretch'*/}}>
           <FlatList
+            // containerStyle={{flex: 1, backgroundColor: 'red'}} // todo resolve
             data={feedsList}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
