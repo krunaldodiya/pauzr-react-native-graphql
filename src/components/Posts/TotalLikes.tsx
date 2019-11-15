@@ -1,5 +1,12 @@
-import { View } from 'react-native';
+import React, {} from 'react';
+import { View, Text } from 'react-native';
 
-export default ({}) => (
-  <View><Text>asd</Text></View>
+const TotalLikes = ({}) => (
+  <View style={{flex: 1}}><Text>asd</Text></View>
 )
+
+TotalLikes.navigationOptions = {
+  title: 'asd',
+}
+
+export default TotalLikes

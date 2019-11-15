@@ -21,6 +21,7 @@ import {
 
 const sampleData = {
   post: {
+    id: '2',
     author: {
       name: 'Kabardio Fluerence',
       avatar: randomAvatar1
@@ -99,7 +100,11 @@ export default ({data, navigation}) => {
             {!!post.unfollowedAuthor && <FollowLabel style={{marginLeft: 1.22 * U}} />}
           </View>
           <Text style={ss.totalLikes} onPress={()=>
-                  navigation.push({ screen: TotalLikes, backButtonHidden: false })
+                  navigation.push(
+                    'TotalLikes',
+                    // { backButtonHidden: false }, // todo
+                    { postId: post.id }
+                  )
                 }>
             {post.likes}</Text>
           <Icon name="favorite" type="SimpleLineIcons" 

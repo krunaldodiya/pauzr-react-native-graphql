@@ -6,6 +6,9 @@ import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
 import Feeds from '../screens/fun/Feeds';
 
+// temp:
+import TotalLikes from '../components/Posts/TotalLikes'
+
 const getStackNavigator = (initialRouteName: string) => {
   return createStackNavigator(
     {
@@ -14,7 +17,10 @@ const getStackNavigator = (initialRouteName: string) => {
       Home: {screen: Home},
       SelectCountry: {screen: SelectCountry},
       Profile: {screen: Profile},
-      Feeds: {screen: Feeds}
+      Feeds: {screen: Feeds},
+
+      // temp ; or should we declare it as modal?
+      TotalLikes: {screen: TotalLikes},
     },
     {
       initialRouteName,
