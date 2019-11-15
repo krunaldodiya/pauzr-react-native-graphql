@@ -79,24 +79,49 @@ export default (props: any) => {
     <View style={ss.postContainer}>
 
       <View style={ss.postContentContainer}>
-        <Image style={[ss.image, {width, height}]} source={{uri: post.imageUrl}} />
+
+        {/* todo if post is only quote (nor image or video), there can only be a text */}
+        {(true || post.type == 'image' || post.type == 'video') &&
+          (post.type == 'image' || true)
+            ? <Image style={[ss.image, {width, height}]} source={{uri: post.imageUrl}} />
+            : null /* : Video */}
 
         <View style={ss.postContentContainer__bottomPlane}>
           <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />
-          <Text style={ss.authorName}>{post.author.name}</Text>
+          <View style={{flex: 1}}>
+            <Text style={ss.authorName}>{post.author.name}</Text>
+
+            {/* unfollowedAuthor -- it's just for example. Dont know how is better to know can we follow it or not */}
+            {/* to play around with displaying -- toggl this '!' */}
+            {!!post.unfollowedAuthor && <FollowLabel style={{marginLeft: 1.22 * U}} />}
+          </View>
           <Icon name="favorite" type="SimpleLineIcons" 
                 color='hsl(341, 97%, 67%)' size={2 * 0.64 * U}
-                containerStyle={{marginRight: 0.64 * U / 2}} />
+                containerStyle={ss.button} />
         </View>
       </View>
 
-      {post.description && (
-        <View style={{padding: 10}}>
-          <Text>{post.description}</Text>
-          <Text>{post.timestamp}</Text>
+      {post.description && <Text style={ss.description}> {post.description}</Text>}
+
+      <View style={ss.bottomContainer}>
+        <View style={{flex: 1 /*5*/}}>
+          {/* {post.description && <Text style={ss.description}> {post.description}</Text>} */}
+          <Text style={ss.timestamp}> {post.timestamp} </Text>
         </View>
-      )}
+        <Icon name='comment' type="evilicon" 
+              color='hsl(0, 0%, 24%)' size={2 * 0.64 * U}
+              containerStyle={[ss.button, ss.button_bottom]} />
+        <Icon name="sc-telegram" type="evilicon" 
+              color='hsl(0, 0%, 24%)' size={2 * 0.64 * U}
+              containerStyle={[ss.button, ss.button_bottom]} />
+        <Icon name="kebab-vertical" type="octicon" 
+              color='hsl(0, 0%, 24%)' size={1 * 0.64 * U}
+              containerStyle={[ss.button, ss.button_bottom, {paddingVertical: 0.64 * u}]} />
+      </View>
 
     </View>
   )
 }
+
+export const FollowLabel = ({userIdOrSomethingForApi, style}) =>
+  <Text style={[ss.FollowLabel, style]} onPress={()=>{}}> + follow </Text>
