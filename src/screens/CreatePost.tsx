@@ -1,16 +1,20 @@
-import {useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useState} from 'react';
 import {FlatList, SafeAreaView, Text, View} from 'react-native';
 import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
+import {CREATE_POST} from '../graphql/mutation';
 import {GET_CATEGORIES} from '../graphql/query';
+const uuidv4 = require('uuid/v4');
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
+
   const [category, setCategory] = useState();
   const [description, setDescription] = useState();
   const [overlay, setOverlay] = useState(false);
 
   const {data, loading} = useQuery(GET_CATEGORIES);
+  const [createPostMutation] = useMutation(CREATE_POST);
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
@@ -51,8 +55,22 @@ const CreatePost = (props: any) => {
         rightComponent={{
           text: 'Create',
           style: {color: 'white'},
-          onPress: () => {
-            console.log('test');
+          onPress: async () => {
+            try {
+              const data = await createPostMutation({
+                variables: {
+                  id: uuidv4(),
+                  category_id: category.id,
+                  description,
+                  type: 'Post',
+                  attachments: params.files,
+                },
+              });
+
+              console.log(data);
+            } catch (error) {
+              console.log(error);
+            }
           },
         }}
       />
@@ -123,7 +141,7 @@ const CreatePost = (props: any) => {
 
               <View style={{flex: 1, padding: 10}}>
                 <FlatList
-                  data={data.categories}
+                  data={loading ? [] : data.categories}
                   keyExtractor={keyExtractor}
                   renderItem={renderItem}
                 />

@@ -8,13 +8,31 @@ export const REQUEST_OTP = gql`
 
 export const CREATE_POST = gql`
   mutation CreatePost(
-    $category: String!
-    $files: [Upload!]!
+    $id: ID!
+    $category_id: ID!
     $type: String!
-    $title: String
+    $description: String
+    $attachments: [AttachmentInput!]!
   ) {
-    createPost(category: $category, files: $files, type: $type, title: $title) {
+    createPost(
+      id: $id
+      category_id: $category_id
+      type: $type
+      description: $description
+      attachments: $attachments
+    ) {
       id
+      type
+      description
+      published
+      owner {
+        id
+        name
+      }
+      category {
+        id
+        name
+      }
     }
   }
 `;
