@@ -9,7 +9,7 @@ import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
 
 // temp:
-import TotalLikes from '../components/Posts/TotalLikes';
+import TotalLikes from '../screens/fun/post/TotalLikes';
 
 const getStackNavigator = (initialRouteName: string) => {
   return createStackNavigator(
