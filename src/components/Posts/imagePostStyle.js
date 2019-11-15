@@ -2,6 +2,7 @@
 /* eslint-disable semi */
 
 import { StyleSheet, Dimensions } from 'react-native'
+import { hasClientExports } from 'apollo-utilities'
 
 // todo move to global style utils
 const {width} = Dimensions.get('window')
@@ -39,9 +40,49 @@ export default StyleSheet.create({
     borderRadius: U - u / 2,
     overflow: 'hidden',
   },
+
+  button: {
+    marginRight: 0.64 * U / 2,
+  },
+
+  bottomContainer: {
+    margin: 0.5 * U,
+    flexDirection: 'row',
+    // alignItems: 'stretch',
+    alignItems: 'center',
+
+    marginRight: 0.25 * U,   // todo refactor
+  },
+  description: {
+    margin: 0.5 * U,
+    // marginBottom: -0.25 * U,
+    marginBottom: 0 * U,
+    marginTop: 0.75 * U,
+
+    color: 'hsl(0, 0%, 24%)',
+    fontSize: 0.54 * U,
+    fontFamily: 'MPLUSRounded1c-Regular',
+    textAlign: 'left',
+  },
+  timestamp: {
+    // margin: 0.5 * U,
+
+    color: 'hsl(0, 0%, 36%)',
+    fontSize: 0.36 * U,
+    fontFamily: 'MPLUSRounded1c-Regular',
+    // textAlign: 'center',
+  },
+  button_bottom: {
+    marginRight: 0,
+    // flex: 1,
+    width: 2 * 0.64 * U,  // todo refactor
+    // backgroundColor:'red',
+    // textAlignVertical: 'center',
+  },
+
   authorName: {
     marginLeft: 0.72 * U,
-    flex: 1,
+    // flex: 1,
 
     color: 'hsl(0, 0%, 24%)',
     fontSize: 0.72 * U,
@@ -50,5 +91,20 @@ export default StyleSheet.create({
 
   image: {
     borderRadius: U,
+  },
+
+  FollowLabel: {
+    flex: 0,
+    alignSelf: 'flex-start',
+
+    // margin: u,
+    padding: 0.5 * u,
+    borderRadius: 1.5 * u,
+    backgroundColor: 'white',
+    elevation: 4, // todo ios
+
+    color: 'hsl(0, 0%, 36%)',
+    fontSize: 2 * u,
+    fontFamily: 'MPLUSRounded1c-Regular',
   },
 })
