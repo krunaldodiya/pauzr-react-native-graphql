@@ -1,3 +1,4 @@
+import {useQuery} from '@apollo/react-hooks';
 import React, {useCallback} from 'react';
 import ActionSheet from 'react-native-action-sheet';
 import {Icon} from 'react-native-elements';
@@ -5,6 +6,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import RNThumbnail from 'react-native-thumbnail';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {GET_AUTH_USER} from '../graphql/query';
 import screens from '../libs/screens';
 import {pickerSettings} from '../libs/vars';
 import Bazaar from './fun/Bazaar';
@@ -86,17 +88,20 @@ const FunTabNavigator = createBottomTabNavigator(
 );
 
 const HeaderLeft = (props: any) => {
+  const {data: authUser} = useQuery(GET_AUTH_USER);
+
   const browseCreateFeed = async (files: any[]) => {
     const data = Promise.all(
       files.map(async file => {
         const isVideo = file.mime.includes('video');
+        delete file['modificationDate'];
 
         if (isVideo) {
           const data = await RNThumbnail.get(file.path);
 
-          return {...file, thumbnail: data.path};
+          return {...file, thumbnail: data.path, user_id: authUser.me.id};
         } else {
-          return {...file, thumbnail: file.path};
+          return {...file, thumbnail: file.path, user_id: authUser.me.id};
         }
       }),
     );

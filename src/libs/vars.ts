@@ -2,9 +2,9 @@ const baseUrlProd = 'https://pauzr.tk';
 const httpUrlProd = 'https://pauzr.tk/graphql';
 const wsUrlProd = 'wss://pauzr.tk/graphql';
 
-const baseUrlDev = 'https://pauzr.tk';
-const httpUrlDev = 'https://vapor.test';
-const wsUrlDev = 'wss://vapor.test';
+const baseUrlDev = 'https://vapor.test';
+const httpUrlDev = 'https://vapor.test/graphql';
+const wsUrlDev = 'wss://vapor.test/graphql';
 
 const baseUrl = __DEV__ ? baseUrlDev : baseUrlProd;
 const httpUrl = __DEV__ ? httpUrlDev : httpUrlProd;
