@@ -11,7 +11,7 @@ const Feeds = (props: any) => {
 
   const renderItem = (data: any) =>
     data && data.item
-      ? <ImagePost data={data} />
+      ? <ImagePost {...{data, navigation: props.navigation}} />
       : <View>
           <Text>hello</Text>
         </View>

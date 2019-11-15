@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { Dimensions, Image, Text, View, StyleSheet } from 'react-native'
-import { Icon } from 'react-native-elements';
+import { Dimensions, Image, Text, View, StyleSheet, Alert } from 'react-native'
+import { Icon } from 'react-native-elements'
 import getAssets from '../../libs/image'
+import screens from '../../libs/screens'
 import ss, { u, U } from './imagePostStyle'
+
+import TotalLikes from './TotalLikes'
 
 // temp as base64:
 import {
@@ -59,7 +62,7 @@ const sampleData = {
 }
 
 
-export default (props: any) => {
+export default ({data, navigation}) => {
 
   const { post } = sampleData
 
@@ -95,13 +98,17 @@ export default (props: any) => {
             {/* to play around with displaying -- toggl this '!' */}
             {!!post.unfollowedAuthor && <FollowLabel style={{marginLeft: 1.22 * U}} />}
           </View>
+          <Text style={ss.totalLikes} onPress={()=>
+                  navigation.push({ screen: TotalLikes, backButtonHidden: false })
+                }>
+            {post.likes}</Text>
           <Icon name="favorite" type="SimpleLineIcons" 
                 color='hsl(341, 97%, 67%)' size={2 * 0.64 * U}
                 containerStyle={ss.button} />
         </View>
       </View>
 
-      {post.description && <Text style={ss.description}> {post.description}</Text>}
+      {post.description && <Text style={ss.description}>{post.description}</Text>}
 
       <View style={ss.bottomContainer}>
         <View style={{flex: 1 /*5*/}}>
@@ -123,5 +130,8 @@ export default (props: any) => {
   )
 }
 
-export const FollowLabel = ({userIdOrSomethingForApi, style}) =>
-  <Text style={[ss.FollowLabel, style]} onPress={()=>{}}> + follow </Text>
+export const FollowLabel = (
+    {userIdOrSomethingForApi = undefined, style} 
+      : {userIdOrSomethingForApi : Number, style: any}
+  ) =>
+    <Text style={[ss.FollowLabel, style]} onPress={()=>{}}> + follow </Text>
