@@ -67,7 +67,7 @@ const CreatePost = (props: any) => {
                 },
               });
 
-              console.log(data);
+              props.navigation.pop();
             } catch (error) {
               console.log(error);
             }

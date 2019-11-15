@@ -2,7 +2,6 @@
 /* eslint-disable semi */
 
 import { StyleSheet, Dimensions } from 'react-native'
-import { hasClientExports } from 'apollo-utilities'
 
 // todo move to global style utils
 const {width} = Dimensions.get('window')
@@ -40,6 +39,20 @@ export default StyleSheet.create({
     borderRadius: U - u / 2,
     overflow: 'hidden',
   },
+  authorName: {
+    marginLeft: 0.72 * U,
+    // flex: 1,
+
+    color: 'hsl(0, 0%, 24%)',
+    fontSize: 0.68 * U,
+    fontFamily: 'MPLUSRounded1c-Regular', // todo rounded mplus1
+  },
+  totalLikes: {
+    color: 'hsl(0, 0%, 24%)',
+    fontSize: 0.54 * U,
+    fontFamily: 'MPLUSRounded1c-Bold',
+    marginRight: 0.64 * U / 2,
+  },
 
   button: {
     marginRight: 0.64 * U / 2,
@@ -54,10 +67,13 @@ export default StyleSheet.create({
     marginRight: 0.25 * U,   // todo refactor
   },
   description: {
-    margin: 0.5 * U,
-    // marginBottom: -0.25 * U,
-    marginBottom: 0 * U,
-    marginTop: 0.75 * U,
+    // margin: 0.5 * U,
+    // // marginBottom: -0.25 * U,
+    // marginBottom: 0 * U,
+    // marginTop: 0.75 * U,
+    margin: U,
+    marginBottom: 0,
+    marginRight: 2 * U,
 
     color: 'hsl(0, 0%, 24%)',
     fontSize: 0.54 * U,
@@ -80,14 +96,6 @@ export default StyleSheet.create({
     // textAlignVertical: 'center',
   },
 
-  authorName: {
-    marginLeft: 0.72 * U,
-    // flex: 1,
-
-    color: 'hsl(0, 0%, 24%)',
-    fontSize: 0.72 * U,
-    fontFamily: 'MPLUSRounded1c-Regular', // todo rounded mplus1
-  },
 
   image: {
     borderRadius: U,

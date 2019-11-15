@@ -8,6 +8,9 @@ import Picker from '../screens/Picker';
 import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
 
+// temp:
+import TotalLikes from '../components/Posts/TotalLikes';
+
 const getStackNavigator = (initialRouteName: string) => {
   return createStackNavigator(
     {
@@ -19,6 +22,7 @@ const getStackNavigator = (initialRouteName: string) => {
       Picker: {screen: Picker},
       Feeds: {screen: Feeds},
       CreatePost: {screen: CreatePost},
+      TotalLikes: {screen: TotalLikes},
     },
     {
       initialRouteName,
