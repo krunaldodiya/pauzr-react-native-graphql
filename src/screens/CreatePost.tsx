@@ -1,4 +1,4 @@
-import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useState} from 'react';
 import {FlatList, SafeAreaView, Text, View} from 'react-native';
 import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
@@ -18,8 +18,6 @@ const CreatePost = (props: any) => {
   const [createPostMutation] = useMutation(CREATE_POST, {
     fetchPolicy: 'no-cache',
   });
-
-  const [getPosts] = useLazyQuery(GET_DRAFTS);
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
@@ -62,7 +60,9 @@ const CreatePost = (props: any) => {
           style: {color: 'white'},
           onPress: async () => {
             try {
-              const data = await createPostMutation({
+              await createPostMutation({
+                awaitRefetchQueries: true,
+                refetchQueries: [{query: GET_DRAFTS}],
                 variables: {
                   id: uuid,
                   category_id: category.id,
@@ -70,32 +70,7 @@ const CreatePost = (props: any) => {
                   type: 'Post',
                   attachments: params.files,
                 },
-                optimisticResponse: {
-                  __typename: 'Mutation',
-                  createPost: {
-                    __typename: 'Post',
-                    id: uuid,
-                    description,
-                    type: 'Post',
-                    attachments: params.files,
-                    published: false,
-                    owner: {
-                      __typename: 'User',
-                      id: '5ca68aab-ed8e-43b9-b298-acdd57971178',
-                      name: 'Krunal Dodiya',
-                    },
-                    category: {
-                      __typename: 'Category',
-                      id: category.id,
-                      name: category.name,
-                    },
-                  },
-                },
               });
-
-              if (data) {
-                getPosts();
-              }
 
               props.navigation.pop();
             } catch (error) {

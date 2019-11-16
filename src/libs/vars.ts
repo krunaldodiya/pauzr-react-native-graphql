@@ -1,5 +1,4 @@
-
-import {Dimensions} from 'react-native'
+import {Dimensions} from 'react-native';
 
 const baseUrlProd = 'https://pauzr.tk';
 const httpUrlProd = 'https://pauzr.tk/graphql';
@@ -16,13 +15,12 @@ const wsUrl = __DEV__ ? wsUrlDev : wsUrlProd;
 export {baseUrl, httpUrl, wsUrl, httpUrlProd, wsUrlProd};
 
 export const pickerSettings = {
-  capturePhoto: {cropping: true, mediaType: 'photo'},
+  capturePhoto: {mediaType: 'photo'},
   recordVideo: {mediaType: 'video'},
   galleryFiles: {multiple: true},
 };
 
-export const {width, height} =
-  Dimensions.get('window')
+export const {width, height} = Dimensions.get('window');
 
-export const U = width / 16
-export const u = width / 64
+export const U = width / 16;
+export const u = width / 64;
