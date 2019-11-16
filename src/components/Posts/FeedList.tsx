@@ -2,7 +2,8 @@ import React from 'react';
 import {Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Pages} from 'react-native-pages';
-import ss, {u, U} from './FeedListStyle';
+import ss from './FeedListStyle';
+import {u, U} from '../../libs/vars';
 
 const FeedList = (props: any) => {
   const post = props.data.item;

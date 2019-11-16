@@ -2,6 +2,8 @@ import React, {Fragment} from 'react';
 import {Text, View, StatusBar, SafeAreaView} from 'react-native';
 import {NavigationScreenProp} from 'react-navigation';
 
+import ss from './SearchStyle'
+
 interface SearchProps {
   navigation: NavigationScreenProp<any, any>;
 }
