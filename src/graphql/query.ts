@@ -89,34 +89,40 @@ export const GET_CATEGORIES = gql`
 `;
 
 export const GET_POSTS = gql`
-  query GetPosts {
-    posts {
-      id
-      description
-      type
-      attachments {
-        id
-        path
-        mime
-        source
-        thumbnail
-        size
-        height
-        width
-        status
+  query GetPosts($page: Int!, $first: Int!) {
+    posts(page: $page, first: $first) {
+      paginatorInfo {
+        count
+        hasMorePages
       }
-      owner {
+      data {
         id
-        name
-        avatar
+        description
+        type
+        attachments {
+          id
+          path
+          mime
+          source
+          thumbnail
+          size
+          height
+          width
+          status
+        }
+        owner {
+          id
+          name
+          avatar
+        }
+        category {
+          id
+          name
+        }
+        created_at
+        updated_at
+        when
       }
-      category {
-        id
-        name
-      }
-      created_at
-      updated_at
-      when
     }
   }
 `;
