@@ -1,11 +1,10 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
-import Swiper from 'react-native-swiper';
-import ss, {u, U} from './imagePostStyle';
 import {Pages} from 'react-native-pages';
+import ss, {u, U} from './FeedListStyle';
 
-export default (props: any) => {
+const FeedList = (props: any) => {
   const post = props.data.item;
 
   return (
@@ -90,3 +89,5 @@ export default (props: any) => {
     </View>
   );
 };
+
+export default FeedList;

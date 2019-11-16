@@ -1,6 +1,7 @@
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useCallback, useState} from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   SafeAreaView,
   StatusBar,
@@ -15,7 +16,13 @@ import {LOAD_COUNTRIES} from '../graphql/query';
 const SelectCountry = (props: any) => {
   const [keywords, setKeywords] = useState('');
 
-  const {data} = useQuery(LOAD_COUNTRIES);
+  const {data: countries, loading: loadingCountries} = useQuery(
+    LOAD_COUNTRIES,
+    {
+      fetchPolicy: 'cache-and-network',
+    },
+  );
+
   const [setCountry] = useMutation(SET_COUNTRY);
 
   const setSelectedCountry = useCallback(async (item: any) => {
@@ -32,13 +39,13 @@ const SelectCountry = (props: any) => {
     }
   }, []);
 
-  const countries = data ? data.countries : [];
-  const filteredCountries =
-    keywords.length >= 3
-      ? countries.filter((country: any) => {
+  const getFilteredCountries = () => {
+    return keywords.length >= 3
+      ? countries.countries.filter((country: any) => {
           return country.name.match(new RegExp(`^${keywords}`, 'gi'));
         })
-      : countries;
+      : countries.countries;
+  };
 
   const renderItem = (data: any) => {
     const {item} = data;
@@ -59,6 +66,10 @@ const SelectCountry = (props: any) => {
     <View style={{height: 1, backgroundColor: '#ccc'}} />
   );
 
+  if (loadingCountries) {
+    return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
+  }
+
   return (
     <Fragment>
       <StatusBar backgroundColor="#0D62A2" barStyle="light-content" />
@@ -75,7 +86,7 @@ const SelectCountry = (props: any) => {
           <FlatList
             keyboardShouldPersistTaps="handled"
             keyExtractor={keyExtractor}
-            data={filteredCountries}
+            data={getFilteredCountries()}
             ItemSeparatorComponent={ItemSeparatorComponent}
             renderItem={renderItem}
           />

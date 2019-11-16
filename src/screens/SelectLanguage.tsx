@@ -1,6 +1,7 @@
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useState} from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   SafeAreaView,
   StatusBar,
@@ -8,7 +9,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import {EDIT_PROFILE, SET_INITIAL_SCREEN} from '../graphql/mutation';
@@ -20,7 +20,9 @@ const SelectLanguage = (props: any) => {
   const {navigation} = props;
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
-  const {data: languages, loading: loadingLanguages} = useQuery(GET_LANGUAGES);
+  const {data: languages, loading: loadingLanguages} = useQuery(GET_LANGUAGES, {
+    fetchPolicy: 'cache-and-network',
+  });
   const [editProfile, {loading}] = useMutation(EDIT_PROFILE);
 
   const [selectedLanguage, setSelectedLanguage] = useState();
