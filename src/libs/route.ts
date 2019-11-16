@@ -4,7 +4,6 @@ import CreatePost from '../screens/CreatePost';
 import Feeds from '../screens/fun/Feeds';
 import Profile from '../screens/fun/Profile';
 import Home from '../screens/Home';
-import Picker from '../screens/Picker';
 import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
 
@@ -19,7 +18,6 @@ const getStackNavigator = (initialRouteName: string) => {
       Home: {screen: Home},
       SelectCountry: {screen: SelectCountry},
       Profile: {screen: Profile},
-      Picker: {screen: Picker},
       Feeds: {screen: Feeds},
       CreatePost: {screen: CreatePost},
       TotalLikes: {screen: TotalLikes},

@@ -1,8 +1,9 @@
 import React from 'react';
-import {Dimensions, Image, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 import ss, {u, U} from './imagePostStyle';
+import {Pages} from 'react-native-pages';
 
 export default (props: any) => {
   const post = props.data.item;
@@ -17,7 +18,7 @@ export default (props: any) => {
           </View>
         </View>
 
-        <Swiper dotColor="white" activeDotColor="skyblue" style={{height: 360}}>
+        <Pages style={{height: 360}}>
           {post.attachments.map((attachment: any) => {
             // const {width, height} = attachment;
 
@@ -31,7 +32,7 @@ export default (props: any) => {
               />
             );
           })}
-        </Swiper>
+        </Pages>
       </View>
 
       {post.description && (
