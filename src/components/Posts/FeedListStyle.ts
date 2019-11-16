@@ -1,12 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable semi */
 
-import { StyleSheet, Dimensions } from 'react-native'
-
-// todo move to global style utils
-const {width} = Dimensions.get('window')
-export const U = width / 16
-export const u = width / 64
+import {StyleSheet} from 'react-native'
+import {width, U, u} from '../../libs/vars'
 
 export default StyleSheet.create({
   postContainer: {

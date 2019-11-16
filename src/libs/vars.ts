@@ -1,3 +1,6 @@
+
+import {Dimensions} from 'react-native'
+
 const baseUrlProd = 'https://pauzr.tk';
 const httpUrlProd = 'https://pauzr.tk/graphql';
 const wsUrlProd = 'wss://pauzr.tk/graphql';
@@ -17,3 +20,9 @@ export const pickerSettings = {
   recordVideo: {mediaType: 'video'},
   galleryFiles: {multiple: true},
 };
+
+export const {width, height} =
+  Dimensions.get('window')
+
+export const U = width / 16
+export const u = width / 64
