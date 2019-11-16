@@ -10,10 +10,6 @@ export default (props: any) => {
   const imageWidth = Dimensions.get('window').width;
   const imageHeight = (width / parseInt(height)) * parseInt(width);
 
-  const avatarAsset = post.owner.avatar
-    ? post.owner.avatar
-    : 'https://picsum.photos/id/492/300/300';
-
   const postAsset = post.attachments[0].source
     ? post.attachments[0].source
     : 'https://picsum.photos/id/1/300/300';
@@ -22,7 +18,7 @@ export default (props: any) => {
     <View style={ss.postContainer}>
       <View style={ss.postContentContainer}>
         <View style={ss.postContentContainer__topPlane}>
-          <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />
+          <Image style={ss.authorAvatar} source={{uri: post.owner.avatar}} />
           <View style={{flex: 1}}>
             <Text style={ss.authorName}>{post.owner.name}</Text>
           </View>
@@ -39,7 +35,7 @@ export default (props: any) => {
       )}
 
       <View style={ss.timestampAndCategory}>
-        <Text style={ss.timestamp}> 3 days ago </Text>
+        <Text style={ss.timestamp}>{post.when}</Text>
         <Text style={ss.category}>Category: {post.category.name}</Text>
       </View>
 

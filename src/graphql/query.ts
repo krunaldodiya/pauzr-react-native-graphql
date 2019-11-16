@@ -114,6 +114,9 @@ export const GET_POSTS = gql`
         id
         name
       }
+      created_at
+      updated_at
+      when
     }
   }
 `;
@@ -144,6 +147,9 @@ export const GET_DRAFTS = gql`
         id
         name
       }
+      created_at
+      updated_at
+      when
     }
   }
 `;
