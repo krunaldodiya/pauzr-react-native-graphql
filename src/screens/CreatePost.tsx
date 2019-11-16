@@ -2,9 +2,9 @@ import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useState} from 'react';
 import {FlatList, SafeAreaView, Text, View} from 'react-native';
 import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
+import uuidv4 from 'uuid/v4';
 import {CREATE_POST} from '../graphql/mutation';
 import {GET_CATEGORIES, GET_DRAFTS} from '../graphql/query';
-const uuidv4 = require('uuid/v4');
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
