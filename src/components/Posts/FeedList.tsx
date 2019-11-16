@@ -5,6 +5,7 @@ import {Pages} from 'react-native-pages';
 import ss from './FeedListStyle';
 import {u, U} from '../../libs/vars';
 
+// todo rename also, this is one post, not list
 const FeedList = (props: any) => {
   const post = props.data.item;
 
@@ -24,6 +25,8 @@ const FeedList = (props: any) => {
 
             // const imageWidth = Dimensions.get('window').width;
             // const imageHeight = (width / parseInt(height)) * parseInt(width);
+            
+            // todo U instead of 360
 
             return (
               <Image
