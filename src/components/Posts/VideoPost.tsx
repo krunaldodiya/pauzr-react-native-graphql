@@ -1,8 +1,7 @@
-import React, {useState, useCallback} from 'react';
-import {Dimensions, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, {useCallback, useState} from 'react';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {Icon} from 'react-native-elements';
 import Video from 'react-native-video';
-import Icon from '../Icon';
 
 const VideoPost = (props: any) => {
   const {data} = props;
@@ -45,7 +44,11 @@ const VideoPost = (props: any) => {
               backgroundColor: '#000',
               padding: 5,
             }}>
-            <Icon type="MaterialIcons" name="volume-off" style={{color: '#fff', fontSize: 16}} />
+            <Icon
+              type="MaterialIcons"
+              name="volume-off"
+              style={{color: '#fff', fontSize: 16}}
+            />
           </View>
         )}
       </View>

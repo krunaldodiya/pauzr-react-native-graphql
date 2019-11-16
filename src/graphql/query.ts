@@ -87,3 +87,63 @@ export const GET_CATEGORIES = gql`
     }
   }
 `;
+
+export const GET_POSTS = gql`
+  query GetPosts {
+    posts {
+      id
+      description
+      type
+      attachments {
+        id
+        path
+        mime
+        source
+        thumbnail
+        size
+        height
+        width
+        status
+      }
+      owner {
+        id
+        name
+        avatar
+      }
+      category {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const GET_DRAFTS = gql`
+  query GetDrafts {
+    drafts {
+      id
+      description
+      type
+      attachments {
+        id
+        path
+        mime
+        source
+        thumbnail
+        size
+        height
+        width
+        status
+      }
+      owner {
+        id
+        name
+        avatar
+      }
+      category {
+        id
+        name
+      }
+    }
+  }
+`;

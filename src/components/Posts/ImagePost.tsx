@@ -1,98 +1,37 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Dimensions, Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import ss, {u, U} from './imagePostStyle';
-import {
-  randomAvatar1,
-  randomAvatar2,
-  randomAvatar3,
-  randomImage1,
-} from './_temp64';
 
-const sampleData = {
-  post: {
-    id: '2',
-    author: {
-      name: 'Kabardio Fluerence',
-      avatar: randomAvatar1,
-    },
-    imageUrl: randomImage1,
-    likes: 327,
-    category: 'Automobiles',
-    description:
-      "Hello! It's me, trying to run my dog across the field! Cheers! :)",
-    timestamp: '3 hours ago',
-    comments: [
-      {
-        comment: 'Awesome!',
-        timestamp: '33 min ago',
-        author: {
-          name: 'Tera Mikello',
-          avatar: randomAvatar2,
-        },
-        likes: 0,
-      },
-      {
-        comment: 'Thank you!',
-        timestamp: '15 min ago',
-        author: {
-          name: 'Kabardio Fluerence',
-          avatar: randomAvatar1,
-        },
-        likes: 1,
-      },
-      {
-        comment: 'What is the name of that dog?',
-        timestamp: '27 min ago',
-        author: {
-          name: 'Alisa Al Abika',
-          avatar: randomAvatar3,
-        },
-        likes: 23,
-      },
-    ],
-  },
-};
+export default (props: any) => {
+  const post = props.data.item;
+  const {width, height} = post.attachments[0];
 
-export default ({data, navigation}) => {
-  const {post} = sampleData;
+  const imageWidth = Dimensions.get('window').width;
+  const imageHeight = (width / parseInt(height)) * parseInt(width);
 
-  const width = Dimensions.get('window').width - U * 2;
-  const [height, setHeight] = useState(width);
+  const avatarAsset = post.owner.avatar
+    ? post.owner.avatar
+    : 'https://picsum.photos/id/492/300/300';
 
-  const avatarAsset = post.author.avatar; // getAssets(..)
-
-  // refactor
-  Image.getSize(
-    post.imageUrl,
-    (w, h) => setHeight((width / h) * w),
-    () => null,
-  );
+  const postAsset = post.attachments[0].source
+    ? post.attachments[0].source
+    : 'https://picsum.photos/id/1/300/300';
 
   return (
     <View style={ss.postContainer}>
       <View style={ss.postContentContainer}>
         <View style={ss.postContentContainer__topPlane}>
           <Image style={ss.authorAvatar} source={{uri: avatarAsset}} />
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <Text style={ss.authorName}>{post.author.name}</Text>
-
-            {/* unfollowedAuthor -- it's just for example. Dont know how is better to know can we follow it or not */}
-            {/* to play around with displaying -- toggl this '!' */}
-            {!post.unfollowedAuthor && (
-              <FollowLabel style={{marginLeft: 1.22 * U}} />
-            )}
+          <View style={{flex: 1}}>
+            <Text style={ss.authorName}>{post.owner.name}</Text>
           </View>
         </View>
 
-        {/* todo if post is only quote (nor image or video), there can only be a text */}
-        {(true || post.type == 'image' || post.type == 'video') &&
-        (post.type == 'image' || true) ? (
-          <Image
-            style={[ss.image, {width, height}]}
-            source={{uri: post.imageUrl}}
-          />
-        ) : null /* : Video */}
+        <Image
+          style={[ss.image, {width: imageWidth, height: imageHeight}]}
+          source={{uri: postAsset}}
+        />
       </View>
 
       {post.description && (
@@ -100,13 +39,12 @@ export default ({data, navigation}) => {
       )}
 
       <View style={ss.timestampAndCategory}>
-        <Text style={ss.timestamp}> {post.timestamp} </Text>
-        <Text style={ss.category}>Category: {post.category}</Text>
+        <Text style={ss.timestamp}> 3 days ago </Text>
+        <Text style={ss.category}>Category: {post.category.name}</Text>
       </View>
 
       <View style={ss.bottomContainer}>
-        <View
-          style={{flex: 1 /*5*/, flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
           <Icon
             name="favorite"
             type="SimpleLineIcons"
@@ -117,16 +55,10 @@ export default ({data, navigation}) => {
           <Text
             style={ss.totalLikes}
             onPress={() =>
-              navigation.push(
-                'TotalLikes',
-                // { backButtonHidden: false }, // todo
-                {postId: post.id},
-              )
+              props.navigation.push('TotalLikes', {postId: post.id})
             }>
             {post.likes}
           </Text>
-
-          {/* {post.description && <Text style={ss.description}> {post.description}</Text>} */}
         </View>
         <Icon
           name="comment"
@@ -157,16 +89,3 @@ export default ({data, navigation}) => {
     </View>
   );
 };
-
-export const FollowLabel = ({
-  userIdOrSomethingForApi = undefined,
-  style,
-}: {
-  userIdOrSomethingForApi: Number;
-  style: any;
-}) => (
-  <Text style={[ss.FollowLabel, style]} onPress={() => {}}>
-    {' '}
-    + follow{' '}
-  </Text>
-);
