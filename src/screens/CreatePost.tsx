@@ -1,20 +1,25 @@
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useState} from 'react';
 import {FlatList, SafeAreaView, Text, View} from 'react-native';
 import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
 import {CREATE_POST} from '../graphql/mutation';
-import {GET_CATEGORIES} from '../graphql/query';
+import {GET_CATEGORIES, GET_DRAFTS} from '../graphql/query';
 const uuidv4 = require('uuid/v4');
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
+  const uuid = uuidv4();
 
   const [category, setCategory] = useState();
   const [description, setDescription] = useState();
   const [overlay, setOverlay] = useState(false);
 
   const {data, loading} = useQuery(GET_CATEGORIES);
-  const [createPostMutation] = useMutation(CREATE_POST);
+  const [createPostMutation] = useMutation(CREATE_POST, {
+    fetchPolicy: 'no-cache',
+  });
+
+  const [getPosts] = useLazyQuery(GET_DRAFTS);
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
@@ -59,13 +64,38 @@ const CreatePost = (props: any) => {
             try {
               const data = await createPostMutation({
                 variables: {
-                  id: uuidv4(),
+                  id: uuid,
                   category_id: category.id,
                   description,
                   type: 'Post',
                   attachments: params.files,
                 },
+                optimisticResponse: {
+                  __typename: 'Mutation',
+                  createPost: {
+                    __typename: 'Post',
+                    id: uuid,
+                    description,
+                    type: 'Post',
+                    attachments: params.files,
+                    published: false,
+                    owner: {
+                      __typename: 'User',
+                      id: '5ca68aab-ed8e-43b9-b298-acdd57971178',
+                      name: 'Krunal Dodiya',
+                    },
+                    category: {
+                      __typename: 'Category',
+                      id: category.id,
+                      name: category.name,
+                    },
+                  },
+                },
               });
+
+              if (data) {
+                getPosts();
+              }
 
               props.navigation.pop();
             } catch (error) {

@@ -28,6 +28,7 @@ const FeedList = (props: any) => {
               <Image
                 style={[ss.image, {width: 360, height: 360}]}
                 source={{uri: attachment.path}}
+                key={attachment.id}
               />
             );
           })}
