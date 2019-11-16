@@ -1,18 +1,11 @@
 import React from 'react';
 import {Dimensions, Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
+import Swiper from 'react-native-swiper';
 import ss, {u, U} from './imagePostStyle';
 
 export default (props: any) => {
   const post = props.data.item;
-  const {width, height} = post.attachments[0];
-
-  const imageWidth = Dimensions.get('window').width;
-  const imageHeight = (width / parseInt(height)) * parseInt(width);
-
-  const postAsset = post.attachments[0].source
-    ? post.attachments[0].source
-    : 'https://picsum.photos/id/1/300/300';
 
   return (
     <View style={ss.postContainer}>
@@ -24,10 +17,21 @@ export default (props: any) => {
           </View>
         </View>
 
-        <Image
-          style={[ss.image, {width: imageWidth, height: imageHeight}]}
-          source={{uri: postAsset}}
-        />
+        <Swiper dotColor="white" activeDotColor="skyblue" style={{height: 360}}>
+          {post.attachments.map((attachment: any) => {
+            // const {width, height} = attachment;
+
+            // const imageWidth = Dimensions.get('window').width;
+            // const imageHeight = (width / parseInt(height)) * parseInt(width);
+
+            return (
+              <Image
+                style={[ss.image, {width: 360, height: 360}]}
+                source={{uri: attachment.path}}
+              />
+            );
+          })}
+        </Swiper>
       </View>
 
       {post.description && (
