@@ -1,5 +1,5 @@
 import {useQuery} from '@apollo/react-hooks';
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -11,6 +11,7 @@ import FeedList from '../../components/Posts/FeedList';
 import {GET_DRAFTS} from '../../graphql/query';
 
 const Feeds = (props: any) => {
+  const [viewableItem, setViewableItem] = useState();
   const {data: feeds, loading: loadingFeeds} = useQuery(GET_DRAFTS, {
     fetchPolicy: 'cache-and-network',
   });
@@ -20,6 +21,10 @@ const Feeds = (props: any) => {
   };
 
   const keyExtractor = (item: any, index: number) => index.toString();
+
+  const viewabilityConfig = {
+    viewAreaCoveragePercentThreshold: 90,
+  };
 
   if (loadingFeeds) {
     return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
@@ -35,6 +40,7 @@ const Feeds = (props: any) => {
             data={feeds.drafts}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
+            viewabilityConfig={viewabilityConfig}
           />
         </View>
       </SafeAreaView>

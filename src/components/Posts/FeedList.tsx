@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image, Text, View, Dimensions} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Pages} from 'react-native-pages';
-import Video from 'react-native-video';
 import {u, U} from '../../libs/vars';
 import ss from './FeedListStyle';
-const {width} = Dimensions.get('window');
+import ImagePost from './ImagePost';
+import VideoPost from './VideoPost';
 
 const FeedList = (props: any) => {
   const post = props.data.item;
@@ -21,41 +21,19 @@ const FeedList = (props: any) => {
         </View>
 
         <Pages
-          style={{height: 360}}
           indicatorColor={post.attachments.length > 1 ? 'red' : 'transparent'}
           indicatorOpacity={0.5}>
           {post.attachments.map((attachment: any) => {
             const isVideo = attachment.mime.includes('video');
 
-            // const {width, height} = attachment;
-
-            // const imageWidth = Dimensions.get('window').width;
-            // const imageHeight = (width / parseInt(height)) * parseInt(width);
-
             if (isVideo) {
               return (
-                <Video
-                  key={attachment.id}
-                  source={{uri: attachment.path}}
-                  style={{
-                    width: 360,
-                    height: 360,
-                  }}
-                  paused={false}
-                  muted={false}
-                  poster={attachment.thumbnail}
-                  posterResizeMode="cover"
-                  resizeMode="cover"
-                />
+                <VideoPost key={attachment.id} {...props} data={attachment} />
               );
             }
 
             return (
-              <Image
-                style={[ss.image, {width: 360, height: 360}]}
-                source={{uri: attachment.path}}
-                key={attachment.id}
-              />
+              <ImagePost key={attachment.id} {...props} data={attachment} />
             );
           })}
         </Pages>

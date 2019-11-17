@@ -6,33 +6,25 @@ import Video from 'react-native-video';
 const VideoPost = (props: any) => {
   const {data} = props;
   const [muted, setMuted] = useState();
-  const [paused] = useState();
 
-  const {item} = data;
   const {width} = Dimensions.get('window');
 
-  const poster = item.url
-    .replace('video/upload/', 'video/upload/e_blur:100/w_300/')
-    .replace('.mp4', '.jpg');
-
-  const muteVideo = useCallback(() => {
-    setMuted({muted: !muted});
-  }, []);
-
   return (
-    <TouchableOpacity onPress={muteVideo}>
+    <TouchableOpacity onPress={() => setMuted(!muted)}>
       <View style={{marginBottom: 10}}>
         <Video
-          source={{uri: item.url}}
+          source={{uri: data.path}}
           style={{
-            width: width - 2,
+            width,
             height: (width * 3) / 4,
           }}
-          paused={paused}
+          paused={false}
           muted={muted}
           controls={false}
-          poster={poster}
+          poster={data.thumbnail}
           posterResizeMode="cover"
+          resizeMode="cover"
+          repeat
         />
 
         {muted && (
@@ -41,13 +33,13 @@ const VideoPost = (props: any) => {
               position: 'absolute',
               top: 0,
               right: 0,
-              backgroundColor: '#000',
               padding: 5,
             }}>
             <Icon
               type="MaterialIcons"
               name="volume-off"
-              style={{color: '#fff', fontSize: 16}}
+              color="#fff"
+              size={16}
             />
           </View>
         )}
