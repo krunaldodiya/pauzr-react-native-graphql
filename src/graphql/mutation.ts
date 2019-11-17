@@ -25,6 +25,9 @@ export const CREATE_POST = gql`
       type
       description
       published
+      attachments {
+        id
+      }
       owner {
         id
         name

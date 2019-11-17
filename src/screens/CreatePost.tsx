@@ -4,22 +4,80 @@ import {FlatList, SafeAreaView, Text, View} from 'react-native';
 import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
 import uuidv4 from 'uuid/v4';
 import {CREATE_POST} from '../graphql/mutation';
-import {GET_CATEGORIES, GET_DRAFTS} from '../graphql/query';
+import {GET_AUTH_USER, GET_CATEGORIES, GET_DRAFTS} from '../graphql/query';
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
   const uuid = uuidv4();
 
   const [category, setCategory] = useState();
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState(null);
   const [overlay, setOverlay] = useState(false);
 
+  const {data: authUser} = useQuery(GET_AUTH_USER);
   const {data, loading} = useQuery(GET_CATEGORIES);
   const [createPostMutation] = useMutation(CREATE_POST, {
     fetchPolicy: 'no-cache',
   });
 
   const keyExtractor = (item: any, index: number) => index.toString();
+
+  const handleCreatePost = async () => {
+    const getAttachments = params.files.map((attachment: any) => {
+      return {...attachment, source: null, status: false, id: uuidv4()};
+    });
+
+    try {
+      await createPostMutation({
+        update: (store, {data: {createPost}}) => {
+          const {drafts}: any = store.readQuery({query: GET_DRAFTS});
+          const updatedCreatePost = [...drafts, createPost];
+
+          store.writeQuery({
+            query: GET_DRAFTS,
+            data: {drafts: updatedCreatePost},
+          });
+
+          props.navigation.pop();
+        },
+        variables: {
+          id: uuid,
+          category_id: category.id,
+          description,
+          type: 'Post',
+          attachments: getAttachments,
+        },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          createPost: {
+            __typename: 'Post',
+            id: uuid,
+            type: 'Post',
+            description,
+            published: false,
+            created_at: '',
+            updated_at: '',
+            when: '',
+            attachments: getAttachments.map((attachment: any) => {
+              return {...attachment, __typename: 'Attachment'};
+            }),
+            owner: {
+              __typename: 'User',
+              id: authUser.me.id,
+              name: authUser.me.name,
+            },
+            category: {
+              __typename: 'Category',
+              id: category.id,
+              name: category.name,
+            },
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const renderItem = (data: any) => {
     const {item} = data;
@@ -58,25 +116,7 @@ const CreatePost = (props: any) => {
         rightComponent={{
           text: 'Create',
           style: {color: 'white'},
-          onPress: async () => {
-            try {
-              await createPostMutation({
-                awaitRefetchQueries: true,
-                refetchQueries: [{query: GET_DRAFTS}],
-                variables: {
-                  id: uuid,
-                  category_id: category.id,
-                  description,
-                  type: 'Post',
-                  attachments: params.files,
-                },
-              });
-
-              props.navigation.pop();
-            } catch (error) {
-              console.log(error);
-            }
-          },
+          onPress: handleCreatePost,
         }}
       />
 
