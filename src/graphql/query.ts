@@ -19,6 +19,7 @@ export const GET_USERS = gql`
       email
       mobile
       language
+      avatar
       country {
         id
         name
@@ -37,6 +38,7 @@ export const GET_AUTH_USER = gql`
       email
       mobile
       language
+      avatar
       country {
         id
         name

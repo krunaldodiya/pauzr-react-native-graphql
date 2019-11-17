@@ -31,7 +31,7 @@ const CreatePost = (props: any) => {
       await createPostMutation({
         update: (store, {data: {createPost}}) => {
           const {drafts}: any = store.readQuery({query: GET_DRAFTS});
-          const updatedCreatePost = [...drafts, createPost];
+          const updatedCreatePost = [createPost, ...drafts];
 
           store.writeQuery({
             query: GET_DRAFTS,
@@ -61,16 +61,8 @@ const CreatePost = (props: any) => {
             attachments: getAttachments.map((attachment: any) => {
               return {...attachment, __typename: 'Attachment'};
             }),
-            owner: {
-              __typename: 'User',
-              id: authUser.me.id,
-              name: authUser.me.name,
-            },
-            category: {
-              __typename: 'Category',
-              id: category.id,
-              name: category.name,
-            },
+            owner: authUser.me,
+            category,
           },
         },
       });
@@ -113,11 +105,19 @@ const CreatePost = (props: any) => {
           },
         }}
         centerComponent={{text: 'Create Post', style: {color: '#fff'}}}
-        rightComponent={{
-          text: 'Create',
-          style: {color: 'white'},
-          onPress: handleCreatePost,
-        }}
+        rightComponent={
+          category && {
+            text: 'Create',
+            style: {
+              color: 'white',
+              textTransform: 'uppercase',
+              fontSize: 14,
+              marginRight: 5,
+              fontWeight: '500',
+            },
+            onPress: handleCreatePost,
+          }
+        }
       />
 
       <SafeAreaView style={{flex: 1}}>

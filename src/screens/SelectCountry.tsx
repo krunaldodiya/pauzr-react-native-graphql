@@ -66,7 +66,7 @@ const SelectCountry = (props: any) => {
     <View style={{height: 1, backgroundColor: '#ccc'}} />
   );
 
-  if (loadingCountries) {
+  if (!countries && loadingCountries) {
     return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
   }
 

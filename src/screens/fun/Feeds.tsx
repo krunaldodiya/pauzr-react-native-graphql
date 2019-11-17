@@ -15,6 +15,8 @@ const Feeds = (props: any) => {
     fetchPolicy: 'cache-and-network',
   });
 
+  console.log(feeds);
+
   const renderItem = (data: any) => {
     return <FeedList {...props} data={data} />;
   };

@@ -73,7 +73,7 @@ const SelectLanguage = (props: any) => {
     );
   };
 
-  if (loadingLanguages) {
+  if (!languages && loadingLanguages) {
     return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
   }
 
