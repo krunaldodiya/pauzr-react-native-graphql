@@ -1,11 +1,12 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
+import {Dimensions, Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Pages} from 'react-native-pages';
 import {u, U} from '../../libs/vars';
 import ss from './FeedListStyle';
 import ImagePost from './ImagePost';
 import VideoPost from './VideoPost';
+const {width} = Dimensions.get('window');
 
 const FeedList = (props: any) => {
   const post = props.data.item;
@@ -21,6 +22,7 @@ const FeedList = (props: any) => {
         </View>
 
         <Pages
+          style={{width: width, height: width}}
           indicatorColor={post.attachments.length > 1 ? 'red' : 'transparent'}
           indicatorOpacity={0.5}>
           {post.attachments.map((attachment: any) => {

@@ -5,21 +5,19 @@ import Video from 'react-native-video';
 
 const VideoPost = (props: any) => {
   const {data} = props;
-  const [muted, setMuted] = useState();
-
-  const {width} = Dimensions.get('window');
+  const [paused, setPaused] = useState(true);
 
   return (
-    <TouchableOpacity onPress={() => setMuted(!muted)}>
+    <TouchableOpacity onPress={() => setPaused(!paused)}>
       <View style={{marginBottom: 10}}>
         <Video
           source={{uri: data.path}}
           style={{
-            width,
-            height: (width * 3) / 4,
+            width: '100%',
+            height: '100%',
           }}
-          paused={false}
-          muted={muted}
+          paused={paused}
+          muted={false}
           controls={false}
           poster={data.thumbnail}
           posterResizeMode="cover"
@@ -27,19 +25,22 @@ const VideoPost = (props: any) => {
           repeat
         />
 
-        {muted && (
+        {paused && (
           <View
             style={{
               position: 'absolute',
               top: 0,
+              left: 0,
               right: 0,
-              padding: 5,
+              bottom: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
             <Icon
               type="MaterialIcons"
-              name="volume-off"
+              name="play-arrow"
               color="#fff"
-              size={16}
+              size={64}
             />
           </View>
         )}

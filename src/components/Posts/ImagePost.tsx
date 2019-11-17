@@ -6,15 +6,13 @@ import ss from './FeedListStyle';
 const ImagePost = (props: any) => {
   const {data} = props;
 
-  const {width} = Dimensions.get('window');
-
   return (
     <Image
       style={[
         ss.image,
         {
-          width,
-          height: (width * 3) / 4,
+          width: '100%',
+          height: '100%',
         },
       ]}
       source={{uri: data.path}}
