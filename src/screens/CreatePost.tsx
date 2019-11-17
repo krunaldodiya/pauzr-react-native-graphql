@@ -29,6 +29,8 @@ const CreatePost = (props: any) => {
 
     try {
       await createPostMutation({
+        awaitRefetchQueries: true,
+        refetchQueries: [{query: GET_DRAFTS}],
         update: (store, {data: {createPost}}) => {
           const {drafts}: any = store.readQuery({query: GET_DRAFTS});
           const updatedCreatePost = [createPost, ...drafts];
