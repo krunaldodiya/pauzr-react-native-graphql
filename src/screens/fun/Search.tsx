@@ -61,12 +61,16 @@ const Search = (props: SearchProps) => {
   );
 };
 
+const _tempQuotient = (name) =>
+  4 / name.length * ( (name.match(/\n/g) && name.match(/\n/g).length) || 1 )
+
 // todo ts interface instead of destructuring
 const Category = ({name, background}) => (
   <View style={ss.Category}>
     <Image source={{uri: background}} style={ss.Category__bg} resizeMode='center' />
     {/* todo fit size */}
-    <Text style={ss.Category__name}>{name}</Text>
+    <Text style={[ss.Category__name, {fontSize: U * _tempQuotient(name) }]}>
+      {name}</Text>
   </View>
 );
 

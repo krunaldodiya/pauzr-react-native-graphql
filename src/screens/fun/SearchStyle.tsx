@@ -63,9 +63,9 @@ export default StyleSheet.create({
     width: 4 * U,
     height: 4 * U,
 
-    backgroundColor: 'grey', // temp
+    backgroundColor: 'black', // temp
 
-    borderRadius: 0.88 * U,
+    borderRadius: 2 * u,
     overflow: 'hidden',
   },
   Category__name: {
@@ -78,10 +78,12 @@ export default StyleSheet.create({
     color: 'white',
 
     textShadowColor: 'black',
-    textShadowRadius: 3 * u // todo refactor
+    textShadowRadius: 2 * u, // todo refactor
   },
   Category__bg: {
     width:  4 * U,
     height: 4 * U,
+
+    opacity: 0.5,
   },
 })
