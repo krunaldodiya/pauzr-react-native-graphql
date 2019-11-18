@@ -1,4 +1,5 @@
-import React, {useEffect, useState, Fragment} from 'react';
+import {useQuery} from '@apollo/react-hooks';
+import React, {Fragment, useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -7,16 +8,13 @@ import {
   Text,
   View,
 } from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {FlatList, NavigationScreenProp} from 'react-navigation';
 import {Icon} from 'react-native-elements';
-import getAssets from '../../libs/image';
-import theme from '../../libs/theme';
-import {useQuery} from '@apollo/react-hooks';
+import {ScrollView} from 'react-native-gesture-handler';
+import {FlatList, NavigationScreenProp} from 'react-navigation';
+import FeedList from '../../components/Posts/FeedList';
 import {GET_AUTH_USER} from '../../graphql/query';
+import getAssets from '../../libs/image';
 import {u, U} from '../../libs/vars';
-
-import FeedList from '../../components/Posts/FeedList'
 import ss from './ProfileStyle';
 
 interface ProfileProps {
@@ -53,8 +51,7 @@ const Profile = (props: ProfileProps) => {
     );
   };
 
-  const renderItem = (data: any) =>
-    <FeedList data={data} />
+  const renderItem = (data: any) => <FeedList data={data} />;
 
   const editProfileHandler = () => null;
   const createPostHandler = () => null;
@@ -73,18 +70,15 @@ const Profile = (props: ProfileProps) => {
 
       <SafeAreaView style={{flex: 1}}>
         <ScrollView style={{flex: 1}}>
-
           <View style={ss.mainContainer}>
-
             <View style={ss.aboutContainer}>
-
               <View style={ss.aboutContainer__avaAndMeta}>
-                
-                <Image style={ss.avatar}
-                      // source={{uri: getAssets(authUser.avatar)}}
-                      source={{uri: 'https://picsum.photos/id/54/500/500'}}
-                    />
-                
+                <Image
+                  style={ss.avatar}
+                  // source={{uri: getAssets(authUser.avatar)}}
+                  source={{uri: 'https://picsum.photos/id/54/500/500'}}
+                />
+
                 <View style={ss.metaBlock}>
                   <Text style={ss.metaBlock__text_number}> 350 </Text>
                   <Text style={ss.metaBlock__text}> posts </Text>
@@ -107,7 +101,6 @@ const Profile = (props: ProfileProps) => {
                   size={1 * 0.64 * U}
                   containerStyle={{flex: 0.5, paddingLeft: u}}
                 />
-
               </View>
 
               <View style={ss.aboutContainer__nameAndBio}>
@@ -120,15 +113,12 @@ const Profile = (props: ProfileProps) => {
                   <Text style={ss.bio}>
                     {/* {authUser.bio} */}
                     {/* there's absolute random bio lol */}
-                      Brittany Wright
-                      I see food as an art and an opportunity to do something creative. | San Diego, CA
-                      ⚡
-                      PRINT SHOP:
-                      wrightkitchen.com
+                    Brittany Wright I see food as an art and an opportunity to
+                    do something creative. | San Diego, CA ⚡ PRINT SHOP:
+                    wrightkitchen.com
                   </Text>
                 )}
               </View>
-
             </View>
 
             {/* <View style={{marginHorizontal: 20, marginVertical: 5}}>
@@ -242,16 +232,26 @@ const Profile = (props: ProfileProps) => {
                 // data={postsList}
                 data={[
                   {
-                    owner: {avatar: 'https://picsum.photos/id/54/500/500', name: 'Ardual Kebab', },
+                    owner: {
+                      avatar: 'https://picsum.photos/id/54/500/500',
+                      name: 'Ardual Kebab',
+                    },
                     category: {name: 'Food'},
-                    attachments: [{path: 'https://picsum.photos/id/54/500/500'}],
+                    attachments: [
+                      {path: 'https://picsum.photos/id/54/500/500'},
+                    ],
                     description: '*-* Cool mountains this weekend :)',
                   },
                   {
-                    owner: {avatar: 'https://picsum.photos/id/54/500/500', name: 'Ardual Kebab', },
+                    owner: {
+                      avatar: 'https://picsum.photos/id/54/500/500',
+                      name: 'Ardual Kebab',
+                    },
                     category: {name: 'Food'},
-                    attachments: [{path: 'https://picsum.photos/id/54/500/500'}]
-                  }
+                    attachments: [
+                      {path: 'https://picsum.photos/id/54/500/500'},
+                    ],
+                  },
                 ]}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
@@ -261,7 +261,6 @@ const Profile = (props: ProfileProps) => {
                 // ListFooterComponent={this.showLoading}
               />
             </View>
-            
           </View>
         </ScrollView>
       </SafeAreaView>
