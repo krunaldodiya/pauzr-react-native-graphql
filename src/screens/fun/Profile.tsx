@@ -238,7 +238,10 @@ const Profile = (props: ProfileProps) => {
                     },
                     category: {name: 'Food'},
                     attachments: [
-                      {path: 'https://picsum.photos/id/54/500/500'},
+                      {
+                        path: 'https://picsum.photos/id/54/500/500',
+                        mime: 'video/mp4',
+                      },
                     ],
                     description: '*-* Cool mountains this weekend :)',
                   },
@@ -249,7 +252,10 @@ const Profile = (props: ProfileProps) => {
                     },
                     category: {name: 'Food'},
                     attachments: [
-                      {path: 'https://picsum.photos/id/54/500/500'},
+                      {
+                        path: 'https://picsum.photos/id/54/500/500',
+                        mime: 'video/mp4',
+                      },
                     ],
                   },
                 ]}
