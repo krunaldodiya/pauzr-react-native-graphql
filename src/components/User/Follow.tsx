@@ -16,12 +16,12 @@ const FollowButton = (props: any) => {
       {user.id != authUser.me.id && (
         <Button
           buttonStyle={{
-            width: 100,
+            width: 110,
             height: 30,
-            borderRadius: 5,
+            borderRadius: 10,
             borderWidth: 1,
-            borderColor: user.is_following ? 'skyblue' : 'white',
-            backgroundColor: user.is_following ? 'white' : 'skyblue',
+            borderColor: user.is_following ? '#50b8e7' : 'white',
+            backgroundColor: user.is_following ? 'white' : '#50b8e7',
           }}
           titleStyle={{
             color: user.is_following ? 'black' : 'white',

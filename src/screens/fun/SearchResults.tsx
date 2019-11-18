@@ -23,7 +23,13 @@ const SearchResults = (props: any) => {
           borderBottomWidth: 1,
           borderColor: '#ccc',
         }}>
-        <Icon name="search" type="evilicon" color="hsl(0, 0%, 24%)" />
+        <Icon
+          name="search"
+          type="evilicon"
+          color="hsl(0, 0%, 24%)"
+          size={30}
+          containerStyle={{marginLeft: 5}}
+        />
 
         <TextInput
           placeholder="find people"
@@ -35,10 +41,11 @@ const SearchResults = (props: any) => {
               searchUsers({variables: {keywords: value, first: 10}});
             }
           }}
+          style={{width: '100%', padding: 10}}
         />
       </View>
 
-      <View>
+      <View style={{marginTop: 5}}>
         <FlatList
           data={data ? data.searchUsers.data : []}
           keyExtractor={(item, index) => index.toString()}
@@ -46,11 +53,12 @@ const SearchResults = (props: any) => {
             return (
               <View
                 style={{
-                  margin: 2,
+                  marginVertical: 2,
+                  marginHorizontal: 5,
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderWidth: 1,
-                  borderColor: 'skyblue',
+                  borderColor: '#50b8e7',
                   borderRadius: 10,
                 }}>
                 <View style={{marginHorizontal: 5}}>
@@ -65,7 +73,7 @@ const SearchResults = (props: any) => {
                   <Text style={{fontSize: 16, textTransform: 'none'}}>
                     {data.item.name}
                   </Text>
-                  <Text style={{fontSize: 12, color: '#3c84a7'}}>
+                  <Text style={{fontSize: 12, color: '#50b8e7'}}>
                     @{data.item.username}
                   </Text>
                 </View>
