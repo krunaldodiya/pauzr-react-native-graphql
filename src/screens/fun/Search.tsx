@@ -1,3 +1,4 @@
+import {useQuery} from '@apollo/react-hooks';
 import React, {Fragment} from 'react';
 import {
   Image,
@@ -6,61 +7,26 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
+import {GET_CATEGORIES} from '../../graphql/query';
 import screens from '../../libs/screens';
 import {U} from '../../libs/vars';
 import ss from './SearchStyle';
 
-const categories = [
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/27/500/500',
-  },
-  {name: 'Food', background: 'https://picsum.photos/id/26/500/500'},
-  {
-    name: 'Science\n&\nTechnology',
-    background: 'https://picsum.photos/id/18/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/54/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/52/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/62/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/23/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/65/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/34/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/2/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/24/500/500',
-  },
-  {
-    name: 'Travel',
-    background: 'https://picsum.photos/id/7/500/500',
-  },
-];
-
 const Search = (props: any) => {
+  const {data: categories, loading: loadingCategories} = useQuery(
+    GET_CATEGORIES,
+    {
+      fetchPolicy: 'cache-and-network',
+    },
+  );
+
+  if (!categories && loadingCategories) {
+    return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
+  }
+
   return (
     <Fragment>
       <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
@@ -86,7 +52,7 @@ const Search = (props: any) => {
             <Text style={ss.categoriesContainer__note}>
               or select the category:
             </Text>
-            {categories.map((category, index) => (
+            {categories.categories.map((category: any, index: number) => (
               <Category key={index} {...category} />
             ))}
           </View>
@@ -103,10 +69,10 @@ const _tempQuotient = name => {
 };
 
 // todo ts interface instead of destructuring
-const Category = ({name, background}) => (
+const Category = ({name, background_image}) => (
   <View style={ss.Category}>
     <Image
-      source={{uri: background}}
+      source={{uri: background_image}}
       style={ss.Category__bg}
       resizeMode="center"
     />
