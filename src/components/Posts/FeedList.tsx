@@ -4,7 +4,6 @@ import {Icon} from 'react-native-elements';
 import {Pages} from 'react-native-pages';
 import {u, U} from '../../libs/vars';
 import ss from './FeedListStyle';
-import ImagePost from './ImagePost';
 import VideoPost from './VideoPost';
 const {width} = Dimensions.get('window');
 
@@ -37,7 +36,10 @@ const FeedList = (props: any) => {
             }
 
             return (
-              <ImagePost key={attachment.id} {...props} data={attachment} />
+              <Image
+                style={[ss.image, {width: 14 * U, height: 14 * U}]}
+                source={{uri: attachment.path}}
+              />
             );
           })}
         </Pages>

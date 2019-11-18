@@ -12,6 +12,7 @@ import Chat from './fun/Chat';
 import Feeds from './fun/Feeds';
 import Notifications from './fun/Notifications';
 import Search from './fun/Search';
+import Profile from './fun/Profile';
 
 const FunTabNavigator = createBottomTabNavigator(
   {
