@@ -10,6 +10,7 @@ const screens = {
   Profile: 'Profile',
   Picker: 'Picker',
   CreatePost: 'CreatePost',
+  SearchResults: 'SearchResults',
 };
 
 export default screens;

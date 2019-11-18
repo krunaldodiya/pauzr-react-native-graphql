@@ -2,13 +2,12 @@ import {createStackNavigator} from 'react-navigation-stack';
 import Auth from '../screens/Auth';
 import CreatePost from '../screens/CreatePost';
 import Feeds from '../screens/fun/Feeds';
+import TotalLikes from '../screens/fun/post/TotalLikes';
 import Profile from '../screens/fun/Profile';
+import SearchResults from '../screens/fun/SearchResults';
 import Home from '../screens/Home';
 import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
-
-// temp:
-import TotalLikes from '../screens/fun/post/TotalLikes';
 
 const getStackNavigator = (initialRouteName: string) => {
   return createStackNavigator(
@@ -21,6 +20,7 @@ const getStackNavigator = (initialRouteName: string) => {
       Feeds: {screen: Feeds},
       CreatePost: {screen: CreatePost},
       TotalLikes: {screen: TotalLikes},
+      SearchResults: {screen: SearchResults},
     },
     {
       initialRouteName,

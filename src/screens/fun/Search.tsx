@@ -1,21 +1,29 @@
-import React, {Fragment} from 'react';
-import {Text, View, StatusBar, SafeAreaView} from 'react-native';
-import {NavigationScreenProp} from 'react-navigation';
+import React, {Fragment, useState} from 'react';
+import {SafeAreaView, StatusBar, View} from 'react-native';
+import {Button, Input} from 'react-native-elements';
+import screens from '../../libs/screens';
 
-import ss from './SearchStyle'
+const Search = (props: any) => {
+  const [keywords, setKeywords] = useState();
 
-interface SearchProps {
-  navigation: NavigationScreenProp<any, any>;
-}
-
-const Search = (props: SearchProps) => {
   return (
     <Fragment>
       <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
 
       <SafeAreaView style={{flex: 1}}>
         <View style={{padding: 10, marginBottom: 10}}>
-          <Text>Search</Text>
+          <Input
+            value={keywords}
+            placeholder="Search"
+            onChangeText={value => setKeywords(value)}
+          />
+
+          <Button
+            title="Search"
+            onPress={() => {
+              props.navigation.push(screens.SearchResults, {keywords});
+            }}
+          />
         </View>
       </SafeAreaView>
     </Fragment>
