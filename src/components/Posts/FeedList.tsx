@@ -16,6 +16,7 @@ const FeedList = (props: any) => {
           <Image style={ss.authorAvatar} source={{uri: post.owner.avatar}} />
           <View style={{flex: 1}}>
             <Text style={ss.authorName}>{post.owner.name}</Text>
+            <Text style={ss.category}>posted in {post.category.name}</Text>
           </View>
         </View>
 
@@ -44,7 +45,7 @@ const FeedList = (props: any) => {
 
       <View style={ss.timestampAndCategory}>
         <Text style={ss.timestamp}>{post.when}</Text>
-        <Text style={ss.category}>Category: {post.category.name}</Text>
+        {/* <Text style={ss.category}>Category: {post.category.name}</Text> */}
       </View>
 
       <View style={ss.bottomContainer}>
