@@ -1,19 +1,16 @@
-import React, {Fragment, useState} from 'react';
-import {SafeAreaView, StatusBar, View} from 'react-native';
-import {Button, Input} from 'react-native-elements';
-import screens from '../../libs/screens';
 import React, {Fragment} from 'react';
 import {
-  Text,
-  View,
-  StatusBar,
-  SafeAreaView,
-  TextInput,
   Image,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import {NavigationScreenProp} from 'react-navigation';
-import {U, u} from '../../libs/vars';
+import screens from '../../libs/screens';
+import {U} from '../../libs/vars';
+import ss from './SearchStyle';
 
 const categories = [
   {
@@ -64,15 +61,15 @@ const categories = [
 ];
 
 const Search = (props: any) => {
-  const [keywords, setKeywords] = useState();
-
   return (
     <Fragment>
       <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
 
       <SafeAreaView style={{flex: 1}}>
         <View style={[ss.mainContainer, ss.mainContainer_clay]}>
-          <View style={ss.inputConteiner}>
+          <TouchableOpacity
+            style={ss.inputConteiner}
+            onPress={() => props.navigation.push(screens.SearchResults)}>
             <Icon
               name="search"
               type="evilicon"
@@ -80,27 +77,17 @@ const Search = (props: any) => {
               size={2 * 0.64 * U}
               containerStyle={ss.inputConteiner__icon}
             />
-            <TextInput
-              placeholder="find people"
-              style={ss.input}
-              value={keywords}
-              onChangeText={value => setKeywords(value)}
-            />
-
-            <Button
-              title="Search"
-              onPress={() => {
-                props.navigation.push(screens.SearchResults, {keywords});
-              }}
-            />
-          </View>
+            <Text style={[ss.input, {textAlignVertical: 'center'}]}>
+              Find People
+            </Text>
+          </TouchableOpacity>
 
           <View style={ss.categoriesContainer}>
             <Text style={ss.categoriesContainer__note}>
               or select the category:
             </Text>
-            {categories.map(category => (
-              <Category {...category} />
+            {categories.map((category, index) => (
+              <Category key={index} {...category} />
             ))}
           </View>
         </View>
@@ -109,8 +96,11 @@ const Search = (props: any) => {
   );
 };
 
-const _tempQuotient = name =>
-  (4 / name.length) * ((name.match(/\n/g) && name.match(/\n/g).length) || 1);
+const _tempQuotient = name => {
+  return (
+    (4 / name.length) * ((name.match(/\n/g) && name.match(/\n/g).length) || 1)
+  );
+};
 
 // todo ts interface instead of destructuring
 const Category = ({name, background}) => (

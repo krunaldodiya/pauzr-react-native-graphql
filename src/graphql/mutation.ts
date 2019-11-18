@@ -46,16 +46,20 @@ export const VERIFY_OTP = gql`
       token
       user {
         id
+        username
         name
         email
         mobile
         language
+        avatar
         country {
           id
           name
           phonecode
           shortname
         }
+        is_follower
+        is_following
       }
     }
   }
@@ -67,16 +71,20 @@ export const LOGIN = gql`
       token
       user {
         id
+        username
         name
         email
         mobile
         language
+        avatar
         country {
           id
           name
           phonecode
           shortname
         }
+        is_follower
+        is_following
       }
     }
   }
@@ -102,16 +110,20 @@ export const EDIT_PROFILE = gql`
       username: $username
     ) {
       id
+      username
       name
       email
       mobile
       language
+      avatar
       country {
         id
         name
         phonecode
         shortname
       }
+      is_follower
+      is_following
     }
   }
 `;
@@ -134,16 +146,20 @@ export const REGISTER = gql`
       token
       user {
         id
+        username
         name
         email
         mobile
         language
+        avatar
         country {
           id
           name
           phonecode
           shortname
         }
+        is_follower
+        is_following
       }
     }
   }

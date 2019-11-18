@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable semi */
 
-import {StyleSheet} from 'react-native'
-import {width, U, u} from '../../libs/vars'
+import {StyleSheet} from 'react-native';
+import {U, u} from '../../libs/vars';
 
 export default StyleSheet.create({
   postContainer: {
@@ -21,7 +21,8 @@ export default StyleSheet.create({
     overflow: 'hidden',
     elevation: 12,
   },
-  postContentContainer__topPlane: { // todo rename
+  postContentContainer__topPlane: {
+    // todo rename
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
@@ -47,7 +48,7 @@ export default StyleSheet.create({
     color: 'hsl(0, 0%, 24%)',
     fontSize: 0.54 * U,
     fontFamily: 'MPLUSRounded1c-Bold',
-    marginRight: 0.64 * U / 2,
+    marginRight: (0.64 * U) / 2,
   },
 
   timestampAndCategory: {
@@ -59,7 +60,7 @@ export default StyleSheet.create({
   },
 
   button: {
-    marginRight: 0.64 * U / 2,
+    marginRight: (0.64 * U) / 2,
   },
 
   bottomContainer: {
@@ -68,7 +69,7 @@ export default StyleSheet.create({
     // alignItems: 'stretch',
     alignItems: 'center',
 
-    marginRight: 0.25 * U,   // todo refactor
+    marginRight: 0.25 * U, // todo refactor
   },
   description: {
     // margin: 0.5 * U,
@@ -103,11 +104,10 @@ export default StyleSheet.create({
   button_bottom: {
     marginRight: 0,
     // flex: 1,
-    width: 2 * 0.64 * U,  // todo refactor
+    width: 2 * 0.64 * U, // todo refactor
     // backgroundColor:'red',
     // textAlignVertical: 'center',
   },
-
 
   image: {
     borderRadius: U,
@@ -127,4 +127,4 @@ export default StyleSheet.create({
     fontSize: 2 * u,
     fontFamily: 'MPLUSRounded1c-Regular',
   },
-})
+});

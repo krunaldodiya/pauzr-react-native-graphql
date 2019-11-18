@@ -11,20 +11,28 @@ export const LOAD_COUNTRIES = gql`
   }
 `;
 
-export const GET_USERS = gql`
-  query GetUsers($first: Int!, $page: Int!) {
-    users(first: $first, page: $page) {
-      id
-      name
-      email
-      mobile
-      language
-      avatar
-      country {
+export const SEARCH_USERS = gql`
+  query SearchUsers($keywords: String!, $first: Int!, $page: Int) {
+    searchUsers(keywords: $keywords, first: $first, page: $page) {
+      data {
         id
+        username
         name
-        phonecode
-        shortname
+        email
+        mobile
+        language
+        avatar
+        country {
+          id
+          name
+          phonecode
+          shortname
+        }
+        is_follower
+        is_following
+      }
+      paginatorInfo {
+        total
       }
     }
   }
@@ -34,6 +42,7 @@ export const GET_AUTH_USER = gql`
   query GetAuthUser {
     me {
       id
+      username
       name
       email
       mobile
@@ -45,6 +54,8 @@ export const GET_AUTH_USER = gql`
         phonecode
         shortname
       }
+      is_follower
+      is_following
     }
   }
 `;

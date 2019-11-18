@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable semi */
 
-import {StyleSheet} from 'react-native'
-import {width, U, u} from '../../libs/vars'
-import { useMemo } from 'react'
+import {StyleSheet} from 'react-native';
+import {U, u} from '../../libs/vars';
 
 export default StyleSheet.create({
   // todo generalize and move to common style file
@@ -33,7 +32,7 @@ export default StyleSheet.create({
   input: {
     flex: 1,
 
-    fontFamily: 'MPLUSRounded1c-Regular'
+    fontFamily: 'MPLUSRounded1c-Regular',
   },
 
   categoriesContainer: {
@@ -81,9 +80,9 @@ export default StyleSheet.create({
     textShadowRadius: 2 * u, // todo refactor
   },
   Category__bg: {
-    width:  4 * U,
+    width: 4 * U,
     height: 4 * U,
 
     opacity: 0.5,
   },
-})
+});
