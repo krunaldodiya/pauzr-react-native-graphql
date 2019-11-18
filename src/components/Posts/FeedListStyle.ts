@@ -93,7 +93,8 @@ export default StyleSheet.create({
     // textAlign: 'center',
   },
   category: {
-    marginLeft: U,
+    // marginLeft: U,
+    marginLeft: 0.75 * U,
 
     color: 'hsl(0, 0%, 36%)',
     fontSize: 0.44 * U,
