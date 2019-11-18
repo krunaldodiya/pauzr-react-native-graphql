@@ -1,8 +1,15 @@
 import {gql} from 'apollo-boost';
+import {USER_INFO_FRAGMENT} from './fragment';
 
 export const REQUEST_OTP = gql`
   mutation RequestOtp($mobile: String!) {
     requestOtp(mobile: $mobile)
+  }
+`;
+
+export const TOGGLE_FOLLOW = gql`
+  mutation ToggleFollow($following_id: ID!) {
+    toggleFollow(following_id: $following_id)
   }
 `;
 
@@ -45,24 +52,12 @@ export const VERIFY_OTP = gql`
     verifyOtp(mobile: $mobile, otp: $otp) {
       token
       user {
-        id
-        username
-        name
-        email
-        mobile
-        language
-        avatar
-        country {
-          id
-          name
-          phonecode
-          shortname
-        }
-        is_follower
-        is_following
+        ...UserInfo
       }
     }
   }
+
+  ${USER_INFO_FRAGMENT}
 `;
 
 export const LOGIN = gql`
@@ -70,24 +65,12 @@ export const LOGIN = gql`
     login(email: $email, password: $password) {
       token
       user {
-        id
-        username
-        name
-        email
-        mobile
-        language
-        avatar
-        country {
-          id
-          name
-          phonecode
-          shortname
-        }
-        is_follower
-        is_following
+        ...UserInfo
       }
     }
   }
+
+  ${USER_INFO_FRAGMENT}
 `;
 
 export const EDIT_PROFILE = gql`
@@ -109,23 +92,11 @@ export const EDIT_PROFILE = gql`
       bio: $bio
       username: $username
     ) {
-      id
-      username
-      name
-      email
-      mobile
-      language
-      avatar
-      country {
-        id
-        name
-        phonecode
-        shortname
-      }
-      is_follower
-      is_following
+      ...UserInfo
     }
   }
+
+  ${USER_INFO_FRAGMENT}
 `;
 
 export const REGISTER = gql`
@@ -145,24 +116,12 @@ export const REGISTER = gql`
     ) {
       token
       user {
-        id
-        username
-        name
-        email
-        mobile
-        language
-        avatar
-        country {
-          id
-          name
-          phonecode
-          shortname
-        }
-        is_follower
-        is_following
+        ...UserInfo
       }
     }
   }
+
+  ${USER_INFO_FRAGMENT}
 `;
 
 export const SET_INITIAL_SCREEN = gql`

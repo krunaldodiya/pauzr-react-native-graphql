@@ -1,11 +1,14 @@
-import {useLazyQuery} from '@apollo/react-hooks';
+import {useLazyQuery, useQuery} from '@apollo/react-hooks';
 import React, {useState} from 'react';
-import {FlatList, TextInput, View, Text} from 'react-native';
-import {Icon, Image, Button} from 'react-native-elements';
-import {SEARCH_USERS} from '../../graphql/query';
+import {FlatList, Text, TextInput, View} from 'react-native';
+import {Icon, Image} from 'react-native-elements';
+import FollowButton from '../../components/User/Follow';
+import {GET_AUTH_USER, SEARCH_USERS} from '../../graphql/query';
 
 const SearchResults = (props: any) => {
   const [keywords, setKeywords] = useState('');
+
+  const {data: authUser} = useQuery(GET_AUTH_USER);
 
   const [searchUsers, {data}] = useLazyQuery(SEARCH_USERS, {
     fetchPolicy: 'cache-and-network',
@@ -38,6 +41,7 @@ const SearchResults = (props: any) => {
       <View>
         <FlatList
           data={data ? data.searchUsers.data : []}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={(data: any) => {
             return (
               <View
@@ -67,11 +71,7 @@ const SearchResults = (props: any) => {
                 </View>
 
                 <View style={{marginRight: 10}}>
-                  <Button
-                    buttonStyle={{width: 80, height: 35, borderRadius: 10}}
-                    title="Follow"
-                    onPress={() => null}
-                  />
+                  <FollowButton user={data.item} authUser={authUser} />
                 </View>
               </View>
             );

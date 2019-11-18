@@ -1,4 +1,5 @@
 import {gql} from 'apollo-boost';
+import {USER_INFO_FRAGMENT} from './fragment';
 
 export const LOAD_COUNTRIES = gql`
   query LoadCountries {
@@ -15,49 +16,25 @@ export const SEARCH_USERS = gql`
   query SearchUsers($keywords: String!, $first: Int!, $page: Int) {
     searchUsers(keywords: $keywords, first: $first, page: $page) {
       data {
-        id
-        username
-        name
-        email
-        mobile
-        language
-        avatar
-        country {
-          id
-          name
-          phonecode
-          shortname
-        }
-        is_follower
-        is_following
+        ...UserInfo
       }
       paginatorInfo {
         total
       }
     }
   }
+
+  ${USER_INFO_FRAGMENT}
 `;
 
 export const GET_AUTH_USER = gql`
   query GetAuthUser {
     me {
-      id
-      username
-      name
-      email
-      mobile
-      language
-      avatar
-      country {
-        id
-        name
-        phonecode
-        shortname
-      }
-      is_follower
-      is_following
+      ...UserInfo
     }
   }
+
+  ${USER_INFO_FRAGMENT}
 `;
 
 export const GET_INITIAL_SCREEN = gql`
