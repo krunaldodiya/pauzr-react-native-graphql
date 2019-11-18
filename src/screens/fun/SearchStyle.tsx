@@ -33,7 +33,7 @@ export default StyleSheet.create({
   input: {
     flex: 1,
 
-    fontFamily: 'MPLUSRounded1c-Regular'
+    fontFamily: 'MPLUSRounded1c-Regular' // todo replace with theme.fonts
   },
 
   categoriesContainer: {
