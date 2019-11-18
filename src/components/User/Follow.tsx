@@ -9,16 +9,14 @@ import {TOGGLE_FOLLOW} from '../../graphql/mutation';
 const FollowButton = (props: any) => {
   const {user, authUser} = props;
 
-  const [toggleFollow] = useMutation(TOGGLE_FOLLOW, {
-    fetchPolicy: 'no-cache',
-  });
+  const [toggleFollow] = useMutation(TOGGLE_FOLLOW);
 
   return (
     <View>
       {user.id != authUser.me.id && (
         <Button
           buttonStyle={{
-            width: 90,
+            width: 100,
             height: 30,
             borderRadius: 5,
             borderWidth: 1,
@@ -30,8 +28,14 @@ const FollowButton = (props: any) => {
             fontSize: 12,
             textTransform: 'uppercase',
           }}
-          title={user.is_following ? 'following' : 'follow'}
-          onPress={async () =>
+          title={
+            user.is_following
+              ? 'following'
+              : user.is_follower
+              ? 'follow back'
+              : 'follow'
+          }
+          onPress={async () => {
             await toggleFollow({
               variables: {
                 following_id: user.id,
@@ -62,8 +66,8 @@ const FollowButton = (props: any) => {
                 __typename: 'Mutation',
                 toggleFollow: user.is_following ? 'detached' : 'attached',
               },
-            })
-          }
+            });
+          }}
         />
       )}
     </View>

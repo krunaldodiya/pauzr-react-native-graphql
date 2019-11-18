@@ -16,9 +16,7 @@ const CreatePost = (props: any) => {
 
   const {data: authUser} = useQuery(GET_AUTH_USER);
   const {data, loading} = useQuery(GET_CATEGORIES);
-  const [createPostMutation] = useMutation(CREATE_POST, {
-    fetchPolicy: 'no-cache',
-  });
+  const [createPostMutation] = useMutation(CREATE_POST);
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
@@ -29,8 +27,6 @@ const CreatePost = (props: any) => {
 
     try {
       await createPostMutation({
-        awaitRefetchQueries: true,
-        refetchQueries: [{query: GET_DRAFTS}],
         update: (store, {data: {createPost}}) => {
           const {drafts}: any = store.readQuery({query: GET_DRAFTS});
           const updatedCreatePost = [createPost, ...drafts];
