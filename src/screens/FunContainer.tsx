@@ -170,7 +170,8 @@ const HeaderLeft = (props: any) => {
 
 const HeaderRight = (props: any) => {
   const userProfile = useCallback(() => {
-    props.navigation.push(screens.Profile);
+    // props.navigation.push(screens.Profile);
+    props.navigation.push(screens.ProfileEdit); // temp for fast debug
   }, []);
 
   return (

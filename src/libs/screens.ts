@@ -3,11 +3,12 @@ const screens = {
   RequestOtp: 'RequestOtp',
   VerifyOtp: 'VerifyOtp',
   Home: 'Home',
+  Profile: 'Profile',
   EditProfile: 'EditProfile',
+  ProfileEdit: 'ProfileEdit', // todo decide & resolve
   Auth: 'Auth',
   Groups: 'Groups',
   SelectLanguage: 'SelectLanguage',
-  Profile: 'Profile',
   Picker: 'Picker',
   CreatePost: 'CreatePost',
   SearchResults: 'SearchResults',
