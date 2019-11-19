@@ -11,43 +11,19 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
+  listBlock: {
 
-  aboutContainer: {
-    margin: U,
-    marginBottom: 0,
-
-    backgroundColor: 'hsl(0, 0%, 94%)',
-    borderRadius: U,
   },
 
-  aboutContainer__avaAndMeta: {
-    margin: U,
-    // marginHorizontal: U,
-    // backgroundColor: 'blue',
+  input: {},
 
+  avaAndNameBlock: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignContent: 'center',
-    alignItems: 'center',
-  },
-  metaBlock: {
-    flex: 2,
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  metaBlock__text: {
-    color: '#000',
-    fontFamily: 'MPLUSRounded1c-Regular', // todo replace with theme.fonts
-  },
-  metaBlock__text_number: {
-    fontFamily: 'MPLUSRounded1c-Bold',
   },
   avatar: {
-    width: 2 * U,
-    height: 2 * U,
-    // borderRadius: U - u,
-    borderRadius: U - u / 2,
+    width: 4 * U,
+    height: 4 * U,
+    borderRadius: 2.001 * U,
     overflow: 'hidden',
   },
 
@@ -66,6 +42,29 @@ export default StyleSheet.create({
     fontSize: 0.5 * U,
   },
 
+  dateOfBirth: {
+    backgroundColor: 'hsl(0,0%,94%)'
+  },
+  dateOfBirth__text: {
+    fontFamily: 'MPLUSRounded1c-Regular'
+  },
+  dateOfBirth__text_value: {
+    fontFamily: 'MPLUSRounded1c-Bold'
+  },
 
+  interestsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  Interest: {
+    margin: u,
+    marginBottom: 0,
+    
+    paddingHorizontal: 1.5 * u,
+    paddingVertical: 0.5 * u,
+    backgroundColor: 'hsl(0,0%, 86%)',
+    borderRadius: 100,
+  },
+  Interest__title: {},
 
 })
