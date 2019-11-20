@@ -56,31 +56,29 @@ const ProfileEdit = (props: ProfileEditProps) => {
                   source={{uri: 'https://picsum.photos/id/63/500/500'}}
                 />
               </TouchableOpacity>
-              <Input placeholder="name" />
+              <Input containerStyle={[ss.input, {marginHorizontal: 0}]} value='Pavel Shamparov' inputStyle={[ss.inputStyle, ss.input__name]} inputContainerStyle={ss.inputContainerStyle} placeholder="name" />
             </View>
 
-            <Input placeholder="email" />
+            <Input containerStyle={ss.input} inputStyle={ss.inputStyle} inputContainerStyle={ss.inputContainerStyle} placeholder="email" />
 
-            <Input placeholder="phone" />
+            <Input containerStyle={ss.input} inputStyle={ss.inputStyle} inputContainerStyle={ss.inputContainerStyle} placeholder="phone" />
 
             <TouchableOpacity style={ss.dateOfBirth}>
+              <Text style={ss.dateOfBirth__text}>saw the light: </Text>
               <DatePicker
-                style={{
-                  padding: 5,
-                  width: '100%',
-                  backgroundColor: 'white',
-                }}
+                style={ss.datePicker}
                 date={authUser.me.dob}
                 mode="date"
                 placeholder={authUser.me.dob}
                 format="DD-MM-YYYY"
                 customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    marginLeft: 0,
-                  },
+                  // dateIcon: {
+                    // position: 'absolute',
+                    // left: 0,
+                    // top: 0,
+                    // marginLeft: 0,
+                  // },
+                  dateInput: {borderWidth: 0, /*borderLeftWidth: 0.5*/}
                 }}
                 onDateChange={(date: any) => {
                   console.log(date);
@@ -88,7 +86,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
               />
             </TouchableOpacity>
 
-            <Input placeholder="bio" multiline={true} />
+            <Input containerStyle={ss.input} inputStyle={[ss.inputStyle, ss.input__bio]} inputContainerStyle={ss.inputContainerStyle} placeholder="bio" multiline={true} />
 
             <View style={ss.interestsContainer}>
               <Interest title="South Park" />
@@ -101,7 +99,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
               <Interest title="eat" />
             </View>
 
-            <Button title="save" containerStyle={{margin: 20}} />
+            <Button title="save" buttonStyle={[ss.button, ss.button_bottom]} titleStyle={ss.button__title} />
           </View>
         </View>
       </SafeAreaView>
