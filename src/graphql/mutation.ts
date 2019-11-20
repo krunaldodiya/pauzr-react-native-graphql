@@ -1,5 +1,5 @@
 import {gql} from 'apollo-boost';
-import {USER_INFO_FRAGMENT} from './fragment';
+import {USER_INFO_FRAGMENT, POST_INFO_FRAGMENT} from './fragment';
 
 export const REQUEST_OTP = gql`
   mutation RequestOtp($mobile: String!) {
@@ -10,6 +10,12 @@ export const REQUEST_OTP = gql`
 export const TOGGLE_FOLLOW = gql`
   mutation ToggleFollow($following_id: ID!) {
     toggleFollow(following_id: $following_id)
+  }
+`;
+
+export const TOGGLE_FAVORITE = gql`
+  mutation ToggleFavorite($post_id: ID!) {
+    toggleFavorite(post_id: $post_id)
   }
 `;
 
@@ -28,23 +34,11 @@ export const CREATE_POST = gql`
       description: $description
       attachments: $attachments
     ) {
-      id
-      type
-      description
-      published
-      attachments {
-        id
-      }
-      owner {
-        id
-        name
-      }
-      category {
-        id
-        name
-      }
+      ...PostInfo
     }
   }
+
+  ${POST_INFO_FRAGMENT}
 `;
 
 export const VERIFY_OTP = gql`

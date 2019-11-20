@@ -1,14 +1,20 @@
+import {useMutation} from '@apollo/react-hooks';
 import React from 'react';
 import {Dimensions, Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Pages} from 'react-native-pages';
+import {TOGGLE_FAVORITE} from '../../graphql/mutation';
 import {u, U} from '../../libs/vars';
 import ss from './FeedListStyle';
 import VideoPost from './VideoPost';
+import {defaultDataIdFromObject} from 'apollo-boost';
+import {POST_INFO_FRAGMENT} from '../../graphql/fragment';
 const {width} = Dimensions.get('window');
 
 // todo rename also, this is one post, not list
 const FeedList = (props: any) => {
+  const [toggleFavorite] = useMutation(TOGGLE_FAVORITE);
+
   const post = props.data.item;
 
   return (
@@ -60,9 +66,42 @@ const FeedList = (props: any) => {
           <Icon
             name="favorite"
             type="SimpleLineIcons"
-            color="hsl(341, 97%, 67%)"
+            color={post.is_favorited ? 'hsl(341, 97%, 67%)' : '#ccc'}
             size={2 * 0.64 * U}
             containerStyle={ss.button}
+            onPress={async () => {
+              await toggleFavorite({
+                variables: {
+                  post_id: post.id,
+                },
+
+                update: (store, {data}) => {
+                  const cacheId: any = defaultDataIdFromObject({
+                    id: post.id,
+                    __typename: 'Post',
+                  });
+
+                  const postInfo = store.readFragment({
+                    id: cacheId,
+                    fragment: POST_INFO_FRAGMENT,
+                  });
+
+                  store.writeFragment({
+                    id: cacheId,
+                    fragment: POST_INFO_FRAGMENT,
+                    data: {
+                      ...postInfo,
+                      is_favorited: data.toggleFavorite === 'attached',
+                    },
+                  });
+                },
+
+                optimisticResponse: {
+                  __typename: 'Mutation',
+                  toggleFavorite: post.is_favorited ? 'detached' : 'attached',
+                },
+              });
+            }}
           />
           <Text
             style={ss.totalLikes}

@@ -1,5 +1,5 @@
 import {gql} from 'apollo-boost';
-import {USER_INFO_FRAGMENT} from './fragment';
+import {USER_INFO_FRAGMENT, POST_INFO_FRAGMENT} from './fragment';
 
 export const LOAD_COUNTRIES = gql`
   query LoadCountries {
@@ -86,66 +86,20 @@ export const GET_POSTS = gql`
         hasMorePages
       }
       data {
-        id
-        description
-        type
-        attachments {
-          id
-          path
-          mime
-          source
-          thumbnail
-          size
-          height
-          width
-          status
-        }
-        owner {
-          id
-          name
-          avatar
-        }
-        category {
-          id
-          name
-        }
-        created_at
-        updated_at
-        when
+        ...PostInfo
       }
     }
   }
+
+  ${POST_INFO_FRAGMENT}
 `;
 
 export const GET_DRAFTS = gql`
   query GetDrafts {
     drafts {
-      id
-      description
-      type
-      attachments {
-        id
-        path
-        mime
-        source
-        thumbnail
-        size
-        height
-        width
-        status
-      }
-      owner {
-        id
-        name
-        avatar
-      }
-      category {
-        id
-        name
-      }
-      created_at
-      updated_at
-      when
+      ...PostInfo
     }
   }
+
+  ${POST_INFO_FRAGMENT}
 `;

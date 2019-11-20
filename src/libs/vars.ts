@@ -1,12 +1,12 @@
 import {Dimensions} from 'react-native';
 
-const baseUrlProd = 'https://pauzr.tk';
-const httpUrlProd = 'https://pauzr.tk/graphql';
-const wsUrlProd = 'wss://pauzr.tk/graphql';
+const baseUrlProd = 'https://graphql.pauzr.com';
+const httpUrlProd = 'https://graphql.pauzr.com/graphql';
+const wsUrlProd = 'wss://graphql.pauzr.com/graphql';
 
-const baseUrlDev = 'https://vapor.test';
-const httpUrlDev = 'https://vapor.test/graphql';
-const wsUrlDev = 'wss://vapor.test/graphql';
+const baseUrlDev = 'https://pauzr-laravel.test';
+const httpUrlDev = 'https://pauzr-laravel.test/graphql';
+const wsUrlDev = 'wss://pauzr-laravel.test/graphql';
 
 const baseUrl = __DEV__ ? baseUrlDev : baseUrlProd;
 const httpUrl = __DEV__ ? httpUrlDev : httpUrlProd;

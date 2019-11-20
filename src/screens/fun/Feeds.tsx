@@ -11,12 +11,11 @@ import FeedList from '../../components/Posts/FeedList';
 import {GET_DRAFTS} from '../../graphql/query';
 
 const Feeds = (props: any) => {
-  const {data: feeds, loading: loadingFeeds} = useQuery(GET_DRAFTS, {
+  const {data: feeds, loading: loadingFeeds, error} = useQuery(GET_DRAFTS, {
     fetchPolicy: 'cache-and-network',
   });
 
-  const renderItem = (data: any) =>
-    <FeedList {...props} data={data} />
+  const renderItem = (data: any) => <FeedList {...props} data={data} />;
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
