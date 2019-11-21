@@ -29,11 +29,13 @@ const App = () => {
   };
 
   return (
-    <ApolloProvider client={client}>
-      <PersistGate client={client}>
-        <Main />
-      </PersistGate>
-    </ApolloProvider>
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <PersistGate client={client}>
+          <Main />
+        </PersistGate>
+      </ApolloProvider>
+    </React.StrictMode>
   );
 };
 
