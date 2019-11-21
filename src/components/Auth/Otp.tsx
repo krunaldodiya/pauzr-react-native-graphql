@@ -3,11 +3,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import React, {Fragment, useState} from 'react';
 import {View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
-import {
-  REQUEST_OTP,
-  SET_INITIAL_SCREEN,
-  VERIFY_OTP,
-} from '../../graphql/mutation';
+import {RequestOtp, RequestOtpVariables} from '../../generated/RequestOtp';
+import {VerifyOtp, VerifyOtpVariables} from '../../generated/VerifyOtp';
+import {SET_INITIAL_SCREEN} from '../../graphql/mutation';
+import request_otp from '../../graphql/types/mutations/request_otp';
+import verify_otp from '../../graphql/types/mutations/verify_otp';
 
 const Otp = (props: any) => {
   const [mobile, setMobile] = useState('');
@@ -16,13 +16,15 @@ const Otp = (props: any) => {
 
   const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
-  const [processRequestOtp, {loading: loadingRequestOtp}] = useMutation(
-    REQUEST_OTP,
-  );
+  const [processRequestOtp, {loading: loadingRequestOtp}] = useMutation<
+    RequestOtp,
+    RequestOtpVariables
+  >(request_otp);
 
-  const [processVerifyOtp, {loading: loadingVerifyOtp}] = useMutation(
-    VERIFY_OTP,
-  );
+  const [processVerifyOtp, {loading: loadingVerifyOtp}] = useMutation<
+    VerifyOtp,
+    VerifyOtpVariables
+  >(verify_otp);
 
   const setAuth = async ({user, token}: any, props: any) => {
     const initialScreen = user.language ? 'Home' : 'SelectLanguage';

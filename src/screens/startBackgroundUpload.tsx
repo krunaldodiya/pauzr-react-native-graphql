@@ -1,11 +1,12 @@
 import {useQuery} from '@apollo/react-hooks';
 import {useEffect} from 'react';
-import {GET_DRAFTS} from '../graphql/query';
+import {GetDrafts} from '../generated/GetDrafts';
+import get_drafts from '../graphql/types/queries/get_drafts';
 import screens from '../libs/screens';
 
 export const startBackgroundUpload = async (data: any) => {
   if (data.initialScreen == screens.Home) {
-    const {data} = useQuery(GET_DRAFTS, {
+    const {data} = useQuery<GetDrafts, {}>(get_drafts, {
       fetchPolicy: 'cache-and-network',
     });
 

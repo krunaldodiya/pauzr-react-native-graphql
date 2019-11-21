@@ -12,7 +12,8 @@ import {Icon} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import {FlatList, NavigationScreenProp} from 'react-navigation';
 import FeedList from '../../components/Posts/FeedList';
-import {GET_AUTH_USER} from '../../graphql/query';
+import {GetAuthUser} from '../../generated/GetAuthUser';
+import get_auth_user from '../../graphql/types/queries/get_auth_user';
 import getAssets from '../../libs/image';
 import {u, U} from '../../libs/vars';
 import ss from './ProfileStyle';
@@ -23,7 +24,7 @@ interface ProfileProps {
 
 const Profile = (props: ProfileProps) => {
   const [tab, setTab] = useState(0);
-  const {data: authUser} = useQuery(GET_AUTH_USER);
+  const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user);
   const postsList: any = [];
 
   useEffect(() => {

@@ -3,16 +3,22 @@ import React, {useState} from 'react';
 import {FlatList, Text, TextInput, View} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import FollowButton from '../../components/User/Follow';
-import {GET_AUTH_USER, SEARCH_USERS} from '../../graphql/query';
+import {GetAuthUser} from '../../generated/GetAuthUser';
+import {SearchUsers, SearchUsersVariables} from '../../generated/SearchUsers';
+import get_auth_user from '../../graphql/types/queries/get_auth_user';
+import search_users from '../../graphql/types/queries/search_users';
 
 const SearchResults = (props: any) => {
   const [keywords, setKeywords] = useState('');
 
-  const {data: authUser} = useQuery(GET_AUTH_USER);
+  const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user);
 
-  const [searchUsers, {data}] = useLazyQuery(SEARCH_USERS, {
-    fetchPolicy: 'cache-and-network',
-  });
+  const [searchUsers, {data}] = useLazyQuery<SearchUsers, SearchUsersVariables>(
+    search_users,
+    {
+      fetchPolicy: 'cache-and-network',
+    },
+  );
 
   return (
     <View style={{flex: 1}}>

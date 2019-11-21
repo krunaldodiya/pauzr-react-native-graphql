@@ -8,12 +8,16 @@ import {
   View,
 } from 'react-native';
 import FeedList from '../../components/Posts/FeedList';
-import {GET_DRAFTS} from '../../graphql/query';
+import {GetDrafts} from '../../generated/GetDrafts';
+import get_drafts from '../../graphql/types/queries/get_drafts';
 
 const Feeds = (props: any) => {
-  const {data: feeds, loading: loadingFeeds, error} = useQuery(GET_DRAFTS, {
-    fetchPolicy: 'cache-and-network',
-  });
+  const {data: feeds, loading: loadingFeeds} = useQuery<GetDrafts, {}>(
+    get_drafts,
+    {
+      fetchPolicy: 'cache-and-network',
+    },
+  );
 
   const renderItem = (data: any) => <FeedList {...props} data={data} />;
 
@@ -34,7 +38,7 @@ const Feeds = (props: any) => {
       <SafeAreaView style={{flex: 1}}>
         <View style={{flex: 1}}>
           <FlatList
-            data={feeds.drafts}
+            data={feeds ? feeds.drafts : []}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
             viewabilityConfig={viewabilityConfig}

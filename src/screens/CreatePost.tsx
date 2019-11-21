@@ -1,22 +1,25 @@
 import {useMutation, useQuery} from '@apollo/react-hooks';
+import moment from 'moment';
 import React, {Fragment, useState} from 'react';
 import {FlatList, SafeAreaView, Text, View} from 'react-native';
 import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
 import uuidv4 from 'uuid/v4';
-import {CREATE_POST} from '../graphql/mutation';
-import {GET_AUTH_USER, GET_CATEGORIES, GET_DRAFTS} from '../graphql/query';
+import create_post from '../graphql/types/mutations/create_post';
+import get_auth_user from '../graphql/types/queries/get_auth_user';
+import get_drafts from '../graphql/types/queries/get_drafts';
+import load_categories from '../graphql/types/queries/load_categories';
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
   const uuid = uuidv4();
 
   const [category, setCategory] = useState();
-  const [description, setDescription] = useState(null);
+  const [description, setDescription] = useState();
   const [overlay, setOverlay] = useState(false);
 
-  const {data: authUser} = useQuery(GET_AUTH_USER);
-  const {data, loading} = useQuery(GET_CATEGORIES);
-  const [createPostMutation] = useMutation(CREATE_POST);
+  const {data: authUser} = useQuery(get_auth_user);
+  const {data, loading} = useQuery(load_categories);
+  const [createPostMutation] = useMutation(create_post);
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
@@ -28,11 +31,11 @@ const CreatePost = (props: any) => {
     try {
       await createPostMutation({
         update: (store, {data: {createPost}}) => {
-          const {drafts}: any = store.readQuery({query: GET_DRAFTS});
+          const {drafts}: any = store.readQuery({query: get_drafts});
           const updatedCreatePost = [createPost, ...drafts];
 
           store.writeQuery({
-            query: GET_DRAFTS,
+            query: get_drafts,
             data: {drafts: updatedCreatePost},
           });
 
@@ -46,16 +49,15 @@ const CreatePost = (props: any) => {
           attachments: getAttachments,
         },
         optimisticResponse: {
-          __typename: 'Mutation',
           createPost: {
             __typename: 'Post',
             id: uuid,
             type: 'Post',
             description,
             published: false,
-            created_at: '',
-            updated_at: '',
-            when: '',
+            created_at: moment(),
+            updated_at: moment(),
+            when: moment().fromNow(),
             attachments: getAttachments.map((attachment: any) => {
               return {...attachment, __typename: 'Attachment'};
             }),

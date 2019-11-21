@@ -11,21 +11,37 @@ import {
   View,
 } from 'react-native';
 import {Button} from 'react-native-elements';
-import {EDIT_PROFILE, SET_INITIAL_SCREEN} from '../graphql/mutation';
-import {GET_AUTH_USER, GET_LANGUAGES} from '../graphql/query';
+import {EditProfile, EditProfileVariables} from '../generated/EditProfile';
+import {GetAuthUser} from '../generated/GetAuthUser';
+import {
+  LoadLanguages,
+  LoadLanguages_languages,
+} from '../generated/LoadLanguages';
+import {SET_INITIAL_SCREEN} from '../graphql/mutation';
+import edit_profile from '../graphql/types/mutations/edit_profile';
+import get_auth_user from '../graphql/types/queries/get_auth_user';
+import get_languages from '../graphql/types/queries/get_languages';
 import screens from '../libs/screens';
 import theme from '../libs/theme';
 
 const SelectLanguage = (props: any) => {
   const {navigation} = props;
 
-  const {data: authUser} = useQuery(GET_AUTH_USER);
-  const {data: languages, loading: loadingLanguages} = useQuery(GET_LANGUAGES, {
+  const [selectedLanguage, setSelectedLanguage] = useState();
+
+  const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user);
+
+  const {data: languages, loading: loadingLanguages} = useQuery<
+    LoadLanguages,
+    {}
+  >(get_languages, {
     fetchPolicy: 'cache-and-network',
   });
-  const [editProfile, {loading}] = useMutation(EDIT_PROFILE);
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [editProfile, {loading}] = useMutation<
+    EditProfile,
+    EditProfileVariables
+  >(edit_profile);
 
   const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
@@ -35,10 +51,9 @@ const SelectLanguage = (props: any) => {
         language: selectedLanguage,
       },
       optimisticResponse: {
-        __typename: 'Mutation',
         editProfile: {
           __typename: 'User',
-          ...authUser.me,
+          ...authUser?.me,
           language: selectedLanguage,
         },
       },
@@ -51,7 +66,7 @@ const SelectLanguage = (props: any) => {
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
-  const renderItem = (data: any) => {
+  const renderItem = (data: {item: LoadLanguages_languages}) => {
     const {item} = data;
 
     const selectedColor = selectedLanguage == item.shortname ? 'red' : 'black';
@@ -90,7 +105,7 @@ const SelectLanguage = (props: any) => {
 
         <View style={{flex: 1, padding: 10}}>
           <FlatList
-            data={languages.languages}
+            data={languages ? languages.languages : []}
             extraData={authUser}
             renderItem={renderItem}
             keyExtractor={keyExtractor}

@@ -5,13 +5,16 @@ import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input} from 'react-native-elements';
 import * as Yup from 'yup';
-import {REGISTER, SET_INITIAL_SCREEN} from '../../graphql/mutation';
-import {GET_COUNTRY} from '../../graphql/query';
+import {LoadCountries} from '../../generated/LoadCountries';
+import {Register, RegisterVariables} from '../../generated/Register';
+import {SET_INITIAL_SCREEN} from '../../graphql/mutation';
+import register from '../../graphql/types/mutations/register';
+import load_countries from '../../graphql/types/queries/load_countries';
 import screens from '../../libs/screens';
 
 const SignUp = (props: any) => {
-  const {data}: any = useQuery(GET_COUNTRY);
-  const [processRegister] = useMutation(REGISTER);
+  const {data}: any = useQuery<LoadCountries, {}>(load_countries);
+  const [processRegister] = useMutation<Register, RegisterVariables>(register);
   const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
   const setAuth = async ({user, token}: any, props: any) => {
@@ -36,7 +39,7 @@ const SignUp = (props: any) => {
       });
 
       bag.setSubmitting(false);
-      await setAuth(data.register, props);
+      await setAuth(data?.register, props);
     } catch (error) {
       bag.setSubmitting(false);
     }

@@ -1,4 +1,5 @@
-import {GET_COUNTRY, GET_INITIAL_SCREEN} from './query';
+import {GET_INITIAL_SCREEN} from './query';
+import load_countries from './types/queries/load_countries';
 
 export const resolvers = {
   Mutation: {
@@ -12,7 +13,7 @@ export const resolvers = {
     },
     setCountry: (_root: any, {country}: any, {cache}: any) => {
       cache.writeQuery({
-        query: GET_COUNTRY,
+        query: load_countries,
         data: {country},
       });
 

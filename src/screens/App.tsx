@@ -2,12 +2,12 @@ import {ApolloProvider} from '@apollo/react-hooks';
 import NetInfo from '@react-native-community/netinfo';
 import React, {useEffect} from 'react';
 import {createAppContainer} from 'react-navigation';
-import {cache} from '../graphql/cache';
 import {getApolloClient} from '../graphql/client';
 import {PersistGate} from '../graphql/gate';
 import {GET_INITIAL_SCREEN} from '../graphql/query';
 import getStackNavigator from '../libs/route';
-export const client = getApolloClient(cache);
+
+export const client = getApolloClient();
 
 const App = () => {
   useEffect(() => {

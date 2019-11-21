@@ -1,19 +1,25 @@
 import {useMutation} from '@apollo/react-hooks';
+import {defaultDataIdFromObject} from 'apollo-boost';
 import React from 'react';
 import {Dimensions, Image, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Pages} from 'react-native-pages';
-import {TOGGLE_FAVORITE} from '../../graphql/mutation';
+import {
+  ToggleFavorite,
+  ToggleFavoriteVariables,
+} from '../../generated/ToggleFavorite';
+import POST_INFO_FRAGMENT from '../../graphql/types/fragments/post_info';
+import toggle_favorite from '../../graphql/types/mutations/toggle_favorite';
 import {u, U} from '../../libs/vars';
 import ss from './FeedListStyle';
 import VideoPost from './VideoPost';
-import {defaultDataIdFromObject} from 'apollo-boost';
-import {POST_INFO_FRAGMENT} from '../../graphql/fragment';
 const {width} = Dimensions.get('window');
 
 // todo rename also, this is one post, not list
 const FeedList = (props: any) => {
-  const [toggleFavorite] = useMutation(TOGGLE_FAVORITE);
+  const [toggleFavorite] = useMutation<ToggleFavorite, ToggleFavoriteVariables>(
+    toggle_favorite,
+  );
 
   const post = props.data.item;
 
@@ -91,13 +97,12 @@ const FeedList = (props: any) => {
                     fragment: POST_INFO_FRAGMENT,
                     data: {
                       ...postInfo,
-                      is_favorited: data.toggleFavorite === 'attached',
+                      is_favorited: data && data.toggleFavorite === 'attached',
                     },
                   });
                 },
 
                 optimisticResponse: {
-                  __typename: 'Mutation',
                   toggleFavorite: post.is_favorited ? 'detached' : 'attached',
                 },
               });

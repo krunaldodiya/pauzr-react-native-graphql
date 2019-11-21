@@ -1,27 +1,28 @@
 import {useQuery} from '@apollo/react-hooks';
 import React, {Fragment} from 'react';
 import {
+  ActivityIndicator,
   Image,
   SafeAreaView,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import {GET_CATEGORIES} from '../../graphql/query';
+import {LoadCategories} from '../../generated/LoadCategories';
+import load_categories from '../../graphql/types/queries/load_categories';
 import screens from '../../libs/screens';
 import {U} from '../../libs/vars';
 import ss from './SearchStyle';
 
 const Search = (props: any) => {
-  const {data: categories, loading: loadingCategories} = useQuery(
-    GET_CATEGORIES,
-    {
-      fetchPolicy: 'cache-and-network',
-    },
-  );
+  const {data: categories, loading: loadingCategories} = useQuery<
+    LoadCategories,
+    {}
+  >(load_categories, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   if (!categories && loadingCategories) {
     return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;

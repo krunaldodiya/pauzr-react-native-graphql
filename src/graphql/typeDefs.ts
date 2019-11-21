@@ -7,7 +7,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    getInitialScreen: String!
-    getCountry: Country!
+    setInitialScreen: String!
+    setCountry: Country!
   }
 `;

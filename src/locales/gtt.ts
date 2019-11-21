@@ -1,10 +1,10 @@
 import {useQuery} from '@apollo/react-hooks';
-import {GET_AUTH_USER} from '../graphql/query';
+import get_auth_user from '../graphql/types/queries/get_auth_user';
 
 const languages = require('./languages.json');
 
 const gtt = (text: string) => {
-  const {data: authUser} = useQuery(GET_AUTH_USER);
+  const {data: authUser} = useQuery(get_auth_user);
   return languages[authUser.auth.selectedLanguage][text];
 };
 

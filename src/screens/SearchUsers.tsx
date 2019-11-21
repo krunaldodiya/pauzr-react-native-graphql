@@ -1,27 +1,28 @@
-import {useMutation, useQuery} from '@apollo/react-hooks';
-import React, {Fragment} from 'react';
+import {useQuery} from '@apollo/react-hooks';
+import React, {Fragment, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
   SafeAreaView,
   StatusBar,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import {SET_AUTH_USER} from '../graphql/mutation';
-import {GET_AUTH_USER, GET_USERS} from '../graphql/query';
+import {SearchUsers, SearchUsersVariables} from '../generated/SearchUsers';
+import search_users from '../graphql/types/queries/search_users';
 
-const Main = () => {
-  const {data, loading, fetchMore} = useQuery(GET_USERS, {
+const SearchUsers = () => {
+  const [keywords, setKeywords] = useState('');
+  const {data, loading, fetchMore} = useQuery<
+    SearchUsers,
+    SearchUsersVariables
+  >(search_users, {
     variables: {
       first: 10,
       page: 1,
+      keywords,
     },
   });
-
-  const {data: authUser} = useQuery(GET_AUTH_USER);
-  const [setAuthUser] = useMutation(SET_AUTH_USER);
 
   if (!data) {
     return (
@@ -47,7 +48,7 @@ const Main = () => {
   };
 
   const ShowListFooterComponent = () => {
-    if (!loading && !data.users.paginatorInfo.hasMorePages) {
+    if (!loading && !data?.users?.paginatorInfo?.hasMorePages) {
       return (
         <View style={{flex: 1, justifyContent: 'center', padding: 10}}>
           <Text style={{textAlign: 'center'}}>No More Results</Text>
@@ -66,20 +67,6 @@ const Main = () => {
     <Fragment>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={{flex: 1}}>
-        <TouchableOpacity
-          style={{padding: 10}}
-          onPress={async () => {
-            await setAuthUser({
-              variables: {
-                ...authUser.auth,
-                authToken: 'abcd',
-                initialScreen: 'Home',
-              },
-            });
-          }}>
-          <Text>{authUser.auth.initialScreen}</Text>
-        </TouchableOpacity>
-
         <View style={{flex: 1}}>
           <FlatList
             data={data ? data.users.data : []}
@@ -90,7 +77,7 @@ const Main = () => {
               if (!data.users.paginatorInfo.hasMorePages) return;
 
               fetchMore({
-                query: GET_USERS,
+                query: search_users,
                 variables: {
                   first: data.users.paginatorInfo.perPage,
                   page: data.users.paginatorInfo.currentPage + 1,
@@ -114,4 +101,4 @@ const Main = () => {
   );
 };
 
-export default React.memo(Main);
+export default React.memo(SearchUsers);

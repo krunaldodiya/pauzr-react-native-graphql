@@ -3,13 +3,19 @@ import {defaultDataIdFromObject} from 'apollo-boost';
 import React from 'react';
 import {View} from 'react-native';
 import {Button} from 'react-native-elements';
-import {USER_INFO_FRAGMENT} from '../../graphql/fragment';
-import {TOGGLE_FOLLOW} from '../../graphql/mutation';
+import {
+  ToggleFollow,
+  ToggleFollowVariables,
+} from '../../generated/ToggleFollow';
+import USER_INFO_FRAGMENT from '../../graphql/types/fragments/user_info';
+import toggle_follow from '../../graphql/types/mutations/toggle_follow';
 
 const FollowButton = (props: any) => {
   const {user, authUser} = props;
 
-  const [toggleFollow] = useMutation(TOGGLE_FOLLOW);
+  const [toggleFollow] = useMutation<ToggleFollow, ToggleFollowVariables>(
+    toggle_follow,
+  );
 
   return (
     <View>
@@ -57,13 +63,12 @@ const FollowButton = (props: any) => {
                   fragment: USER_INFO_FRAGMENT,
                   data: {
                     ...userinfo,
-                    is_following: data.toggleFollow === 'attached',
+                    is_following: data && data.toggleFollow === 'attached',
                   },
                 });
               },
 
               optimisticResponse: {
-                __typename: 'Mutation',
                 toggleFollow: user.is_following ? 'detached' : 'attached',
               },
             });

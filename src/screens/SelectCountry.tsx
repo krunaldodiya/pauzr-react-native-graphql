@@ -11,17 +11,22 @@ import {
   View,
 } from 'react-native';
 import {SET_COUNTRY} from '../graphql/mutation';
-import {LOAD_COUNTRIES} from '../graphql/query';
+import load_countries from '../graphql/types/queries/load_countries';
+
+import {
+  LoadCountries,
+  LoadCountries_countries,
+} from '../generated/LoadCountries';
 
 const SelectCountry = (props: any) => {
   const [keywords, setKeywords] = useState('');
 
-  const {data: countries, loading: loadingCountries} = useQuery(
-    LOAD_COUNTRIES,
-    {
-      fetchPolicy: 'cache-and-network',
-    },
-  );
+  const {data: countries, loading: loadingCountries} = useQuery<
+    LoadCountries,
+    {}
+  >(load_countries, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   const [setCountry] = useMutation(SET_COUNTRY);
 
@@ -40,14 +45,16 @@ const SelectCountry = (props: any) => {
   }, []);
 
   const getFilteredCountries = () => {
+    const data = countries ? countries.countries : [];
+
     return keywords.length >= 3
-      ? countries.countries.filter((country: any) => {
+      ? data.filter((country: any) => {
           return country.name.match(new RegExp(`^${keywords}`, 'gi'));
         })
-      : countries.countries;
+      : data;
   };
 
-  const renderItem = (data: any) => {
+  const renderItem = (data: {item: LoadCountries_countries}) => {
     const {item} = data;
 
     return (
