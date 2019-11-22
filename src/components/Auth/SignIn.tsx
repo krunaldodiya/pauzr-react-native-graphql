@@ -2,7 +2,7 @@ import {useMutation} from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
 import React, {Fragment, useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input, Overlay, Text} from 'react-native-elements';
 import * as Yup from 'yup';
 import {Login, LoginVariables} from '../../generated/Login';
@@ -13,7 +13,9 @@ import Otp from './Otp';
 
 const SignIn = (props: any) => {
   const [overlay, setOverlay] = useState(false);
-  const [processLogin] = useMutation<Login, LoginVariables>(login);
+  const [processLogin] = useMutation<Login, LoginVariables>(login, {
+    errorPolicy: 'all',
+  });
   const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
   const setAuth = async ({user, token}: any, props: any) => {
@@ -35,9 +37,14 @@ const SignIn = (props: any) => {
       });
 
       bag.setSubmitting(false);
-      await setAuth(data.login, props);
+      await setAuth(data?.login, props);
     } catch (error) {
+      const response = error.networkError || error.graphQLErrors;
+      const message = response[0].extensions.reason;
+
       bag.setSubmitting(false);
+
+      Alert.alert('Oops', message);
     }
   };
 

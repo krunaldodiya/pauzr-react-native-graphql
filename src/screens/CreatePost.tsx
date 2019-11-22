@@ -21,6 +21,8 @@ import create_post from '../graphql/types/mutations/create_post';
 import get_auth_user from '../graphql/types/queries/get_auth_user';
 import get_drafts from '../graphql/types/queries/get_drafts';
 import load_categories from '../graphql/types/queries/load_categories';
+import Upload from 'react-native-background-upload';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const CreatePost = (props: any) => {
   const params = props.navigation.state.params;
@@ -86,6 +88,32 @@ const CreatePost = (props: any) => {
           },
         },
       });
+
+      const token = await AsyncStorage.getItem('token');
+      const options = {
+        url: 'https://graphql.pauzr.com/api/attachments/upload',
+        path: params.files[0]['path'],
+        method: 'POST',
+        field: 'media',
+        type: 'multipart',
+        maxRetries: 2,
+        headers: {
+          'content-type': 'application/octet-stream',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      console.log(options);
+
+      Upload.startUpload(options)
+        .then((uploadId: any) => {
+          Upload.addListener('completed', uploadId, (data: any) => {
+            console.log('Completed!', data);
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
     } catch (error) {
       console.log(error);
     }

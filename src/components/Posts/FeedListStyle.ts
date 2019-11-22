@@ -6,8 +6,9 @@ import {U, u} from '../../libs/vars';
 
 export default StyleSheet.create({
   postContainer: {
-    margin: U,
-    marginBottom: 0, // todo refactor
+    // margin: U,
+    margin: 10,
+    marginBottom: 10, // todo refactor
 
     borderRadius: U,
     backgroundColor: 'white',
@@ -110,7 +111,7 @@ export default StyleSheet.create({
   },
 
   image: {
-    borderRadius: U,
+    // borderRadius: U,
   },
 
   FollowLabel: {
