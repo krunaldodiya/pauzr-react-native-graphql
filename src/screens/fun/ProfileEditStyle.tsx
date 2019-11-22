@@ -3,7 +3,6 @@
 
 import {StyleSheet} from 'react-native'
 import {width, U, u} from '../../libs/vars'
-import { useMemo } from 'react'
 
 export default StyleSheet.create({
   // todo generalize and move to common style file
