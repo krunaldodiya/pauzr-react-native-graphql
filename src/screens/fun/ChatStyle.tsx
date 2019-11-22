@@ -1,24 +1,58 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable semi */
 
-import {StyleSheet} from 'react-native'
+import {StyleSheet, YellowBox} from 'react-native'
 import {width, U, u} from '../../libs/vars'
+import { useMemo } from 'react'
 
 export default StyleSheet.create({
   mainContainer: {
     backgroundColor: 'hsl(0,0%,94%)',
 
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 
   messagesContainer: {
     flex: 1,
+    // backgroundColor: 'red',
+
+    //refactor
+    paddingTop: 0.5 * U,
+
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
   },
-  Message: {},
-  Message_fromMe: {},
-  Message__text: {},
-  Message__avatar: {},
+  Message: {
+    // flex: 0,
+    maxWidth: 14 * U,
+    backgroundColor: 'white',
+
+    marginTop: 0,
+    margin: 0.5 * U,
+    padding: 0.5 * U,
+    // paddingHorizontal: 0.75 * U,
+    borderRadius: 0.5 * U,
+
+    flexDirection: 'row',
+  },
+  Message_fromMe: {
+    backgroundColor: 'hsl(0,0%,97%)',
+    alignSelf: 'flex-end',
+  },
+  Message__text: {
+    maxWidth: 10 * U,
+
+    fontFamily: 'MPLUSRounded1c-Regular',
+    color: 'hsl(0,0%,12%)',
+  },
+  Message__avatar: {
+    marginRight: 0.5 * U,
+
+    width: 1.25 * U,
+    height: 1.25 * U,
+    borderRadius: U,
+  },
 
   inputContainer: {
     flexDirection: 'row',

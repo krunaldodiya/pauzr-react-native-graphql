@@ -30,7 +30,7 @@ const messagesSample = [
   },
   {
     // fromMe: true,
-    message: 'It’s Baijiu, a strong clear Chinese alcohol. I like that, have an empty bottle from a trip to Shanghai',
+    message: 'It’s Baijiu, a strong clear Chinese alcohol. \nI like that, have an empty bottle from \na trip to Shanghai',
     time: '01:35',
     avatarMapIndex: 0,
   },
@@ -48,7 +48,7 @@ const messagesSample = [
   },
   {
     // fromMe: true,
-    message: 'Mix with a slightly grainy, but otherwise neutral lagers (you know...the cheap stuff) and the aroma of the baijiu just pops out. It’s actually fantastic.',
+    message: 'Mix with a slightly grainy, but otherwise neutral \nlagers (you know...the cheap stuff) and the aroma of the baijiu just pops out. It’s actually fantastic.',
     time: '01:37',
     avatarMapIndex: 0,
   },
@@ -61,19 +61,17 @@ const Chat = (props: ChatProps) => {
 
       <SafeAreaView style={{flex: 1}}>
         <View style={ss.mainContainer}>
-          <View style={ss.messagesContainer}>
-            <ScrollView>
-              {messagesSample.map(message =>
-                // todo extract to component
-                <View key={message.message + message.time} 
-                      style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
-                  <Image style={ss.Message__avatar}
-                         source={{uri: avatarsMap[message.avatarMapIndex]}}/>
-                  <Text style={ss.Message__text}>{message.message}</Text>
-                </View>
-              )}
-            </ScrollView>
-          </View>
+          <ScrollView contentContainerStyle={ss.messagesContainer}>
+            {messagesSample.map(message =>
+              // todo extract to component
+              <View key={message.message + message.time} 
+                    style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
+                <Image style={ss.Message__avatar}
+                        source={{uri: avatarsMap[message.avatarMapIndex]}}/>
+                <Text style={ss.Message__text}>{message.message}</Text>
+              </View>
+            )}
+          </ScrollView>
           <View style={ss.inputContainer}>
             <TextInput style={ss.input} autoFocus/>
             <Icon
