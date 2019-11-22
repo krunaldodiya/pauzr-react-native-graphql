@@ -4178,7 +4178,7 @@ jest@^24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-jetifier@^1.6.2:
+jetifier@^1.6.2, jetifier@^1.6.4:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/jetifier/-/jetifier-1.6.4.tgz#6159db8e275d97980d26162897a0648b6d4a3222"
   integrity sha512-+f/4OLeqY8RAmXnonI1ffeY1DR8kMNJPhv5WMFehchf7U71cjMQVKkOz1n6asz6kfVoAqKNWJz1A/18i18AcXA==
@@ -5698,6 +5698,11 @@ react-native-action-sheet@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-action-sheet/-/react-native-action-sheet-2.2.0.tgz#309a87f53bf4e7b17fdd9d24b10b8dcbaebb7230"
   integrity sha512-4lsuxH+Cn3/aUEs1VCwqvLhEFyXNqYTkT67CzgTwlifD9Ij4OPQAIs8D+HUD9zBvWc4NtT6cyG1lhArPVMQeVw==
+
+react-native-background-upload@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-upload/-/react-native-background-upload-5.1.0.tgz#68129cbd0d9f0ff33e4870866b81b6df5962b7d5"
+  integrity sha512-3HgWUO1V1vk1At+R6jUz7nxmRJMvpsRukimI1qG06aSIYpcS10dG3d/o/XVeyNS+k8OuHKIjzBXPw2ZrmCWkIA==
 
 react-native-buttons@^0.0.3:
   version "0.0.3"

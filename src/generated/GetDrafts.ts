@@ -40,8 +40,9 @@ export interface GetDrafts_drafts {
   attachments: GetDrafts_drafts_attachments[];
   owner: GetDrafts_drafts_owner;
   category: GetDrafts_drafts_category;
-  when: string;
   is_favorited: boolean;
+  published: boolean | null;
+  when: string;
   created_at: any;
   updated_at: any;
 }

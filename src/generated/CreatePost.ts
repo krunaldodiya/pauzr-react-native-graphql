@@ -42,8 +42,9 @@ export interface CreatePost_createPost {
   attachments: CreatePost_createPost_attachments[];
   owner: CreatePost_createPost_owner;
   category: CreatePost_createPost_category;
-  when: string;
   is_favorited: boolean;
+  published: boolean | null;
+  when: string;
   created_at: any;
   updated_at: any;
 }

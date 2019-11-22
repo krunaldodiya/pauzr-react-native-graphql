@@ -70,11 +70,14 @@ const _tempQuotient = name => {
 };
 
 // todo ts interface instead of destructuring
-const Category = ({name, background_image}) => (
+const Category = ({name, background_image, background_color}) => (
   <View style={ss.Category}>
     <Image
       source={{uri: background_image}}
-      style={ss.Category__bg}
+      style={[
+        ss.Category__bg,
+        !background_image && {backgroundColor: background_color},
+      ]}
       resizeMode="center"
     />
     {/* todo fit size */}

@@ -40,8 +40,9 @@ export interface PostInfo {
   attachments: PostInfo_attachments[];
   owner: PostInfo_owner;
   category: PostInfo_category;
-  when: string;
   is_favorited: boolean;
+  published: boolean | null;
+  when: string;
   created_at: any;
   updated_at: any;
 }

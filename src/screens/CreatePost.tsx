@@ -2,8 +2,21 @@ import {useMutation, useQuery} from '@apollo/react-hooks';
 import moment from 'moment';
 import React, {Fragment, useState} from 'react';
 import {FlatList, SafeAreaView, Text, View} from 'react-native';
-import {Header, Icon, Image, Input, Overlay} from 'react-native-elements';
+import {
+  Header,
+  Icon,
+  Image,
+  Input,
+  Overlay,
+  Button,
+} from 'react-native-elements';
 import uuidv4 from 'uuid/v4';
+import {
+  CreatePost as CreatePostType,
+  CreatePostVariables,
+} from '../generated/CreatePost';
+import {GetAuthUser} from '../generated/GetAuthUser';
+import {LoadCategories} from '../generated/LoadCategories';
 import create_post from '../graphql/types/mutations/create_post';
 import get_auth_user from '../graphql/types/queries/get_auth_user';
 import get_drafts from '../graphql/types/queries/get_drafts';
@@ -17,9 +30,12 @@ const CreatePost = (props: any) => {
   const [description, setDescription] = useState();
   const [overlay, setOverlay] = useState(false);
 
-  const {data: authUser} = useQuery(get_auth_user);
-  const {data, loading} = useQuery(load_categories);
-  const [createPostMutation] = useMutation(create_post);
+  const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user);
+  const {data: categories} = useQuery<LoadCategories, {}>(load_categories);
+  const [createPostMutation, {loading: creatingPost}] = useMutation<
+    CreatePostType,
+    CreatePostVariables
+  >(create_post);
 
   const keyExtractor = (item: any, index: number) => index.toString();
 
@@ -30,9 +46,9 @@ const CreatePost = (props: any) => {
 
     try {
       await createPostMutation({
-        update: (store, {data: {createPost}}) => {
+        update: (store, {data}) => {
           const {drafts}: any = store.readQuery({query: get_drafts});
-          const updatedCreatePost = [createPost, ...drafts];
+          const updatedCreatePost = [data && data.createPost, ...drafts];
 
           store.writeQuery({
             query: get_drafts,
@@ -54,15 +70,19 @@ const CreatePost = (props: any) => {
             id: uuid,
             type: 'Post',
             description,
-            published: false,
-            created_at: moment(),
-            updated_at: moment(),
-            when: moment().fromNow(),
             attachments: getAttachments.map((attachment: any) => {
               return {...attachment, __typename: 'Attachment'};
             }),
-            owner: authUser.me,
+            owner: {
+              __typename: 'User',
+              ...authUser?.me,
+            },
             category,
+            is_favorited: false,
+            published: false,
+            when: moment().fromNow(),
+            created_at: moment(),
+            updated_at: moment(),
           },
         },
       });
@@ -88,6 +108,25 @@ const CreatePost = (props: any) => {
     );
   };
 
+  const CreatePostButton = () => {
+    return (
+      <Button
+        title="Create"
+        buttonStyle={{backgroundColor: 'transparent'}}
+        titleStyle={{
+          color: 'white',
+          textTransform: 'uppercase',
+          fontSize: 14,
+          marginRight: 5,
+          fontWeight: '500',
+        }}
+        onPress={handleCreatePost}
+        loading={creatingPost}
+        loadingStyle={{marginRight: 20}}
+      />
+    );
+  };
+
   return (
     <Fragment>
       <Header
@@ -105,19 +144,7 @@ const CreatePost = (props: any) => {
           },
         }}
         centerComponent={{text: 'Create Post', style: {color: '#fff'}}}
-        rightComponent={
-          category && {
-            text: 'Create',
-            style: {
-              color: 'white',
-              textTransform: 'uppercase',
-              fontSize: 14,
-              marginRight: 5,
-              fontWeight: '500',
-            },
-            onPress: handleCreatePost,
-          }
-        }
+        rightComponent={category && <CreatePostButton />}
       />
 
       <SafeAreaView style={{flex: 1}}>
@@ -186,7 +213,7 @@ const CreatePost = (props: any) => {
 
               <View style={{flex: 1, padding: 10}}>
                 <FlatList
-                  data={loading ? [] : data.categories}
+                  data={categories ? categories.categories : []}
                   keyExtractor={keyExtractor}
                   renderItem={renderItem}
                 />

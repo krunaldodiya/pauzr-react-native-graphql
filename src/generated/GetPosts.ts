@@ -52,8 +52,9 @@ export interface GetPosts_posts_data {
   attachments: GetPosts_posts_data_attachments[];
   owner: GetPosts_posts_data_owner;
   category: GetPosts_posts_data_category;
-  when: string;
   is_favorited: boolean;
+  published: boolean | null;
+  when: string;
   created_at: any;
   updated_at: any;
 }

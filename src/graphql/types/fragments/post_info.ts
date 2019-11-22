@@ -25,8 +25,9 @@ export default gql`
       id
       name
     }
-    when
     is_favorited
+    published
+    when
     created_at
     updated_at
   }

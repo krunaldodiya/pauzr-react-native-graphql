@@ -12,9 +12,11 @@ import {GetDrafts} from '../../generated/GetDrafts';
 import get_drafts from '../../graphql/types/queries/get_drafts';
 
 const Feeds = (props: any) => {
-  const {data: feeds} = useQuery<GetDrafts, {}>(get_drafts, {
+  const {data: feeds, error} = useQuery<GetDrafts, {}>(get_drafts, {
     fetchPolicy: 'cache-and-network',
   });
+
+  console.log(error);
 
   const renderItem = (data: any) => <FeedList {...props} data={data} />;
 
