@@ -3,7 +3,6 @@
 
 import {StyleSheet, YellowBox} from 'react-native'
 import {width, U, u} from '../../libs/vars'
-import { useMemo } from 'react'
 
 export default StyleSheet.create({
   mainContainer: {

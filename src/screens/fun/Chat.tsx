@@ -30,7 +30,7 @@ const messagesSample = [
   },
   {
     // fromMe: true,
-    message: 'It’s Baijiu, a strong clear Chinese alcohol. \nI like that, have an empty bottle from \na trip to Shanghai',
+    message: 'It’s Baijiu, a strong clear Chinese alcohol. I like that, have an empty bottle from a trip to Shanghai',
     time: '01:35',
     avatarMapIndex: 0,
   },
@@ -48,7 +48,7 @@ const messagesSample = [
   },
   {
     // fromMe: true,
-    message: 'Mix with a slightly grainy, but otherwise neutral \nlagers (you know...the cheap stuff) and the aroma of the baijiu just pops out. It’s actually fantastic.',
+    message: 'Mix with a slightly grainy, but otherwise neutral lagers (you know...the cheap stuff) and the aroma of the baijiu just pops out. It’s actually fantastic.',
     time: '01:37',
     avatarMapIndex: 0,
   },
