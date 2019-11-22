@@ -8,11 +8,10 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import screens from '../libs/screens';
 import {pickerSettings} from '../libs/vars';
 import Bazaar from './fun/Bazaar';
-import Chat from './fun/Chat';
+import Conversation from './fun/Conversation';
 import Feeds from './fun/Feeds';
 import Notifications from './fun/Notifications';
 import Search from './fun/Search';
-import Profile from './fun/Profile';
 
 const FunTabNavigator = createBottomTabNavigator(
   {
@@ -52,8 +51,8 @@ const FunTabNavigator = createBottomTabNavigator(
         ),
       },
     },
-    Chat: {
-      screen: Chat,
+    Conversation: {
+      screen: Conversation,
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon

@@ -12,6 +12,8 @@ const screens = {
   Picker: 'Picker',
   CreatePost: 'CreatePost',
   SearchResults: 'SearchResults',
+  Conversation: 'Conversation',
+  Chat: 'Chat',
 };
 
 export default screens;

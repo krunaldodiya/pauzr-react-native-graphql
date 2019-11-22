@@ -1,6 +1,7 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import Auth from '../screens/Auth';
 import CreatePost from '../screens/CreatePost';
+import Chat from '../screens/fun/chat/Chat';
 import Feeds from '../screens/fun/Feeds';
 import TotalLikes from '../screens/fun/post/TotalLikes';
 import Profile from '../screens/fun/Profile';
@@ -23,6 +24,7 @@ const getStackNavigator = (initialRouteName: string) => {
       CreatePost: {screen: CreatePost},
       TotalLikes: {screen: TotalLikes},
       SearchResults: {screen: SearchResults},
+      Chat: {screen: Chat},
     },
     {
       initialRouteName,

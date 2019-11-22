@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable semi */
 
-import {StyleSheet, YellowBox} from 'react-native'
-import {width, U, u} from '../../libs/vars'
+import {StyleSheet, YellowBox} from 'react-native';
+import {width, U, u} from '../../../libs/vars';
 
 export default StyleSheet.create({
   mainContainer: {
@@ -36,7 +36,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   Message_fromMe: {
-    backgroundColor: 'hsl(0,0%,97%)',
+    backgroundColor: '#e7e2f8',
     alignSelf: 'flex-end',
   },
   Message__text: {
@@ -58,10 +58,10 @@ export default StyleSheet.create({
     alignItems: 'stretch',
 
     height: 2 * U,
-    
+
     // borderTopWidth: 0.5,
     borderWidth: 0.5,
-      margin: -1,
+    margin: -1,
     borderColor: 'hsl(0,0%,64%)',
     borderTopLeftRadius: U,
     borderTopRightRadius: U,
@@ -73,7 +73,7 @@ export default StyleSheet.create({
 
     // paddingVertical: u,
     paddingHorizontal: 0.75 * U,
-    
+
     fontFamily: 'MPLUSRounded1c-Regular',
   },
   send: {
@@ -88,5 +88,4 @@ export default StyleSheet.create({
   inputContainerStyle: {
     borderBottomWidth: 0,
   },
-
-})
+});
