@@ -150,6 +150,7 @@ const Chat = (props: any) => {
                 );
               })}
             </ScrollView>
+
             <View style={ss.inputContainer}>
               <TextInput style={ss.input} autoFocus />
               <Icon
