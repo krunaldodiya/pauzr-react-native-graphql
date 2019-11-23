@@ -16,8 +16,6 @@ const Feeds = (props: any) => {
     fetchPolicy: 'cache-and-network',
   });
 
-  console.log(error);
-
   const renderItem = (data: any) => <FeedList {...props} data={data} />;
 
   const keyExtractor = (item: any, index: number) => index.toString();
