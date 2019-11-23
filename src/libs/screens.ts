@@ -4,7 +4,6 @@ const screens = {
   VerifyOtp: 'VerifyOtp',
   Home: 'Home',
   Profile: 'Profile',
-  EditProfile: 'EditProfile',
   ProfileEdit: 'ProfileEdit', // todo decide & resolve
   Auth: 'Auth',
   Groups: 'Groups',

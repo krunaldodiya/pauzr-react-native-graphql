@@ -10,6 +10,7 @@ export interface AllChatrooms_all_chatrooms_subscribers {
   __typename: "User";
   id: string;
   name: string;
+  avatar: string | null;
 }
 
 export interface AllChatrooms_all_chatrooms {
@@ -17,6 +18,7 @@ export interface AllChatrooms_all_chatrooms {
   id: string;
   chatroom_type: string;
   chatroom_name: string;
+  chatroom_image: string;
   subscribers: AllChatrooms_all_chatrooms_subscribers[];
 }
 

@@ -1,12 +1,13 @@
 import {useLazyQuery, useQuery} from '@apollo/react-hooks';
 import React, {useState} from 'react';
-import {FlatList, Text, TextInput, View} from 'react-native';
-import {Icon, Image} from 'react-native-elements';
-import FollowButton from '../../components/User/Follow';
+import {FlatList, TextInput, View} from 'react-native';
+import {Icon, ListItem} from 'react-native-elements';
+import FollowButton from '../../components/User/FollowButton';
 import {GetAuthUser} from '../../generated/GetAuthUser';
 import {SearchUsers, SearchUsersVariables} from '../../generated/SearchUsers';
 import get_auth_user from '../../graphql/types/queries/get_auth_user';
 import search_users from '../../graphql/types/queries/search_users';
+import screens from '../../libs/screens';
 
 const SearchResults = (props: any) => {
   const [keywords, setKeywords] = useState('');
@@ -53,41 +54,29 @@ const SearchResults = (props: any) => {
 
       <View style={{marginTop: 5}}>
         <FlatList
-          data={data ? data.searchUsers.data : []}
+          data={data ? data?.searchUsers?.data : []}
           keyExtractor={(item, index) => index.toString()}
           renderItem={(data: any) => {
             return (
-              <View
-                style={{
-                  marginVertical: 2,
-                  marginHorizontal: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderWidth: 1,
-                  borderColor: '#50b8e7',
-                  borderRadius: 10,
-                }}>
-                <View style={{marginHorizontal: 5}}>
-                  <Image
-                    source={{uri: data.item.avatar}}
-                    style={{width: 40, height: 40}}
-                  />
-                </View>
-
-                <View
-                  style={{flex: 1, padding: 5, justifyContent: 'space-evenly'}}>
-                  <Text style={{fontSize: 16, textTransform: 'none'}}>
-                    {data.item.name}
-                  </Text>
-                  <Text style={{fontSize: 12, color: '#50b8e7'}}>
-                    @{data.item.username}
-                  </Text>
-                </View>
-
-                <View style={{marginRight: 10}}>
-                  <FollowButton user={data.item} authUser={authUser} />
-                </View>
-              </View>
+              <ListItem
+                onPress={() => {
+                  return props.navigation.push(screens.Profile, {
+                    user_id: data.item.id,
+                  });
+                }}
+                key={data.id}
+                leftAvatar={{
+                  source: {
+                    uri: data.item.avatar,
+                  },
+                }}
+                title={data.item.name}
+                subtitle={`@${data.item.username}`}
+                bottomDivider
+                rightElement={
+                  <FollowButton guestUser={data.item} authUser={authUser?.me} />
+                }
+              />
             );
           }}
         />

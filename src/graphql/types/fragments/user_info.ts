@@ -9,6 +9,7 @@ export default gql`
     mobile
     language
     avatar
+    bio
     country {
       id
       name

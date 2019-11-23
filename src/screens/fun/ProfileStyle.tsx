@@ -1,19 +1,19 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable semi */
 
-import {StyleSheet} from 'react-native'
-import {width, U, u} from '../../libs/vars'
-import { useMemo } from 'react'
+import {StyleSheet} from 'react-native';
+import {width, U, u} from '../../libs/vars';
+import {useMemo} from 'react';
 
 export default StyleSheet.create({
   // todo generalize and move to common style file
   mainContainer: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 
   aboutContainer: {
-    margin: U,
+    margin: 20,
     marginBottom: 0,
 
     backgroundColor: 'hsl(0, 0%, 94%)',
@@ -65,7 +65,4 @@ export default StyleSheet.create({
     fontFamily: 'MPLUSRounded1c-Regular', // todo replace with theme.fonts
     fontSize: 0.5 * U,
   },
-
-
-
-})
+});

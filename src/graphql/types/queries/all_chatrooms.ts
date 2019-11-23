@@ -6,9 +6,11 @@ export default gql`
       id
       chatroom_type
       chatroom_name
+      chatroom_image
       subscribers {
         id
         name
+        avatar
       }
     }
   }
