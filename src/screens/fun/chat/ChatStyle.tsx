@@ -56,15 +56,15 @@ export default StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'stretch',
-
-    height: 2 * U,
-
+    backgroundColor: 'white',
+    // height: 2 * U,
     // borderTopWidth: 0.5,
     borderWidth: 0.5,
-    margin: -1,
+    margin: 5,
     borderColor: 'hsl(0,0%,64%)',
-    borderTopLeftRadius: U,
-    borderTopRightRadius: U,
+    borderRadius: U,
+    // borderTopLeftRadius: U,
+    // borderTopRightRadius: U,
     // overflow: "hidden",
     paddingHorizontal: 0.25 * U,
   },

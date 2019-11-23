@@ -4,68 +4,21 @@ import {
   ActivityIndicator,
   Image,
   SafeAreaView,
-  StatusBar,
   Text,
   TextInput,
   View,
 } from 'react-native';
-import {Icon, Header, ListItem} from 'react-native-elements';
-import {NavigationScreenProp, ScrollView} from 'react-navigation';
+import {Header, Icon, ListItem} from 'react-native-elements';
+import {FlatList} from 'react-navigation';
+import {GetAuthUser} from '../../../generated/GetAuthUser';
 import {
   PrivateChatroom,
   PrivateChatroomVariables,
 } from '../../../generated/PrivateChatroom';
+import get_auth_user from '../../../graphql/types/queries/get_auth_user';
 import private_chatroom from '../../../graphql/types/queries/private_chatroom';
 import {U} from '../../../libs/vars';
 import ss from './ChatStyle';
-import get_auth_user from '../../../graphql/types/queries/get_auth_user';
-import {GetAuthUser} from '../../../generated/GetAuthUser';
-
-const avatarsMap = [
-  'https://picsum.photos/id/63/500/500',
-  'https://picsum.photos/id/64/500/500',
-];
-
-const messagesSample = [
-  {
-    // fromMe: true,
-    message: 'Hello stranger!',
-    time: '01:34',
-    avatarMapIndex: 0,
-  },
-  {
-    fromMe: true,
-    message: 'Hi!',
-    time: '01:35',
-    avatarMapIndex: 1,
-  },
-  {
-    // fromMe: true,
-    message:
-      'It’s Baijiu, a strong clear Chinese alcohol. I like that, have an empty bottle from a trip to Shanghai',
-    time: '01:35',
-    avatarMapIndex: 0,
-  },
-  {
-    fromMe: true,
-    message: 'could you mix it with anything?',
-    time: '01:36',
-    avatarMapIndex: 1,
-  },
-  {
-    // fromMe: true,
-    message: 'Nobody does but you can try',
-    time: '01:37',
-    avatarMapIndex: 0,
-  },
-  {
-    // fromMe: true,
-    message:
-      'Mix with a slightly grainy, but otherwise neutral lagers (you know...the cheap stuff) and the aroma of the baijiu just pops out. It’s actually fantastic.',
-    time: '01:37',
-    avatarMapIndex: 0,
-  },
-];
 
 const Chat = (props: any) => {
   const {data: authUser}: any = useQuery<GetAuthUser, {}>(get_auth_user, {
@@ -76,7 +29,10 @@ const Chat = (props: any) => {
     private_chatroom,
     {
       fetchPolicy: 'cache-and-network',
-      variables: {friend_id: props.navigation.state.params.friend_id},
+      variables: {
+        friend_id: props.navigation.state.params.friend_id,
+        per_page: 100,
+      },
     },
   );
 
@@ -85,8 +41,6 @@ const Chat = (props: any) => {
       return subscriber.id != authUser.me.id;
     })[0][data];
   };
-
-  console.log(friend('name'));
 
   return (
     <Suspense
@@ -135,24 +89,29 @@ const Chat = (props: any) => {
 
         <SafeAreaView style={{flex: 1}}>
           <View style={ss.mainContainer}>
-            <ScrollView contentContainerStyle={ss.messagesContainer}>
-              {messagesSample.map(message => {
+            <FlatList
+              contentContainerStyle={ss.messagesContainer}
+              data={chat.private_chatroom.chats.data}
+              renderItem={({item}) => {
                 return (
                   <View
-                    key={message.message + message.time}
-                    style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
+                    key={item.id}
+                    style={[
+                      ss.Message,
+                      item.sender_id == authUser.me.id && ss.Message_fromMe,
+                    ]}>
                     <Image
                       style={ss.Message__avatar}
-                      source={{uri: avatarsMap[message.avatarMapIndex]}}
+                      source={{uri: item.sender.avatar}}
                     />
-                    <Text style={ss.Message__text}>{message.message}</Text>
+                    <Text style={ss.Message__text}>{item.text}</Text>
                   </View>
                 );
-              })}
-            </ScrollView>
+              }}
+            />
 
             <View style={ss.inputContainer}>
-              <TextInput style={ss.input} autoFocus />
+              <TextInput style={ss.input} multiline />
               <Icon
                 name="sc-telegram"
                 type="evilicon"
