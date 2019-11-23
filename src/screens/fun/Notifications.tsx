@@ -6,58 +6,84 @@ import {
   StatusBar,
   Text,
   View,
+  StyleSheet,
 } from 'react-native';
 import getAssets from '../../libs/image';
+import {width, U, u} from '../../libs/vars'
 
 const Notifications = (props: any) => {
   useEffect(() => {
     // dispatch.notification.getNotifications(null);
   }, []);
 
-  const notifications: any = [];
+  const notifications: any = [
+    {
+      type: 'App\\Notifications\\UserFollowed',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+    },
+    {
+      type: 'App\\Notifications\\PostLiked',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+      post: {url: 'asd'}
+    },
+    {
+      type: 'App\\Notifications\\PostLiked',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+      post: {url: 'asd'}
+    },
+    {
+      type: 'App\\Notifications\\PostLiked',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+      post: {url: 'asd'}
+    },
+  ];
 
   const renderItem = (data: any) => {
     const {item} = data;
 
     return (
       <Fragment>
-        <View style={{padding: 10}}>
+        <View style={ss.Notification}>
           {item.type == 'App\\Notifications\\UserFollowed' && (
             <View style={{flexDirection: 'row'}}>
               <View>
                 <Image
-                  style={{width: 30, height: 30}}
-                  source={{uri: getAssets(item.user.avatar)}}
+                  style={ss.avatar}
+                  source={{uri: 'https://picsum.photos/id/64/500/500'}}
                 />
               </View>
 
               <View style={{flex: 1}}>
-                <Text>{item.user.name} started following you.</Text>
-                <Text>{item.when}</Text>
+                <Text style={ss.text}>{item.user.name} started following you.</Text>
+                <Text style={[ss.text, ss.text_when]}>{item.when}</Text>
               </View>
             </View>
           )}
 
           {item.type == 'App\\Notifications\\PostLiked' && (
-            <View style={{flexDirection: 'row'}}>
-              <View>
-                <Image
-                  style={{width: 30, height: 30}}
-                  source={{uri: getAssets(item.user.avatar)}}
-                />
+            <View>
+              <View style={{flexDirection: 'row'}}>
+                <View>
+                  <Image
+                    style={ss.avatar}
+                    source={{uri: 'https://picsum.photos/id/64/500/500'}}
+                  />
+                </View>
+
+                <View style={{flex: 1}}>
+                  <Text style={ss.text}>{item.user.name} liked your post.</Text>
+                  <Text style={[ss.text, ss.text_when]}>{item.when}</Text>
+                </View>
               </View>
 
-              <View style={{flex: 1}}>
-                <Text>{item.user.name} liked your post.</Text>
-                <Text>{item.when}</Text>
-              </View>
-
-              <View>
-                <Image
-                  style={{width: 30, height: 30}}
-                  source={{uri: getAssets(item.post.url)}}
-                />
-              </View>
+              <Image
+                style={ss.postImage}
+                source={{uri: 'https://picsum.photos/id/65/500/500'}}
+              />
             </View>
           )}
         </View>
@@ -79,8 +105,9 @@ const Notifications = (props: any) => {
           <FlatList
             data={notifications}
             renderItem={renderItem}
+            contentContainerStyle={ss.notificationsContainer}
             keyExtractor={keyExtractor}
-            ItemSeparatorComponent={ItemSeparatorComponent}
+            // ItemSeparatorComponent={ItemSeparatorComponent}
           />
         </View>
       </SafeAreaView>
@@ -89,3 +116,41 @@ const Notifications = (props: any) => {
 };
 
 export default React.memo(Notifications);
+
+const ss = StyleSheet.create({
+  notificationsContainer: {
+    flex: 1,
+  },
+  Notification: {
+    margin: U,
+    marginBottom: 0,
+
+    padding: 0.5 * U,
+    borderRadius: 0.5 * U,
+
+    backgroundColor: 'white',
+    elevation: 32,
+  },
+  avatar: {
+    marginRight: 0.5 * U,
+
+    width: 1.25 * U,
+    height: 1.25 * U,
+    borderRadius: 0.75 * U,
+  },
+  text: {    
+    fontSize: 0.5 * U,
+    fontFamily: 'MPLUSRounded1c-Regular',
+    color: 'hsl(0,0%,12%)',
+  },
+  text_when: {
+    fontSize: 0.375 * U,
+    fontFamily: 'MPLUSRounded1c-Bold',
+  },
+  postImage: {
+    width: 4* U, height: 4* U,
+    borderRadius: u,
+
+    alignSelf: 'flex-end',
+  },
+})
