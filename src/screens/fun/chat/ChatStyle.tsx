@@ -13,12 +13,10 @@ export default StyleSheet.create({
   },
 
   messagesContainer: {
-    flex: 1,
     // backgroundColor: 'red',
 
     //refactor
     paddingTop: 0.5 * U,
-
     alignItems: 'flex-start',
     justifyContent: 'flex-end',
   },
