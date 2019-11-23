@@ -1,5 +1,5 @@
 import {useQuery} from '@apollo/react-hooks';
-import React, {Fragment, Suspense, useEffect, useState} from 'react';
+import React, {Fragment, Suspense, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -18,7 +18,6 @@ import {GetAuthUser} from '../../generated/GetAuthUser';
 import {GetUser} from '../../generated/GetUser';
 import get_auth_user from '../../graphql/types/queries/get_auth_user';
 import get_user from '../../graphql/types/queries/get_user';
-import getAssets from '../../libs/image';
 import {u, U} from '../../libs/vars';
 import ss from './ProfileStyle';
 
@@ -100,7 +99,7 @@ const Profile = (props: ProfileProps) => {
               <ActionButton
                 {...props}
                 authUser={authUser.me}
-                guestUser={guestUser.user}
+                guestUser={guestUser.getUserById}
               />
 
               <TabView
