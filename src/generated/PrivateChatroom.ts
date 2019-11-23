@@ -9,6 +9,8 @@
 export interface PrivateChatroom_private_chatroom_subscribers {
   __typename: "User";
   id: string;
+  name: string;
+  avatar: string | null;
 }
 
 export interface PrivateChatroom_private_chatroom_chats_paginatorInfo {
@@ -23,6 +25,7 @@ export interface PrivateChatroom_private_chatroom_chats_data_sender {
   __typename: "User";
   id: string;
   name: string;
+  avatar: string | null;
 }
 
 export interface PrivateChatroom_private_chatroom_chats_data {
