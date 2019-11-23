@@ -1,16 +1,22 @@
-import React, {Fragment} from 'react';
+import {useQuery} from '@apollo/react-hooks';
+import React, {Fragment, Suspense} from 'react';
 import {
-  Text,
-  View,
-  StatusBar,
-  SafeAreaView,
-  TextInput,
+  ActivityIndicator,
   Image,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
-import {NavigationScreenProp, ScrollView} from 'react-navigation';
 import {Icon} from 'react-native-elements';
-import {width, U, u} from '../../../libs/vars';
-
+import {NavigationScreenProp, ScrollView} from 'react-navigation';
+import {
+  PrivateChatroom,
+  PrivateChatroomVariables,
+} from '../../../generated/PrivateChatroom';
+import private_chatroom from '../../../graphql/types/queries/private_chatroom';
+import {U} from '../../../libs/vars';
 import ss from './ChatStyle';
 
 interface ChatProps {
@@ -64,40 +70,55 @@ const messagesSample = [
 ];
 
 const Chat = (props: ChatProps) => {
-  return (
-    <Fragment>
-      <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
+  const {data: chat}: any = useQuery<PrivateChatroom, PrivateChatroomVariables>(
+    private_chatroom,
+    {
+      fetchPolicy: 'cache-and-network',
+      variables: {friend_id: props.navigation.state.params.friend_id},
+    },
+  );
 
-      <SafeAreaView style={{flex: 1}}>
-        <View style={ss.mainContainer}>
-          <ScrollView contentContainerStyle={ss.messagesContainer}>
-            {messagesSample.map(message => {
-              return (
-                <View
-                  key={message.message + message.time}
-                  style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
-                  <Image
-                    style={ss.Message__avatar}
-                    source={{uri: avatarsMap[message.avatarMapIndex]}}
-                  />
-                  <Text style={ss.Message__text}>{message.message}</Text>
-                </View>
-              );
-            })}
-          </ScrollView>
-          <View style={ss.inputContainer}>
-            <TextInput style={ss.input} autoFocus />
-            <Icon
-              name="sc-telegram"
-              type="evilicon"
-              color="hsl(0, 0%, 24%)"
-              size={2 * 0.64 * U}
-              containerStyle={ss.send}
-            />
+  console.log(chat);
+
+  return (
+    <Suspense
+      fallback={
+        <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />
+      }>
+      <Fragment>
+        <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
+
+        <SafeAreaView style={{flex: 1}}>
+          <View style={ss.mainContainer}>
+            <ScrollView contentContainerStyle={ss.messagesContainer}>
+              {messagesSample.map(message => {
+                return (
+                  <View
+                    key={message.message + message.time}
+                    style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
+                    <Image
+                      style={ss.Message__avatar}
+                      source={{uri: avatarsMap[message.avatarMapIndex]}}
+                    />
+                    <Text style={ss.Message__text}>{message.message}</Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
+            <View style={ss.inputContainer}>
+              <TextInput style={ss.input} autoFocus />
+              <Icon
+                name="sc-telegram"
+                type="evilicon"
+                color="hsl(0, 0%, 24%)"
+                size={2 * 0.64 * U}
+                containerStyle={ss.send}
+              />
+            </View>
           </View>
-        </View>
-      </SafeAreaView>
-    </Fragment>
+        </SafeAreaView>
+      </Fragment>
+    </Suspense>
   );
 };
 

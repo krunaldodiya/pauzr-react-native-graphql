@@ -3,6 +3,8 @@ import {Text, TouchableOpacity} from 'react-native';
 import screens from '../../libs/screens';
 
 const MessageButton = (props: any) => {
+  const {guestUser} = props;
+
   return (
     <TouchableOpacity
       style={{
@@ -16,7 +18,9 @@ const MessageButton = (props: any) => {
         justifyContent: 'center',
         alignItems: 'center',
       }}
-      onPress={() => props.navigation.push(screens.Chat)}>
+      onPress={() =>
+        props.navigation.push(screens.Chat, {friend_id: guestUser.id})
+      }>
       <Text
         style={{
           fontSize: 14,

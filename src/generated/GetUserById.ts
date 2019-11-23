@@ -3,10 +3,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: EditProfile
+// GraphQL query operation: GetUserById
 // ====================================================
 
-export interface EditProfile_editProfile_country {
+export interface GetUserById_getUserById_country {
   __typename: "Country";
   id: string;
   name: string;
@@ -14,7 +14,7 @@ export interface EditProfile_editProfile_country {
   shortname: string;
 }
 
-export interface EditProfile_editProfile {
+export interface GetUserById_getUserById {
   __typename: "User";
   id: string;
   username: string;
@@ -24,21 +24,15 @@ export interface EditProfile_editProfile {
   language: string | null;
   avatar: string | null;
   bio: string | null;
-  country: EditProfile_editProfile_country | null;
+  country: GetUserById_getUserById_country | null;
   is_follower: boolean;
   is_following: boolean;
 }
 
-export interface EditProfile {
-  editProfile: EditProfile_editProfile;
+export interface GetUserById {
+  getUserById: GetUserById_getUserById | null;
 }
 
-export interface EditProfileVariables {
-  name?: string | null;
-  language?: string | null;
-  dob?: string | null;
-  gender?: string | null;
-  avatar?: string | null;
-  bio?: string | null;
-  username?: string | null;
+export interface GetUserByIdVariables {
+  user_id: string;
 }

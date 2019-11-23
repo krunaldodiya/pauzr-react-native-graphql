@@ -23,6 +23,7 @@ export interface VerifyOtp_verifyOtp_user {
   mobile: string;
   language: string | null;
   avatar: string | null;
+  bio: string | null;
   country: VerifyOtp_verifyOtp_user_country | null;
   is_follower: boolean;
   is_following: boolean;

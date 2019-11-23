@@ -37,7 +37,9 @@ const Conversation = (props: any) => {
 
     return (
       <ListItem
-        onPress={() => props.navigation.push(screens.Chat)}
+        onPress={() =>
+          props.navigation.push(screens.Chat, {friend_id: friend('id')})
+        }
         key={item.id}
         leftAvatar={{
           source: {

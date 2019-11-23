@@ -23,6 +23,7 @@ export interface Login_login_user {
   mobile: string;
   language: string | null;
   avatar: string | null;
+  bio: string | null;
   country: Login_login_user_country | null;
   is_follower: boolean;
   is_following: boolean;

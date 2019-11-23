@@ -23,6 +23,7 @@ export interface SearchUsers_searchUsers_data {
   mobile: string;
   language: string | null;
   avatar: string | null;
+  bio: string | null;
   country: SearchUsers_searchUsers_data_country | null;
   is_follower: boolean;
   is_following: boolean;

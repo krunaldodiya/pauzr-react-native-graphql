@@ -23,6 +23,7 @@ export interface GetAuthUser_me {
   mobile: string;
   language: string | null;
   avatar: string | null;
+  bio: string | null;
   country: GetAuthUser_me_country | null;
   is_follower: boolean;
   is_following: boolean;

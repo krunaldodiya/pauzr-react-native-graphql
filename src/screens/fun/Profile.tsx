@@ -32,10 +32,6 @@ const Profile = (props: ProfileProps) => {
     fetchPolicy: 'cache-and-network',
   });
 
-  const {data: test} = useQuery<GetAuthUser, {}>(get_auth_user, {
-    fetchPolicy: 'cache-and-network',
-  });
-
   const {data: guestUser} = useQuery<GetUser, {}>(get_user, {
     fetchPolicy: 'cache-and-network',
     variables: {
