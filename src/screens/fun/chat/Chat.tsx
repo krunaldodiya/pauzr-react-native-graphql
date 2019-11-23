@@ -9,7 +9,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {Icon} from 'react-native-elements';
+import {Icon, Header, ListItem} from 'react-native-elements';
 import {NavigationScreenProp, ScrollView} from 'react-navigation';
 import {
   PrivateChatroom,
@@ -18,10 +18,8 @@ import {
 import private_chatroom from '../../../graphql/types/queries/private_chatroom';
 import {U} from '../../../libs/vars';
 import ss from './ChatStyle';
-
-interface ChatProps {
-  navigation: NavigationScreenProp<any, any>;
-}
+import get_auth_user from '../../../graphql/types/queries/get_auth_user';
+import {GetAuthUser} from '../../../generated/GetAuthUser';
 
 const avatarsMap = [
   'https://picsum.photos/id/63/500/500',
@@ -69,7 +67,11 @@ const messagesSample = [
   },
 ];
 
-const Chat = (props: ChatProps) => {
+const Chat = (props: any) => {
+  const {data: authUser}: any = useQuery<GetAuthUser, {}>(get_auth_user, {
+    fetchPolicy: 'cache-and-network',
+  });
+
   const {data: chat}: any = useQuery<PrivateChatroom, PrivateChatroomVariables>(
     private_chatroom,
     {
@@ -78,7 +80,13 @@ const Chat = (props: ChatProps) => {
     },
   );
 
-  console.log(chat);
+  const friend = (data: string) => {
+    return chat.private_chatroom.subscribers.filter((subscriber: any) => {
+      return subscriber.id != authUser.me.id;
+    })[0][data];
+  };
+
+  console.log(friend('name'));
 
   return (
     <Suspense
@@ -86,7 +94,44 @@ const Chat = (props: ChatProps) => {
         <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />
       }>
       <Fragment>
-        <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
+        <Header
+          style={{flex: 1}}
+          statusBarProps={{
+            backgroundColor: '#0D62A2',
+            translucent: true,
+          }}
+          backgroundColor="#0D62A2"
+          placement="center"
+          leftContainerStyle={{
+            alignItems: 'center',
+          }}
+          leftComponent={{
+            icon: 'arrow-back',
+            color: '#fff',
+            onPress: () => {
+              props.navigation.pop();
+            },
+          }}
+          centerComponent={
+            <ListItem
+              key={friend('id')}
+              titleStyle={{color: 'white'}}
+              subtitleStyle={{color: 'lightgreen', fontSize: 12}}
+              containerStyle={{
+                backgroundColor: 'transparent',
+                alignSelf: 'flex-start',
+              }}
+              leftAvatar={{
+                source: {
+                  uri: friend('avatar'),
+                },
+              }}
+              title={friend('name')}
+              subtitle="online"
+              bottomDivider
+            />
+          }
+        />
 
         <SafeAreaView style={{flex: 1}}>
           <View style={ss.mainContainer}>
