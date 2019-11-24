@@ -35,7 +35,7 @@ const Search = (props: any) => {
       <SafeAreaView style={{flex: 1}}>
         <View style={[ss.mainContainer, ss.mainContainer_clay]}>
           <TouchableOpacity
-            style={ss.inputConteiner}
+            style={ss.inputContainer}
             onPress={() => props.navigation.push(screens.SearchResults)}>
             <Icon
               name="search"
@@ -65,7 +65,7 @@ const Search = (props: any) => {
 
 const _tempQuotient = name => {
   return (
-    (4 / name.length) * ((name.match(/\n/g) && name.match(/\n/g).length) || 1)
+    (8 / name.length) * ((name.match(/\n/g) && name.match(/\n/g).length) || 1)
   );
 };
 
@@ -78,7 +78,7 @@ const Category = ({name, background_image, background_color}) => (
         ss.Category__bg,
         !background_image && {backgroundColor: background_color},
       ]}
-      resizeMode="center"
+      resizeMode='cover'
     />
     {/* todo fit size */}
     <Text style={[ss.Category__name, {fontSize: U * _tempQuotient(name)}]}>

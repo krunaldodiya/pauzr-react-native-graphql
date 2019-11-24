@@ -22,8 +22,11 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
 
-  inputConteiner: {
+  inputContainer: {
     flexDirection: 'row',
+
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'hsl(0,0%,80%)',
   },
   inputConteiner__icon: {
     alignSelf: 'center',
@@ -59,8 +62,8 @@ export default StyleSheet.create({
     // marginLeft: 0.5 * U,
     // marginTop:  0.5 * U,
     margin: 0.25 * U,
-    width: 4 * U,
-    height: 4 * U,
+    width: 6 * U,
+    height: 6 * U,
 
     backgroundColor: 'black', // temp
 
@@ -69,10 +72,10 @@ export default StyleSheet.create({
   },
   Category__name: {
     position: 'absolute',
-    left: 0.75 * U,
-    bottom: 0.75 * U,
+    left: 1 * U,
+    bottom: 1 * U,
 
-    fontSize: 0.75 * U,
+    fontSize: 1 * U,
     fontFamily: 'MPLUSRounded1c-Regular',
     color: 'white',
 
@@ -80,8 +83,8 @@ export default StyleSheet.create({
     textShadowRadius: 2 * u, // todo refactor
   },
   Category__bg: {
-    width: 4 * U,
-    height: 4 * U,
+    width: 6 * U,
+    height: 6 * U,
 
     opacity: 0.5,
   },
