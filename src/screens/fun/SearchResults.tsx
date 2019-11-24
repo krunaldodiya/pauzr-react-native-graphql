@@ -54,6 +54,7 @@ const SearchResults = (props: any) => {
               />
 
               <TextInput
+                autoFocus
                 placeholder="find people"
                 value={keywords}
                 onChangeText={value => {

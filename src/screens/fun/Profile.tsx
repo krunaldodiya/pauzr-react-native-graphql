@@ -28,18 +28,28 @@ interface ProfileProps {
 const Profile = (props: ProfileProps) => {
   const [tab, setTab] = useState(0);
 
-  const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user, {
-    fetchPolicy: 'cache-and-network',
-  });
-
-  const {data: guestUser} = useQuery<GetUser, {}>(get_user, {
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      user_id: props.navigation.state.params.user_id
-        ? props.navigation.state.params.user_id
-        : authUser?.me?.id,
+  const {data: authUser, loading: loadingAuthUser} = useQuery<GetAuthUser, {}>(
+    get_auth_user,
+    {
+      fetchPolicy: 'cache-and-network',
     },
-  });
+  );
+
+  const {data: guestUser, loading: loadingGuestUser} = useQuery<GetUser, {}>(
+    get_user,
+    {
+      fetchPolicy: 'cache-and-network',
+      variables: {
+        user_id: props.navigation.state.params.user_id
+          ? props.navigation.state.params.user_id
+          : authUser?.me?.id,
+      },
+    },
+  );
+
+  if (loadingAuthUser || loadingGuestUser) {
+    return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
+  }
 
   return (
     <Suspense
