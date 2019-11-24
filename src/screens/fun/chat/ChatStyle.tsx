@@ -17,8 +17,10 @@ export default StyleSheet.create({
 
     //refactor
     paddingTop: 0.5 * U,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
+    // alignContent: 'flex-end',
+    // alignItems: 'flex-end',
+    // alignSelf: 'flex-end',
   },
   Message: {
     // flex: 0,
@@ -32,9 +34,13 @@ export default StyleSheet.create({
     borderRadius: 0.5 * U,
 
     flexDirection: 'row',
+
+    alignItems: 'center',
+    alignSelf: 'flex-start',
   },
   Message_fromMe: {
     backgroundColor: '#e7e2f8',
+    alignItems: 'center',
     alignSelf: 'flex-end',
   },
   Message__text: {

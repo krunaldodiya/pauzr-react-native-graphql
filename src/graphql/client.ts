@@ -13,10 +13,6 @@ import {resolvers} from './resolvers';
 import {typeDefs} from './typeDefs';
 
 const getApolloClient = () => {
-  AsyncStorage.getItem('token').then(token => {
-    console.log(token, 'token');
-  });
-
   const errorLink = onError(data => {
     console.log(data);
   });
@@ -45,9 +41,14 @@ const getApolloClient = () => {
   });
 
   const pusherLink = new PusherLink({
-    pusher: new Pusher('60d3868f66b0ab455b41', {
+    pusher: new Pusher('myAppKey', {
       cluster: 'ap2',
       authEndpoint: `${httpUrlProd}/subscriptions/auth`,
+      // auth: {
+      //   headers: {
+      //     authorization: `Bearer ${token}`,
+      //   },
+      // },
     }),
   });
 

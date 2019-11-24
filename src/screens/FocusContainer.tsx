@@ -8,7 +8,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Groups from './focus/Groups';
 import Scoreboard from './focus/Scoreboard';
 import Timer from './focus/Timer';
-import {width, U, u} from '../libs/vars'
+import {width, U, u} from '../libs/vars';
 
 import ss, {fontColor} from './DrawerStyle';
 
@@ -20,18 +20,20 @@ const DrawerMenu = (props: any) => {
     // todo its just dummy fast sample
     {title: 'friends', iconName: 'user', iconType: 'font-awesome'},
     {title: 'favorites', iconName: 'favorite'},
-    {title: 'friends', iconName: 'sc-vk', iconType: 'evilicon'},
-  ]
+    {title: 'friends two', iconName: 'sc-vk', iconType: 'evilicon'},
+  ];
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={ss.mainContainer}>
-        
-        <Image source={{uri: 'https://picsum.photos/id/13/500/500'}} containerStyle={ss.avatar}/>
+        <Image
+          source={{uri: 'https://picsum.photos/id/13/500/500'}}
+          containerStyle={ss.avatar}
+        />
         <Text style={ss.name}>Kolya Avidov</Text>
 
-        {labels.map(label =>
-          <TouchableOpacity style={ss.label}>
+        {labels.map(label => (
+          <TouchableOpacity style={ss.label} key={label.title}>
             <Icon
               name={label.iconName}
               type={label.iconType}
@@ -41,33 +43,32 @@ const DrawerMenu = (props: any) => {
             />
             <Text style={ss.label__text}>{label.title}</Text>
           </TouchableOpacity>
-        )}
+        ))}
 
         {/* <View style={{flex: 1}}/> */}
-        <View style={{height: 4 * U}}/>
-        <View style={ss.divider}/>
+        <View style={{height: 4 * U}} />
+        <View style={ss.divider} />
 
         <TouchableOpacity style={ss.label}>
-            <Icon
-              name="sc-telegram"
-              type="evilicon"
-              color={fontColor}
-              size={2 * 0.64 * U}
-              containerStyle={ss.label__icon}
-            />
+          <Icon
+            name="sc-telegram"
+            type="evilicon"
+            color={fontColor}
+            size={2 * 0.64 * U}
+            containerStyle={ss.label__icon}
+          />
           <Text style={ss.label__text}>settings</Text>
         </TouchableOpacity>
         <TouchableOpacity style={ss.label}>
-            <Icon
-              name="ios-share"
-              type='ionicon'
-              color={fontColor}
-              size={2 * 0.64 * U}
-              containerStyle={ss.label__icon}
-            />
+          <Icon
+            name="ios-share"
+            type="ionicon"
+            color={fontColor}
+            size={2 * 0.64 * U}
+            containerStyle={ss.label__icon}
+          />
           <Text style={ss.label__text}>log-out</Text>
         </TouchableOpacity>
-
       </View>
     </SafeAreaView>
   );

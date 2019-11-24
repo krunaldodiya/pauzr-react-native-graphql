@@ -10,6 +10,7 @@ export interface addPrivateMessage_addPrivateMessage_sender {
   __typename: "User";
   id: string;
   name: string;
+  avatar: string | null;
 }
 
 export interface addPrivateMessage_addPrivateMessage {
@@ -24,6 +25,7 @@ export interface addPrivateMessage {
 }
 
 export interface addPrivateMessageVariables {
+  id: string;
   text: string;
   chatroom_id: string;
 }
