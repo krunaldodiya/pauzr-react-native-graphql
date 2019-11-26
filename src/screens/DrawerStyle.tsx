@@ -14,7 +14,8 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     // alignItems: 'center',
-    // alignContent: 'center',
+    alignContent: 'center',
+    alignItems: 'baseline',
   },
 
   avatar: {
@@ -56,8 +57,10 @@ export default StyleSheet.create({
     marginVertical: 0.25 * U,
 
     // refactor
-    alignSelf: 'flex-end',
-    marginRight: 3.25 * U,
+    // alignSelf: 'flex-end',
+    // marginRight: 3.25 * U,
+    // alignSelf: 'flex-start',
+    marginLeft: 2.25 * U,
   },
   label__text: {
     color: fontColor,
@@ -68,5 +71,6 @@ export default StyleSheet.create({
   },
   label__icon: {
     marginRight: u,
+    width: 2 * U,
   },
 })

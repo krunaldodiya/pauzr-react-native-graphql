@@ -40,12 +40,14 @@ export default StyleSheet.create({
 
   categoriesContainer: {
     // margin: 0.5 * U,
-
+    
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignContent: 'center',
     alignItems: 'center',
+
+    paddingLeft: 0.5 * U,
   },
   categoriesContainer__note: {
     width: 12 * U,
