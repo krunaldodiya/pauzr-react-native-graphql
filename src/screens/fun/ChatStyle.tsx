@@ -63,8 +63,8 @@ export default StyleSheet.create({
     borderWidth: 0.5,
       margin: -1,
     borderColor: 'hsl(0,0%,64%)',
-    borderTopLeftRadius: U,
-    borderTopRightRadius: U,
+    // borderTopLeftRadius: U,
+    // borderTopRightRadius: U,
     // overflow: "hidden",
     paddingHorizontal: 0.25 * U,
   },
@@ -87,6 +87,27 @@ export default StyleSheet.create({
   },
   inputContainerStyle: {
     borderBottomWidth: 0,
+  },
+
+  header: {
+    flexDirection: 'row',
+    backgroundColor: 'hsl(0,0%,92%)'
+  },
+  header__avatar: {
+    margin: 0.75 * U,
+    marginRight: 0,
+    marginLeft: U,
+
+    width: 1.25 * U,
+    height: 1.25 * U,
+    borderRadius: U,    
+  },
+  header__name: {
+    color: 'hsl(0,0%,24%)',    
+    fontFamily: 'MPLUSRounded1c-Regular',
+    fontSize: 0.5 * U,
+
+    margin: U,
   },
 
 })

@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
@@ -21,6 +21,12 @@ const DrawerMenu = (props: any) => {
     {title: 'friends', iconName: 'user', iconType: 'font-awesome'},
     {title: 'favorites', iconName: 'favorite'},
     {title: 'friends', iconName: 'sc-vk', iconType: 'evilicon'},
+    {title: 'friends', iconName: 'user', iconType: 'font-awesome'},
+    {title: 'favorites', iconName: 'favorite'},
+    {title: 'friends', iconName: 'sc-vk', iconType: 'evilicon'},
+    {title: 'friends', iconName: 'user', iconType: 'font-awesome'},
+    {title: 'favorites', iconName: 'favorite'},
+    {title: 'friends', iconName: 'sc-vk', iconType: 'evilicon'},
   ]
 
   return (
@@ -30,21 +36,24 @@ const DrawerMenu = (props: any) => {
         <Image source={{uri: 'https://picsum.photos/id/13/500/500'}} containerStyle={ss.avatar}/>
         <Text style={ss.name}>Kolya Avidov</Text>
 
-        {labels.map(label =>
-          <TouchableOpacity style={ss.label}>
-            <Icon
-              name={label.iconName}
-              type={label.iconType}
-              color={fontColor}
-              size={2 * 0.64 * U}
-              containerStyle={ss.label__icon}
-            />
-            <Text style={ss.label__text}>{label.title}</Text>
-          </TouchableOpacity>
-        )}
+        {/* todo or scroll with avatar too? */}
+        <ScrollView style={ss.mainLabelsScroll} contentContainerStyle={ss.mainLabelsContainer}>
+          {labels.map(label =>
+            <TouchableOpacity style={ss.label}>
+              <Icon
+                name={label.iconName}
+                type={label.iconType}
+                color={fontColor}
+                size={2 * 0.64 * U}
+                containerStyle={ss.label__icon}
+              />
+              <Text style={ss.label__text}>{label.title}</Text>
+            </TouchableOpacity>
+          )}
+        </ScrollView>
 
         {/* <View style={{flex: 1}}/> */}
-        <View style={{height: 4 * U}}/>
+        {/* <View style={{height: 4 * U}}/> */}
         <View style={ss.divider}/>
 
         <TouchableOpacity style={ss.label}>

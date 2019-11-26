@@ -61,6 +61,12 @@ const Chat = (props: ChatProps) => {
 
       <SafeAreaView style={{flex: 1}}>
         <View style={ss.mainContainer}>
+          <View style={ss.header}>
+            <Image style={ss.header__avatar}
+                   source={{uri: 'https://picsum.photos/id/63/500/500'}}/>
+            <Text style={ss.header__name}>Akella Balisky</Text>
+          </View>
+
           <ScrollView contentContainerStyle={ss.messagesContainer}>
             {messagesSample.map(message =>
               // todo extract to component
@@ -73,9 +79,16 @@ const Chat = (props: ChatProps) => {
             )}
           </ScrollView>
           <View style={ss.inputContainer}>
-            <TextInput style={ss.input} autoFocus/>
             <Icon
-              name="sc-telegram"
+              name="camera"
+              type="evilicon"
+              color="hsl(0, 0%, 24%)"
+              size={2 * 0.64 * U}
+              containerStyle={ss.send}
+            />
+            <TextInput style={ss.input} autoFocus returnKeyType='send'/>
+            <Icon
+              name="image"
               type="evilicon"
               color="hsl(0, 0%, 24%)"
               size={2 * 0.64 * U}

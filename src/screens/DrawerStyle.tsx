@@ -73,4 +73,13 @@ export default StyleSheet.create({
     marginRight: u,
     width: 2 * U,
   },
+
+  mainLabelsScroll: {
+    // backgroundColor: 'blue',
+    maxHeight: 8 * U,
+  },
+  mainLabelsContainer: {
+    // height: 10 * U,
+    // backgroundColor: 'red',
+  },
 })
