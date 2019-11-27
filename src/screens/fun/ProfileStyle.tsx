@@ -68,7 +68,7 @@ export default StyleSheet.create({
 
   galleryContainer: {
     margin: U,
-    borderRadius: U,
+    // borderRadius: U,
     overflow: 'hidden',
 
     flexDirection: 'row',

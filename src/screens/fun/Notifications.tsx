@@ -11,6 +11,11 @@ import {
 import getAssets from '../../libs/image';
 import {width, U, u} from '../../libs/vars'
 
+// todo extract to external component
+const DateSeparator = ({date}) =>
+  <View style={ss.DateSeparator}>
+    <Text style={ss.DateSeparator__text}>{date}</Text></View>
+
 const Notifications = (props: any) => {
   useEffect(() => {
     // dispatch.notification.getNotifications(null);
@@ -28,6 +33,7 @@ const Notifications = (props: any) => {
       when: '27 hours ago',
       post: {url: 'asd'}
     },
+    { dateSeparator: 'past week' },
     {
       type: 'App\\Notifications\\PostLiked',
       user: {avatar: '', name: 'Ali Alihab'},
@@ -47,9 +53,25 @@ const Notifications = (props: any) => {
 
     return (
       <Fragment>
-        {/* <View style={ss.Notification}> */}
-          {item.type == 'App\\Notifications\\UserFollowed' && (
-            <View style={ss.Notification}>
+        {item.type === 'App\\Notifications\\UserFollowed' && (
+          <View style={ss.Notification}>
+            <View>
+              <Image
+                style={ss.avatar}
+                source={{uri: 'https://picsum.photos/id/64/500/500'}}
+              />
+            </View>
+
+            <View style={{flex: 1}}>
+              <Text style={ss.text}>{item.user.name} started following you.</Text>
+              <Text style={[ss.text, ss.text_when]}>{item.when}</Text>
+            </View>
+          </View>
+        )}
+
+        {item.type === 'App\\Notifications\\PostLiked' && (
+          <View style={ss.Notification}>
+            <View style={{flex: 1, flexDirection: 'row',}}>
               <View>
                 <Image
                   style={ss.avatar}
@@ -58,35 +80,19 @@ const Notifications = (props: any) => {
               </View>
 
               <View style={{flex: 1}}>
-                <Text style={ss.text}>{item.user.name} started following you.</Text>
+                <Text style={ss.text}>{item.user.name} liked your post.</Text>
                 <Text style={[ss.text, ss.text_when]}>{item.when}</Text>
               </View>
             </View>
-          )}
 
-          {item.type == 'App\\Notifications\\PostLiked' && (
-            <View style={ss.Notification}>
-              <View style={{flex: 1, flexDirection: 'row',}}>
-                <View>
-                  <Image
-                    style={ss.avatar}
-                    source={{uri: 'https://picsum.photos/id/64/500/500'}}
-                  />
-                </View>
+            <Image
+              style={ss.postImage}
+              source={{uri: 'https://picsum.photos/id/65/500/500'}}
+            />
+          </View>
+        )}
 
-                <View style={{flex: 1}}>
-                  <Text style={ss.text}>{item.user.name} liked your post.</Text>
-                  <Text style={[ss.text, ss.text_when]}>{item.when}</Text>
-                </View>
-              </View>
-
-              <Image
-                style={ss.postImage}
-                source={{uri: 'https://picsum.photos/id/65/500/500'}}
-              />
-            </View>
-          )}
-        {/* </View> */}
+        {item.dateSeparator && <DateSeparator date={item.dateSeparator} />}
       </Fragment>
     );
   };
@@ -108,7 +114,6 @@ const Notifications = (props: any) => {
             contentContainerStyle={ss.notificationsContainer}
             keyExtractor={keyExtractor}
             // ItemSeparatorComponent={ItemSeparatorComponent}
-            dir
           />
         </View>
       </SafeAreaView>
@@ -156,5 +161,35 @@ const ss = StyleSheet.create({
     borderRadius: u,
 
     // alignSelf: 'flex-end',
+  },
+
+  DateSeparator: {
+    height: 0.5,
+    // backgroundColor: 'hsl(0,0%,80%)',
+    alignSelf: 'stretch',
+    borderRadius: 2,
+
+    // marginVertical: U,
+    margin: U,
+
+    // modifier: _ForNotifications
+    marginTop: 1.5 * U,
+    marginBottom: 0.25 * U,
+  },
+  DateSeparator__text: {
+    // backgroundColor: 'hsl(0,0%,94%)',
+    alignSelf: 'center',
+    paddingHorizontal: U,
+
+    marginTop: - 1 * 0.25 * U - u * 0.675,
+
+    color: 'hsl(0,0%,24%)',    
+    fontFamily: 'MPLUSRounded1c-Regular',
+    fontSize: 0.5 * U,
+
+    // modifier: _ForNotifications
+    // backgroundColor: 'hsl(0,0%,98%)',
+    position: 'absolute',
+    zIndex: -4,
   },
 })

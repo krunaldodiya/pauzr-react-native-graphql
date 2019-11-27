@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   StatusBar,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
@@ -177,12 +178,14 @@ const Profile = (props: ProfileProps) => {
               </View>
             </View> */}
 
-            {/* <View
+            <View
               style={{
-                marginTop: 10,
-                marginBottom: 1,
-                borderTopColor: '#eee',
-                borderTopWidth: 1,
+                margin: U,
+                marginBottom: - U + 1,
+                borderColor: '#eee',
+                borderWidth: 1,
+                borderTopLeftRadius: U,
+                borderTopRightRadius: U,
               }}>
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -226,7 +229,7 @@ const Profile = (props: ProfileProps) => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View> */}
+            </View> 
 
             {/*
             <View style={{flex: 1}}>

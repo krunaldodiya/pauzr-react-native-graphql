@@ -15,7 +15,7 @@ const avatarsMap = [
   'https://picsum.photos/id/64/500/500',
 ]
 
-const messagesSample = [
+const messagesPipe = [
   {
     // fromMe: true,
     message: 'Hello stranger!',
@@ -28,6 +28,7 @@ const messagesSample = [
     time: '01:35',
     avatarMapIndex: 1,
   },
+  { dateSeparator: 'today' },
   {
     // fromMe: true,
     message: 'It’s Baijiu, a strong clear Chinese alcohol. I like that, have an empty bottle from a trip to Shanghai',
@@ -54,6 +55,11 @@ const messagesSample = [
   },
 ]
 
+// todo extract to external component
+const DateSeparator = ({date}) =>
+  <View style={ss.DateSeparator}>
+    <Text style={ss.DateSeparator__text}>{date}</Text></View>
+
 const Chat = (props: ChatProps) => {
   return (
     <Fragment>
@@ -68,29 +74,33 @@ const Chat = (props: ChatProps) => {
           </View>
 
           <ScrollView contentContainerStyle={ss.messagesContainer}>
-            {messagesSample.map((message, index) =>
-              // todo extract to component
-              <View key={message.message + message.time} 
-                    style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
-                <Image style={ss.Message__avatar}
-                        source={{uri: avatarsMap[message.avatarMapIndex]}}/>
-                <Text style={ss.Message__text}>{message.message}</Text>
+            {messagesPipe.map((message, index) =>
+              message.dateSeparator // todo add logic
+                ? <DateSeparator date={message.dateSeparator} />
+                : <View key={message.message + message.time} // todo extract to component
+                        style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
+                    <Image style={ss.Message__avatar}
+                            source={{uri: avatarsMap[message.avatarMapIndex]}}/>
+                    <Text style={ss.Message__text}>{message.message}</Text>
 
-                {index === (messagesSample.length-1) &&
-                  // todo you can also bind with other status
-                  <Icon
-                    name="check" // can bind, for example, this
-                    type="evilicon"
-                    color="hsl(0, 0%, 24%)" // and this
-                    // color="hsl(207, 80%, 64%)" // |
-                    size={U}
-                    containerStyle={ss.messageStatus}
-                  />
-                }
-                {'if(showTime)' &&
-                  <Text style={ss.message__time}>18:53</Text>
-                }
-              </View>
+                    {index === (messagesPipe.length-1) &&
+                      // todo you can also bind with other status
+                      <Icon
+                        name="check" // can bind, for example, this
+                        type="evilicon"
+                        color="hsl(0, 0%, 24%)" // and this
+                        // color="hsl(207, 80%, 64%)" // |
+                        size={U}
+                        containerStyle={[
+                          ss.messageStatus, 
+                          message.fromMe && ss.messageStatus_fromMe
+                        ]}
+                      />
+                    }
+                    {'if(showTime)' &&
+                      <Text style={ss.message__time}>18:53</Text>
+                    }
+                  </View>
             )}
           </ScrollView>
           <View style={ss.inputContainer}>

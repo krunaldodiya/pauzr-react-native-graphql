@@ -44,6 +44,8 @@ export default StyleSheet.create({
 
     fontFamily: 'MPLUSRounded1c-Regular',
     color: 'hsl(0,0%,12%)',
+
+    marginBottom: u,
   },
   Message__avatar: {
     marginRight: 0.5 * U,
@@ -111,13 +113,58 @@ export default StyleSheet.create({
   },
 
   messageStatus: {
-    alignSelf: 'flex-end',
-    marginRight: -u*0.5,
-    marginLeft: u*0.5,
+    // alignSelf: 'flex-end',
+    // marginRight: -u*0.5,
+    // marginLeft: u*0.5,
+    position: 'absolute',
+    right: - U * 1.25,
+    bottom: u * 2,
+  },
+  messageStatus_fromMe: {
+    right: undefined,
+    left: - U * 1.25,
   },
 
   message__time: {
-    display: 'none',
+    // display: 'none',
+    position: 'absolute',
+    // top: U * 2,
+    // left: U * 0.125,
+    bottom: U * 0.125,
+    right: U * 0.125,
+
+    backgroundColor: 'white',
+    paddingHorizontal: u,
+    borderRadius: u,
+
+    color: 'hsl(0,0%,36%)',    
+    fontFamily: 'MPLUSRounded1c-Regular',
+    fontSize: 0.5 * U,
+  },
+
+  DateSeparator: {
+    height: 0.5,
+    backgroundColor: 'hsl(0,0%,80%)',
+    alignSelf: 'stretch',
+    borderRadius: 2,
+
+    // marginVertical: U,
+    margin: U,
+  },
+  DateSeparator__text: {
+    // position: 'absolute',
+    // top: 0,
+    // left: 0,
+    // right: 0,
+    backgroundColor: 'hsl(0,0%,94%)',
+    alignSelf: 'center',
+    paddingHorizontal: U,
+
+    marginTop: - 1 * 0.25 * U - u * 0.675,
+
+    color: 'hsl(0,0%,24%)',    
+    fontFamily: 'MPLUSRounded1c-Regular',
+    fontSize: 0.5 * U,
   },
 
 })
