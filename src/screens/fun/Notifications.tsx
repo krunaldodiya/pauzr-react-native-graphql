@@ -32,7 +32,6 @@ const Notifications = (props: any) => {
     const {item} = data;
 
     const json = JSON.parse(item.data);
-    console.log('json', json);
 
     return (
       <Fragment>
