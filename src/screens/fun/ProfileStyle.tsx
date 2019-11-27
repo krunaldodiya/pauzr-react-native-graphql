@@ -65,4 +65,22 @@ export default StyleSheet.create({
     fontFamily: 'MPLUSRounded1c-Regular', // todo replace with theme.fonts
     fontSize: 0.5 * U,
   },
+
+  galleryContainer: {
+    margin: U,
+    // borderRadius: U,
+    overflow: 'hidden',
+
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  galleryItem: {
+    margin: 1,
+    marginRight: 0,
+    marginBottom: 0,
+  },
+  galleryItem__image: {
+    width: 7 * (U - u * 1.25) - u,
+    height: 7 * (U - u * 1.25) - u,
+  },
 });

@@ -39,14 +39,16 @@ export default StyleSheet.create({
   },
   inputContainerStyle: {
     borderBottomWidth: 0,
+
+    backgroundColor: 'hsl(0,0%,98%)',
+    borderRadius: 0.5 * U,
+    maxWidth: 10 * U,
+    paddingLeft: 0.5 * U,
+    marginLeft: -0.75 * U,
   },
 
   input__name: {
-    // todo wrap
-    // fontSize: U,
     fontSize: 0.9 * U,
-
-    // marginHorizontal: 0, // todo for container too
   },
   input__bio: {
     fontSize: 0.5 * U,

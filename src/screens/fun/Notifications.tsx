@@ -1,4 +1,3 @@
-import {useQuery} from '@apollo/react-hooks';
 import React, {Fragment, useEffect} from 'react';
 import {
   FlatList,
@@ -8,25 +7,47 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicator,
 } from 'react-native';
-import {Notifications as NotificationsType} from '../../generated/Notifications';
-import notifications from '../../graphql/types/queries/notifications';
 import {U, u} from '../../libs/vars';
-import moment from 'moment';
+
+// todo extract to external component
+const DateSeparator = ({date}) => (
+  <View style={ss.DateSeparator}>
+    <Text style={ss.DateSeparator__text}>{date}</Text>
+  </View>
+);
 
 const Notifications = (props: any) => {
   useEffect(() => {
     // dispatch.notification.getNotifications(null);
   }, []);
 
-  const {data, loading}: any = useQuery<NotificationsType, {}>(notifications, {
-    fetchPolicy: 'cache-and-network',
-  });
-
-  if (loading && !data) {
-    return <ActivityIndicator style={{flex: 1, justifyContent: 'center'}} />;
-  }
+  const notifications: any = [
+    {
+      type: 'App\\Notifications\\UserFollowed',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+    },
+    {
+      type: 'App\\Notifications\\PostLiked',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+      post: {url: 'asd'},
+    },
+    {dateSeparator: 'past week'},
+    {
+      type: 'App\\Notifications\\PostLiked',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+      post: {url: 'asd'},
+    },
+    {
+      type: 'App\\Notifications\\PostLiked',
+      user: {avatar: '', name: 'Ali Alihab'},
+      when: '27 hours ago',
+      post: {url: 'asd'},
+    },
+  ];
 
   const renderItem = (data: any) => {
     const {item} = data;
@@ -35,25 +56,25 @@ const Notifications = (props: any) => {
 
     return (
       <Fragment>
-        {/* <View style={ss.Notification}> */}
-        {item.type == 'App\\Notifications\\UserFollowed' && (
+        {item.type === 'App\\Notifications\\UserFollowed' && (
           <View style={ss.Notification}>
             <View>
-              <Image style={ss.avatar} source={{uri: json.follower.avatar}} />
+              <Image
+                style={ss.avatar}
+                source={{uri: 'https://picsum.photos/id/64/500/500'}}
+              />
             </View>
 
             <View style={{flex: 1}}>
               <Text style={ss.text}>
-                {json.follower.name} started following you.
+                {item.user.name} started following you.
               </Text>
-              <Text style={[ss.text, ss.text_when]}>
-                {moment('2019-11-16 17:13:34').fromNow()}
-              </Text>
+              <Text style={[ss.text, ss.text_when]}>{item.when}</Text>
             </View>
           </View>
         )}
 
-        {item.type == 'App\\Notifications\\PostLiked' && (
+        {item.type === 'App\\Notifications\\PostLiked' && (
           <View style={ss.Notification}>
             <View style={{flex: 1, flexDirection: 'row'}}>
               <View>
@@ -75,7 +96,8 @@ const Notifications = (props: any) => {
             />
           </View>
         )}
-        {/* </View> */}
+
+        {item.dateSeparator && <DateSeparator date={item.dateSeparator} />}
       </Fragment>
     );
   };
@@ -92,7 +114,7 @@ const Notifications = (props: any) => {
       <SafeAreaView style={{flex: 1}}>
         <View style={{flex: 1}}>
           <FlatList
-            data={data.notifications}
+            data={notifications}
             renderItem={renderItem}
             contentContainerStyle={ss.notificationsContainer}
             keyExtractor={keyExtractor}
@@ -144,5 +166,35 @@ const ss = StyleSheet.create({
     borderRadius: u,
 
     // alignSelf: 'flex-end',
+  },
+
+  DateSeparator: {
+    height: 0.5,
+    // backgroundColor: 'hsl(0,0%,80%)',
+    alignSelf: 'stretch',
+    borderRadius: 2,
+
+    // marginVertical: U,
+    margin: U,
+
+    // modifier: _ForNotifications
+    marginTop: 1.5 * U,
+    marginBottom: 0.25 * U,
+  },
+  DateSeparator__text: {
+    // backgroundColor: 'hsl(0,0%,94%)',
+    alignSelf: 'center',
+    paddingHorizontal: U,
+
+    marginTop: -1 * 0.25 * U - u * 0.675,
+
+    color: 'hsl(0,0%,24%)',
+    fontFamily: 'MPLUSRounded1c-Regular',
+    fontSize: 0.5 * U,
+
+    // modifier: _ForNotifications
+    // backgroundColor: 'hsl(0,0%,98%)',
+    position: 'absolute',
+    zIndex: -4,
   },
 });

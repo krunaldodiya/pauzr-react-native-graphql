@@ -169,9 +169,8 @@ const HeaderLeft = (props: any) => {
 
 const HeaderRight = (props: any) => {
   const userProfile = useCallback(() => {
-    return props.navigation.push(screens.Profile, {
-      user_id: null,
-    });
+    props.navigation.push(screens.Profile);
+    // props.navigation.push(screens.ProfileEdit); // temp for fast debug
   }, []);
 
   return (
