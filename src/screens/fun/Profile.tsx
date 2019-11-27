@@ -52,6 +52,8 @@ const Profile = (props: ProfileProps) => {
     );
   };
 
+  const _items = [30,14,52,32,12,51,33,41,42,43,44,45,46,47,48,49]
+
   const renderItem = (data: any) => <FeedList data={data} />;
 
   const editProfileHandler = () => null;
@@ -226,6 +228,7 @@ const Profile = (props: ProfileProps) => {
               </View>
             </View> */}
 
+            {/*
             <View style={{flex: 1}}>
               <FlatList
                 // numColumns={3}
@@ -267,7 +270,19 @@ const Profile = (props: ProfileProps) => {
                 // onEndReachedThreshold={0.5}
                 // ListFooterComponent={this.showLoading}
               />
+            </View>*/}
+
+            <View style={ss.galleryContainer}>
+            {_items.map(item =>
+              <View style={ss.galleryItem}>                
+                <Image
+                  style={ss.galleryItem__image}
+                  source={{uri: `https://picsum.photos/id/${item}/500/500`}}
+                />
+              </View>
+            )}
             </View>
+
           </View>
         </ScrollView>
       </SafeAreaView>

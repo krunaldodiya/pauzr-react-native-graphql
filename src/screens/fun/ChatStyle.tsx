@@ -110,4 +110,14 @@ export default StyleSheet.create({
     margin: U,
   },
 
+  messageStatus: {
+    alignSelf: 'flex-end',
+    marginRight: -u*0.5,
+    marginLeft: u*0.5,
+  },
+
+  message__time: {
+    display: 'none',
+  },
+
 })

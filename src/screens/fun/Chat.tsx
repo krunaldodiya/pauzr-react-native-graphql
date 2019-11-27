@@ -68,13 +68,28 @@ const Chat = (props: ChatProps) => {
           </View>
 
           <ScrollView contentContainerStyle={ss.messagesContainer}>
-            {messagesSample.map(message =>
+            {messagesSample.map((message, index) =>
               // todo extract to component
               <View key={message.message + message.time} 
                     style={[ss.Message, message.fromMe && ss.Message_fromMe]}>
                 <Image style={ss.Message__avatar}
                         source={{uri: avatarsMap[message.avatarMapIndex]}}/>
                 <Text style={ss.Message__text}>{message.message}</Text>
+
+                {index === (messagesSample.length-1) &&
+                  // todo you can also bind with other status
+                  <Icon
+                    name="check" // can bind, for example, this
+                    type="evilicon"
+                    color="hsl(0, 0%, 24%)" // and this
+                    // color="hsl(207, 80%, 64%)" // |
+                    size={U}
+                    containerStyle={ss.messageStatus}
+                  />
+                }
+                {'if(showTime)' &&
+                  <Text style={ss.message__time}>18:53</Text>
+                }
               </View>
             )}
           </ScrollView>

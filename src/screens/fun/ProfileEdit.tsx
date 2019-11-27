@@ -53,7 +53,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
                   source={{uri: 'https://picsum.photos/id/63/500/500'}}
                 />
               </TouchableOpacity>
-              <Input containerStyle={[ss.input, {marginHorizontal: 0}]} value='Pavel Shamparov' inputStyle={[ss.inputStyle, ss.input__name]} inputContainerStyle={ss.inputContainerStyle} placeholder="name" />
+              <Input containerStyle={[ss.input, {marginHorizontal: 0}]} value='Pavel Shamparov' inputStyle={[ss.inputStyle, ss.input__name]} inputContainerStyle={[ss.inputContainerStyle, {backgroundColor: 'transparent'}]} placeholder="name" />
             </View>
 
             <Input 
