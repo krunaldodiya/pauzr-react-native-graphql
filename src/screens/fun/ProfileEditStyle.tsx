@@ -4,6 +4,10 @@
 import {StyleSheet} from 'react-native'
 import {width, U, u} from '../../libs/vars'
 
+export const colors = {
+  input__text: 'hsl(0, 0%, 24%)',
+}
+
 export default StyleSheet.create({
   // todo generalize and move to common style file
   mainContainer: {
@@ -29,6 +33,7 @@ export default StyleSheet.create({
     paddingHorizontal: 0.75 * U,
   },
   inputStyle: {
+    color: colors.input__text,
     fontFamily: 'MPLUSRounded1c-Regular',
     fontSize: 0.75 * U,
   },
@@ -46,12 +51,22 @@ export default StyleSheet.create({
   input__bio: {
     fontSize: 0.5 * U,
   },
+  input__icon: {
+    marginRight: 0.5 * U,
+    marginLeft: -0.5 * U,
+  },
+  // input_withIcon: {
+  //   paddingHorizontal: u,
+  // },
 
   button: {
     margin: U,
 
     borderRadius: U,
-    backgroundColor: 'hsl(0, 0%, 88%)',
+    backgroundColor: 'hsl(0, 0%, 94%)',
+    elevation: U,
+    borderWidth: 0.5,
+    borderColor: 'white',
 
     padding: U,
   },
@@ -145,16 +160,34 @@ export default StyleSheet.create({
     
     paddingHorizontal: 1.5 * u,
     paddingVertical: 0.5 * u,
-    backgroundColor: 'hsl(0,0%, 86%)',
+    backgroundColor: 'hsl(0,0%, 96%)',
     borderRadius: 100,
+
+    borderWidth: 0.5,
+    borderColor: 'hsl(0,0%, 92%)',
   },
-  Interest__title: {},
+  Interest__title: {
+    fontFamily: 'MPLUSRounded1c-Regular',
+    fontSize: 0.5 * U,
+    color: 'hsl(0,0%,24%)',
+  },
 
   button_bottom: {
     // position: 'absolute',
     // bottom: U,
     // though, no
     // marginTop: 3 * U,
+    
+    // because of elevation:
+    marginTop: U + 1.5 * U,
+  },
+
+  heading: {
+    fontFamily: 'MPLUSRounded1c-Regular',
+    fontSize: 0.5 * U,
+    color: 'hsl(0,0%,36%)',
+    
+    marginLeft: U,
   },
 
 })

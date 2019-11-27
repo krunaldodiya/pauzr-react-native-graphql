@@ -47,9 +47,9 @@ const Notifications = (props: any) => {
 
     return (
       <Fragment>
-        <View style={ss.Notification}>
+        {/* <View style={ss.Notification}> */}
           {item.type == 'App\\Notifications\\UserFollowed' && (
-            <View style={{flexDirection: 'row'}}>
+            <View style={ss.Notification}>
               <View>
                 <Image
                   style={ss.avatar}
@@ -65,8 +65,8 @@ const Notifications = (props: any) => {
           )}
 
           {item.type == 'App\\Notifications\\PostLiked' && (
-            <View>
-              <View style={{flexDirection: 'row'}}>
+            <View style={ss.Notification}>
+              <View style={{flex: 1, flexDirection: 'row',}}>
                 <View>
                   <Image
                     style={ss.avatar}
@@ -86,7 +86,7 @@ const Notifications = (props: any) => {
               />
             </View>
           )}
-        </View>
+        {/* </View> */}
       </Fragment>
     );
   };
@@ -108,6 +108,7 @@ const Notifications = (props: any) => {
             contentContainerStyle={ss.notificationsContainer}
             keyExtractor={keyExtractor}
             // ItemSeparatorComponent={ItemSeparatorComponent}
+            dir
           />
         </View>
       </SafeAreaView>
@@ -130,6 +131,8 @@ const ss = StyleSheet.create({
 
     backgroundColor: 'white',
     elevation: 32,
+    
+    flexDirection: 'row',
   },
   avatar: {
     marginRight: 0.5 * U,
@@ -148,9 +151,10 @@ const ss = StyleSheet.create({
     fontFamily: 'MPLUSRounded1c-Bold',
   },
   postImage: {
-    width: 4* U, height: 4* U,
+    width: 3* U, 
+    height: 3* U,
     borderRadius: u,
 
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
   },
 })
