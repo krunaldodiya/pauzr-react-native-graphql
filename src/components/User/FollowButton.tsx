@@ -13,8 +13,6 @@ import toggle_follow from '../../graphql/types/mutations/toggle_follow';
 const FollowButton = (props: any) => {
   const {guestUser, authUser} = props;
 
-  console.log(guestUser);
-
   const [toggleFollow] = useMutation<ToggleFollow, ToggleFollowVariables>(
     toggle_follow,
   );
