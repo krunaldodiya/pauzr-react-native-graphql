@@ -41,7 +41,7 @@ const getApolloClient = () => {
   });
 
   const pusherLink = new PusherLink({
-    pusher: new Pusher('myAppKey', {
+    pusher: new Pusher('abd0716eddc0702f68a4', {
       cluster: 'ap2',
       authEndpoint: `${httpUrlProd}/subscriptions/auth`,
       // auth: {

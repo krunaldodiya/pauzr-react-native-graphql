@@ -1,14 +1,13 @@
-import {ApolloProvider} from '@apollo/react-hooks';
+import {ApolloProvider, useSubscription} from '@apollo/react-hooks';
 import NetInfo from '@react-native-community/netinfo';
 import React, {useEffect} from 'react';
 import {createAppContainer} from 'react-navigation';
+import {PrivateMessageAdded} from '../generated/PrivateMessageAdded';
 import {getApolloClient} from '../graphql/client';
 import {PersistGate} from '../graphql/gate';
 import {GET_INITIAL_SCREEN} from '../graphql/query';
+import private_message_added from '../graphql/types/subscriptions/private_message_added';
 import getStackNavigator from '../libs/route';
-import PusherNative from 'pusher-js/react-native';
-import Echo from 'laravel-echo';
-import AsyncStorage from '@react-native-community/async-storage';
 
 export const client = getApolloClient();
 
@@ -28,39 +27,11 @@ const App = () => {
     const AppNavigator = getStackNavigator(data.initialScreen);
     const AppContainer = createAppContainer(AppNavigator);
 
-    // const httpHost = 'https://graphql.pauzr.com';
-    const wsHost = 'https://graphql.pauzr.com';
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JhcGhxbC5wYXV6ci5jb21cL2dyYXBocWwiLCJpYXQiOjE1NzQ4NjExMzMsImV4cCI6MTYwNjM5NzEzMywibmJmIjoxNTc0ODYxMTMzLCJqdGkiOiJsanZGWlI2VWVvM1NNN1BOIiwic3ViIjoiNDNlMjYzNGQtZDI4NC00NGZiLWIwMWUtMDRhODA1YjlmYjQ3IiwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.5jrqMYUj8NUKjgsZgo4E2PXRiwhAsYRrbwSygrk1fi4';
+    const {data: message} = useSubscription<PrivateMessageAdded, {}>(
+      private_message_added,
+    );
 
-    const options = {
-      broadcaster: 'pusher',
-      key: 'myAppKey',
-      // cluster: 'ap2',
-      // encrypted: true,
-      // logToConsole: true,
-      wsHost: wsHost,
-      wsPort: 6001,
-      authEndpoint: `/broadcasting/auth`,
-      auth: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-        },
-      },
-    };
-
-    let PusherClient = new PusherNative(options.key, options);
-
-    const echo = new Echo({
-      broadcaster: 'pusher',
-      client: PusherClient,
-      ...options,
-    });
-
-    echo.channel('private-chat').listen('TestEvent', (data: any) => {
-      console.log(data, 'data');
-    });
+    console.log(message);
 
     return <AppContainer />;
   };
