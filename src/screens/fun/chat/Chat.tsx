@@ -29,6 +29,7 @@ import private_chatroom from '../../../graphql/types/queries/private_chatroom';
 import private_message_added from '../../../graphql/types/subscriptions/private_message_added';
 import {U} from '../../../libs/vars';
 import ss from './ChatStyle';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Chat = (props: any) => {
   const uuid = uuidv4();
@@ -150,59 +151,72 @@ const Chat = (props: any) => {
                 onChangeText={message => setMessage(message)}
               />
 
-              <Icon
-                name="sc-telegram"
-                type="evilicon"
-                color="hsl(0, 0%, 24%)"
-                size={2 * 0.64 * U}
-                containerStyle={ss.send}
-                onPress={async () => {
-                  addPrivateMessage({
-                    variables: {
-                      id: uuid,
-                      text: message,
-                      chatroom_id: chat.private_chatroom.id,
-                    },
-                    update: (store, {data}) => {
-                      const chatroom: any = store.readQuery({
-                        query: private_chatroom,
-                        variables: {
-                          friend_id: props.navigation.state.params.friend_id,
-                        },
-                      });
+              {!message.length ? (
+                <Icon
+                  name="camera"
+                  type="foundation"
+                  color="hsl(0, 0%, 24%)"
+                  size={2 * 0.64 * U}
+                  containerStyle={ss.send}
+                />
+              ) : null}
 
-                      store.writeQuery({
-                        query: private_chatroom,
-                        variables: {
-                          friend_id: props.navigation.state.params.friend_id,
-                        },
-                        data: produce(chatroom, (x: any) => {
-                          x.private_chatroom.chats.push(
-                            data!.addPrivateMessage,
-                          );
-                        }),
-                      });
-
-                      flatListRef?.current.scrollToEnd({animated: false});
-                    },
-                    optimisticResponse: {
-                      addPrivateMessage: {
-                        __typename: 'Chat',
+              {message.length ? (
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    marginRight: 10,
+                  }}
+                  onPress={async () => {
+                    addPrivateMessage({
+                      variables: {
                         id: uuid,
-                        sender: {
-                          __typename: 'User',
-                          id: authUser.me.id,
-                          name: authUser.me.name,
-                          avatar: authUser.me.avatar,
-                        },
                         text: message,
+                        chatroom_id: chat.private_chatroom.id,
                       },
-                    },
-                  });
+                      update: (store, {data}) => {
+                        const chatroom: any = store.readQuery({
+                          query: private_chatroom,
+                          variables: {
+                            friend_id: props.navigation.state.params.friend_id,
+                          },
+                        });
 
-                  setMessage('');
-                }}
-              />
+                        store.writeQuery({
+                          query: private_chatroom,
+                          variables: {
+                            friend_id: props.navigation.state.params.friend_id,
+                          },
+                          data: produce(chatroom, (x: any) => {
+                            x.private_chatroom.chats.push(
+                              data!.addPrivateMessage,
+                            );
+                          }),
+                        });
+
+                        flatListRef?.current.scrollToEnd({animated: false});
+                      },
+                      optimisticResponse: {
+                        addPrivateMessage: {
+                          __typename: 'Chat',
+                          id: uuid,
+                          sender: {
+                            __typename: 'User',
+                            id: authUser.me.id,
+                            name: authUser.me.name,
+                            avatar: authUser.me.avatar,
+                          },
+                          text: message,
+                        },
+                      },
+                    });
+
+                    setMessage('');
+                  }}>
+                  <Text style={{fontWeight: '500'}}>Send</Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
           </View>
         </SafeAreaView>

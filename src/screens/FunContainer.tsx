@@ -56,8 +56,8 @@ const FunTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}: any) => (
           <Icon
-            type="SimpleLineIcons"
-            name="message"
+            type="Entypo"
+            name="chat"
             style={{color: tintColor, fontSize: 36}}
           />
         ),

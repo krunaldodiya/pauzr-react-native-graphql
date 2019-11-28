@@ -1,14 +1,15 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import {
   FlatList,
   Image,
   SafeAreaView,
   StatusBar,
-  StyleSheet,
   Text,
   View,
+  StyleSheet,
 } from 'react-native';
-import {U, u} from '../../libs/vars';
+import getAssets from '../../libs/image';
+import {width, U, u} from '../../libs/vars';
 
 // todo extract to external component
 const DateSeparator = ({date}) => (
@@ -51,8 +52,6 @@ const Notifications = (props: any) => {
 
   const renderItem = (data: any) => {
     const {item} = data;
-
-    const json = JSON.parse(item.data);
 
     return (
       <Fragment>
