@@ -79,11 +79,19 @@ const Chat = (props: ChatProps) => {
       <SafeAreaView style={{flex: 1}}>
         <View style={ss.mainContainer}>
           <View style={ss.header}>
+            <Text style={{margin: U, marginVertical: 0.625 * U, marginRight: 0, fontSize: U}}>{'\<'}</Text>
             <Image
               style={ss.header__avatar}
               source={{uri: 'https://picsum.photos/id/63/500/500'}}
             />
             <Text style={ss.header__name}>Akella Balisky</Text>
+            <Icon
+                name="kebab-vertical"
+                type="octicon"
+                color="hsl(0, 0%, 24%)"
+                size={U}
+                containerStyle={{margin: 0.75 * U}}
+              />
           </View>
 
           <ScrollView contentContainerStyle={ss.messagesContainer}>
@@ -121,23 +129,34 @@ const Chat = (props: ChatProps) => {
               ),
             )}
           </ScrollView>
-          <View style={ss.inputContainer}>
+
+          <View style={{flexDirection:'row'}}>
+            <View style={ss.inputContainer}>
+              <Icon
+                name="camera"
+                type="evilicon"
+                color="hsl(0, 0%, 24%)"
+                size={2 * 0.64 * U}
+                containerStyle={ss.send}
+              />
+              <TextInput style={ss.input} autoFocus returnKeyType="send" />
+              <Icon
+                name="image"
+                type="evilicon"
+                color="hsl(0, 0%, 24%)"
+                size={2 * 0.64 * U}
+                containerStyle={ss.send}
+              />
+            </View>
             <Icon
-              name="camera"
-              type="evilicon"
-              color="hsl(0, 0%, 24%)"
-              size={2 * 0.64 * U}
-              containerStyle={ss.send}
-            />
-            <TextInput style={ss.input} autoFocus returnKeyType="send" />
-            <Icon
-              name="image"
-              type="evilicon"
-              color="hsl(0, 0%, 24%)"
-              size={2 * 0.64 * U}
-              containerStyle={ss.send}
-            />
+                name="sc-telegram"
+                type="evilicon"
+                color="hsl(0, 0%, 24%)"
+                size={2 * 0.64 * U}
+                containerStyle={ss.sendBtn}
+              />
           </View>
+
         </View>
       </SafeAreaView>
     </Fragment>

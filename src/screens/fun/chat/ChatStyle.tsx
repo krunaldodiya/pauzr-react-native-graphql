@@ -35,12 +35,11 @@ export default StyleSheet.create({
 
     flexDirection: 'row',
 
-    alignItems: 'center',
+    alignItems: 'flex-start',
     alignSelf: 'flex-start',
   },
   Message_fromMe: {
     backgroundColor: '#e7e2f8',
-    alignItems: 'center',
     alignSelf: 'flex-end',
   },
   Message__text: {
@@ -49,7 +48,9 @@ export default StyleSheet.create({
     fontFamily: 'MPLUSRounded1c-Regular',
     color: 'hsl(0,0%,12%)',
 
-    marginBottom: u,
+    // marginBottom: u,
+    margin: U * 0.25,
+    marginBottom: U * 0.75,
   },
   Message__avatar: {
     marginRight: 0.5 * U,
@@ -65,13 +66,15 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     // height: 2 * U,
     // borderTopWidth: 0.5,
-    borderWidth: 0.5,
+    // borderWidth: 0.5,
     margin: 5,
     borderColor: 'hsl(0,0%,64%)',
     // borderTopLeftRadius: U,
-    // borderTopRightRadius: U,
-    // overflow: "hidden",
+    borderRadius: U,
+    overflow: "hidden",
     paddingHorizontal: 0.25 * U,
+
+    flex: 1,
   },
   input: {
     flex: 1,
@@ -86,6 +89,18 @@ export default StyleSheet.create({
     height: 2 * U,
     width: 2 * U,
     paddingTop: 3 * 0.64 * u,
+  },
+  sendBtn: {
+    margin: u,
+    marginLeft: 0,
+
+    backgroundColor:'white',
+    height: 2 * U,
+    width: 2 * U,
+    borderRadius: U,
+
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   inputStyle: {
     fontSize: 0.75 * U,
@@ -113,6 +128,7 @@ export default StyleSheet.create({
     fontSize: 0.5 * U,
 
     margin: U,
+    flex: 1,
   },
 
   messageStatus: {

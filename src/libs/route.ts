@@ -1,7 +1,8 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import Auth from '../screens/Auth';
 import CreatePost from '../screens/CreatePost';
-import Chat from '../screens/fun/chat/Chat';
+// import Chat from '../screens/fun/chat/Chat';
+import Chat from '../screens/fun/chat/ChatBackup'; // temp
 import Feeds from '../screens/fun/Feeds';
 import TotalLikes from '../screens/fun/post/TotalLikes';
 import Profile from '../screens/fun/Profile';

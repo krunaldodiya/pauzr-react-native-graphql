@@ -7,7 +7,7 @@ import {U, u} from '../../libs/vars';
 export default StyleSheet.create({
   // todo generalize and move to common style file
   mainContainer: {
-    margin: U,
+    margin: 0.5 * U,
     flex: 1,
 
     borderRadius: U,
@@ -63,9 +63,9 @@ export default StyleSheet.create({
   Category: {
     // marginLeft: 0.5 * U,
     // marginTop:  0.5 * U,
-    margin: 0.25 * U,
-    width: 6 * U,
-    height: 6 * U,
+    margin: 0.125 * U ,
+    width: 5 * U - u * 2.25,
+    height: 5 * U - u * 2.25,
 
     backgroundColor: 'black', // temp
 
@@ -74,10 +74,10 @@ export default StyleSheet.create({
   },
   Category__name: {
     position: 'absolute',
-    left: 1 * U,
-    bottom: 1 * U,
+    left: 0.75 * U,
+    bottom: 0.75 * U,
 
-    fontSize: 1 * U,
+    fontSize: 0.625 * U,
     fontFamily: 'MPLUSRounded1c-Regular',
     color: 'white',
 
@@ -88,6 +88,6 @@ export default StyleSheet.create({
     width: 6 * U,
     height: 6 * U,
 
-    opacity: 0.5,
+    opacity: 0.25,
   },
 });

@@ -81,8 +81,8 @@ const Category = ({name, background_image, background_color}) => (
       resizeMode='cover'
     />
     {/* todo fit size */}
-    <Text style={[ss.Category__name, {fontSize: U * _tempQuotient(name)}]}>
-      {name}
+    <Text style={ss.Category__name}>
+      {name.replace(/ /g, '\n')}
     </Text>
   </View>
 );
