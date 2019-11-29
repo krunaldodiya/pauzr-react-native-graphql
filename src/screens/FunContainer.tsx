@@ -12,6 +12,7 @@ import Conversation from './fun/Conversation';
 import Feeds from './fun/Feeds';
 import Notifications from './fun/Notifications';
 import Search from './fun/Search';
+import TotalLikes from './fun/post/TotalLikes';
 
 const FunTabNavigator = createBottomTabNavigator(
   {
@@ -63,9 +64,23 @@ const FunTabNavigator = createBottomTabNavigator(
         ),
       },
     },
+    // Notifications: {
+    //   screen: Notifications,
+    //   navigationOptions: {
+    //     tabBarIcon: ({tintColor}: any) => (
+    //       <Icon
+    //         type="SimpleLineIcons"
+    //         name="favorite"
+    //         style={{color: tintColor, fontSize: 36}}
+    //       />
+    //     ),
+    //   },
+    // },
+
     Notifications: {
-      screen: Notifications,
+      screen: TotalLikes, // temp
       navigationOptions: {
+        tabBarLabel: '3k total likes',
         tabBarIcon: ({tintColor}: any) => (
           <Icon
             type="SimpleLineIcons"

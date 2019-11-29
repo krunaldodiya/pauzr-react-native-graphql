@@ -13,6 +13,7 @@ const screens = {
   SearchResults: 'SearchResults',
   Conversation: 'Conversation',
   Chat: 'Chat',
+  TotalLikes: 'TotalLikes',
 };
 
 export default screens;
