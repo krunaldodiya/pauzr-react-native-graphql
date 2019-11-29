@@ -10,7 +10,7 @@ const ActionButton = (props: any) => {
   const type = authUser?.id == guestUser?.id ? 'auth' : 'guest';
 
   return (
-    <View style={{marginHorizontal: 20, marginTop: 20}}>
+    <View style={[{marginHorizontal: 20, marginTop: 20}, props.style]}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={{flex: 1}}>
           {type == 'auth' ? (

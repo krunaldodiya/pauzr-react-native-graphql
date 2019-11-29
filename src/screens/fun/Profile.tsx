@@ -1,6 +1,7 @@
 import {useQuery} from '@apollo/react-hooks';
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, Suspense, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   SafeAreaView,
@@ -11,11 +12,16 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {FlatList, NavigationScreenProp} from 'react-navigation';
 import FeedList from '../../components/Posts/FeedList';
-import {GetAuthUser} from '../../generated/GetAuthUser';
-import get_auth_user from '../../graphql/types/queries/get_auth_user';
+import ActionButton from '../../components/User/ActionButton';
+
 import getAssets from '../../libs/image';
+import {GetAuthUser} from '../../generated/GetAuthUser';
+import {GetUser} from '../../generated/GetUser';
+import get_auth_user from '../../graphql/types/queries/get_auth_user';
+import get_user from '../../graphql/types/queries/get_user';
 import {u, U} from '../../libs/vars';
 import ss from './ProfileStyle';
 
@@ -24,34 +30,31 @@ interface ProfileProps {
 }
 
 const Profile = (props: ProfileProps) => {
+ 
   const [tab, setTab] = useState(0);
-  const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user);
-  const postsList: any = [];
 
-  useEffect(() => {
-    // dispatch.user.getPosts({user_id: authUserId});
-  }, []);
+  const {data: authUser, loading: loadingAuthUser} = useQuery<GetAuthUser, {}>(
+    get_auth_user,
+    {
+      fetchPolicy: 'cache-and-network',
+    },
+  );
 
-  // todo rm
-  const _obsolete_renderItem = (data: any) => {
-    const {item} = data;
-    const size = Dimensions.get('screen').width / 3 - 2;
+  const {data: guestUser, loading: loadingGuestUser} = useQuery<GetUser, {}>(
+    get_user,
+    {
+      fetchPolicy: 'cache-and-network',
+      variables: {
+        user_id: props.navigation?.state?.params?.user_id
+          ? props.navigation.state.params.user_id
+          : authUser?.me?.id,
+      },
+    },
+  );
 
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          margin: 1,
-          maxWidth: size,
-        }}>
-        <Image
-          style={{width: size, height: size}}
-          source={{uri: getAssets(item.url)}}
-        />
-      </View>
-    );
-  };
+  if (loadingAuthUser || loadingGuestUser) {
+    return <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />;
+  }
 
   const _items = [
     30,
@@ -72,20 +75,11 @@ const Profile = (props: ProfileProps) => {
     49,
   ];
 
-  const renderItem = (data: any) => <FeedList data={data} />;
-
-  const editProfileHandler = () => null;
-  const createPostHandler = () => null;
-
-  const keyExtractor = (item: any, index: number) => index.toString();
-  const ItemSeparatorComponent = () => (
-    <View style={{height: 1, backgroundColor: '#ccc'}} />
-  );
-
-  const showUserPosts = () => setTab(0);
-  const showLikedPosts = () => setTab(1);
-
   return (
+    <Suspense
+      fallback={
+        <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />
+      }>
     <Fragment>
       <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
 
@@ -140,62 +134,53 @@ const Profile = (props: ProfileProps) => {
                   </Text>
                 )}
               </View>
+
+              <ActionButton
+                {...props}
+                style={{margin: U, marginTop: 0}}
+                authUser={authUser.me}
+                guestUser={guestUser.getUserById}
+              />
             </View>
 
-            {/* <View style={{marginHorizontal: 20, marginVertical: 5}}>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View style={{flex: 1}}>
-                  <TouchableOpacity
-                    style={{
-                      marginRight: 5,
-                      borderWidth: 1,
-                      borderColor: '#ccc',
-                      borderRadius: 5,
-                      backgroundColor: 'white',
-                      height: 32,
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
+            <TabView
+                style={{marginTop: 10}}
+                swipeEnabled={true}
+                navigationState={{
+                  index: tab,
+                  routes: [
+                    {key: 'first', icon: 'grid-on'},
+                    {key: 'second', icon: 'favorite'},
+                  ],
+                }}
+                onIndexChange={index => {
+                  setTab(index);
+                }}
+                renderTabBar={props => (
+                  <TabBar
+                    {...props}
+                    renderIcon={props => {
+                      return (
+                        <Icon
+                          name={props.route.icon}
+                          color={props.focused ? 'red' : 'grey'}
+                        />
+                      );
                     }}
-                    onPress={editProfileHandler}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: '#000',
-                      }}>
-                      Edit Profile
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                    indicatorContainerStyle={{backgroundColor: 'white', borderBottomLeftRadius: U, borderBottomRightRadius: U}}
+                    indicatorStyle={{backgroundColor: 'transparent'}}
+                  />
+                )}
+                renderScene={SceneMap({
+                  first: () => <GalleryContainer items={_items}/>,
+                  second: () => <Text>two</Text>,
+                })}
+                initialLayout={{
+                  width: Dimensions.get('window').width,
+                }}
+              />
 
-                <View style={{flex: 1}}>
-                  <TouchableOpacity
-                    style={{
-                      marginLeft: 5,
-                      borderWidth: 1,
-                      borderColor: '#ccc',
-                      borderRadius: 5,
-                      backgroundColor: 'white',
-                      height: 32,
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    onPress={createPostHandler}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: '#000',
-                      }}>
-                      Create Post
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View> */}
-
-            <View
+            {/* <View
               style={{
                 margin: U,
                 marginBottom: -U + 1,
@@ -208,7 +193,8 @@ const Profile = (props: ProfileProps) => {
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{flex: 1}}>
                   <TouchableOpacity
-                    onPress={showUserPosts}
+                    // onPress={showUserPosts}
+                    onPress={()=>{}}
                     style={{
                       height: 32,
                       flexDirection: 'row',
@@ -228,7 +214,7 @@ const Profile = (props: ProfileProps) => {
 
                 <View style={{flex: 1}}>
                   <TouchableOpacity
-                    onPress={showLikedPosts}
+                    onPress={()=>{}}
                     style={{
                       height: 32,
                       flexDirection: 'row',
@@ -246,67 +232,26 @@ const Profile = (props: ProfileProps) => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </View> */}
 
-            {/*
-            <View style={{flex: 1}}>
-              <FlatList
-                // numColumns={3}
-                keyboardShouldPersistTaps="handled"
-                // data={postsList}
-                data={[
-                  {
-                    owner: {
-                      avatar: 'https://picsum.photos/id/54/500/500',
-                      name: 'Ardual Kebab',
-                    },
-                    category: {name: 'Food'},
-                    attachments: [
-                      {
-                        path: 'https://picsum.photos/id/54/500/500',
-                        mime: 'video/mp4',
-                      },
-                    ],
-                    description: '*-* Cool mountains this weekend :)',
-                  },
-                  {
-                    owner: {
-                      avatar: 'https://picsum.photos/id/54/500/500',
-                      name: 'Ardual Kebab',
-                    },
-                    category: {name: 'Food'},
-                    attachments: [
-                      {
-                        path: 'https://picsum.photos/id/54/500/500',
-                        mime: 'video/mp4',
-                      },
-                    ],
-                  },
-                ]}
-                keyExtractor={keyExtractor}
-                renderItem={renderItem}
-                // ItemSeparatorComponent={ItemSeparatorComponent}
-                // onEndReached={this.getFeeds}
-                // onEndReachedThreshold={0.5}
-                // ListFooterComponent={this.showLoading}
-              />
-            </View>*/}
-
-            <View style={ss.galleryContainer}>
-              {_items.map(item => (
-                <View style={ss.galleryItem}>
-                  <Image
-                    style={ss.galleryItem__image}
-                    source={{uri: `https://picsum.photos/id/${item}/500/500`}}
-                  />
-                </View>
-              ))}
-            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
     </Fragment>
+    </Suspense>
   );
 };
+
+const GalleryContainer = ({items}) =>
+  <View style={ss.galleryContainer}>
+    {items.map(item => (
+      <View style={ss.galleryItem}>
+        <Image
+          style={ss.galleryItem__image}
+          source={{uri: `https://picsum.photos/id/${item}/500/500`}}
+        />
+      </View>
+    ))}
+  </View>
 
 export default React.memo(Profile);
