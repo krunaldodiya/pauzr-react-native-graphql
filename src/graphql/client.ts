@@ -40,13 +40,17 @@ const getApolloClient = () => {
     },
   });
 
+  // const token =
+  //   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZ3JhcGhxbC5wYXV6ci5jb21cL2dyYXBocWwiLCJpYXQiOjE1NzQ4NjExMzMsImV4cCI6MTYwNjM5NzEzMywibmJmIjoxNTc0ODYxMTMzLCJqdGkiOiJsanZGWlI2VWVvM1NNN1BOIiwic3ViIjoiNDNlMjYzNGQtZDI4NC00NGZiLWIwMWUtMDRhODA1YjlmYjQ3IiwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.5jrqMYUj8NUKjgsZgo4E2PXRiwhAsYRrbwSygrk1fi4';
+
   const pusherLink = new PusherLink({
-    pusher: new Pusher('abd0716eddc0702f68a4', {
+    pusher: new Pusher('60d3868f66b0ab455b41', {
       cluster: 'ap2',
       authEndpoint: `${httpUrlProd}/subscriptions/auth`,
+      disableStats: true,
       // auth: {
       //   headers: {
-      //     authorization: `Bearer ${token}`,
+      //     authorization: token ? `Bearer ${token}` : null,
       //   },
       // },
     }),
