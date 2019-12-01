@@ -1,27 +1,50 @@
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
 import React, {Fragment, useState} from 'react';
 import {Alert, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input, Overlay, Text} from 'react-native-elements';
 import * as Yup from 'yup';
+import {GetConfig, GetConfigVariables} from '../../generated/GetConfig';
+import {SetConfig, SetConfigVariables} from '../../generated/SetConfig';
+import set_config from '../../graphql/types/mutations/set_config';
+import get_config from '../../graphql/types/queries/get_config';
 import {Login, LoginVariables} from '../../generated/Login';
-import {SET_INITIAL_SCREEN} from '../../graphql/mutation';
 import login from '../../graphql/types/mutations/login';
 import screens from '../../libs/screens';
 import Otp from './Otp';
+import DeviceInfo from 'react-native-device-info';
 
 const SignIn = (props: any) => {
+  const device_id = DeviceInfo.getUniqueId();
+
   const [overlay, setOverlay] = useState(false);
+  const [secure, setSecure] = useState(true);
+
+  const {data: config} = useQuery<GetConfig, GetConfigVariables>(get_config, {
+    variables: {
+      device_id,
+    },
+  });
+
   const [processLogin] = useMutation<Login, LoginVariables>(login, {
     errorPolicy: 'all',
   });
-  const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
+
+  const [setConfig] = useMutation<SetConfig, SetConfigVariables>(set_config);
 
   const setAuth = async ({user, token}: any, props: any) => {
-    const initialScreen = user.language ? screens.Home : screens.SelectLanguage;
-    await setInitialScreen({variables: {initialScreen}});
     await AsyncStorage.setItem('token', token);
+
+    const initialScreen = user.language ? screens.Home : screens.SelectLanguage;
+
+    await setConfig({
+      variables: {
+        id: config?.getConfig?.id,
+        initial_screen: initialScreen,
+      },
+    });
+
     props.navigation.replace(initialScreen);
   };
 
@@ -39,6 +62,8 @@ const SignIn = (props: any) => {
       bag.setSubmitting(false);
       await setAuth(data?.login, props);
     } catch (error) {
+      console.log(error);
+
       const response = error.networkError || error.graphQLErrors;
       const message = response[0].extensions.reason;
 
@@ -105,9 +130,17 @@ const SignIn = (props: any) => {
                   onBlur={formikProps.handleBlur('password')}
                   errorStyle={{color: 'red'}}
                   errorMessage={formikProps.errors.password}
-                  secureTextEntry
+                  secureTextEntry={secure}
                   autoCorrect={false}
                   autoCapitalize="none"
+                  rightIcon={{
+                    type: 'Ionicons',
+                    name: 'lock',
+                    size: 20,
+                    onPress: () => {
+                      setSecure(!secure);
+                    },
+                  }}
                 />
               </View>
             </View>

@@ -12,7 +12,7 @@ export interface Notifications_notifications {
   type: string;
   notifiable_id: string;
   notifiable_type: string;
-  data: string | null;
+  data: any;
   read_at: any | null;
   created_at: any | null;
   updated_at: any | null;

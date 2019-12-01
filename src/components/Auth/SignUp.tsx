@@ -5,22 +5,37 @@ import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Button, Icon, Input} from 'react-native-elements';
 import * as Yup from 'yup';
+import {GetConfig, GetConfigVariables} from '../../generated/GetConfig';
 import {LoadCountries} from '../../generated/LoadCountries';
 import {Register, RegisterVariables} from '../../generated/Register';
-import {SET_INITIAL_SCREEN} from '../../graphql/mutation';
+import {SetConfig, SetConfigVariables} from '../../generated/SetConfig';
 import register from '../../graphql/types/mutations/register';
+import set_config from '../../graphql/types/mutations/set_config';
+import get_config from '../../graphql/types/queries/get_config';
 import load_countries from '../../graphql/types/queries/load_countries';
 import screens from '../../libs/screens';
 
 const SignUp = (props: any) => {
   const {data}: any = useQuery<LoadCountries, {}>(load_countries);
+
+  const {data: config} = useQuery<GetConfig, GetConfigVariables>(get_config);
+
   const [processRegister] = useMutation<Register, RegisterVariables>(register);
-  const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
+
+  const [setConfig] = useMutation<SetConfig, SetConfigVariables>(set_config);
 
   const setAuth = async ({user, token}: any, props: any) => {
-    const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-    await setInitialScreen({variables: {initialScreen}});
     await AsyncStorage.setItem('token', token);
+
+    const initialScreen = user.language ? screens.Home : screens.SelectLanguage;
+
+    await setConfig({
+      variables: {
+        id: config?.getConfig?.id,
+        initial_screen: initialScreen,
+      },
+    });
+
     props.navigation.replace(initialScreen);
   };
 
