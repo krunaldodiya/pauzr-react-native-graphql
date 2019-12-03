@@ -1,20 +1,25 @@
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
 import React, {Fragment, useState} from 'react';
 import {View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
+import {GetConfig, GetConfigVariables} from '../../generated/GetConfig';
 import {RequestOtp, RequestOtpVariables} from '../../generated/RequestOtp';
+import {SetConfig, SetConfigVariables} from '../../generated/SetConfig';
 import {VerifyOtp, VerifyOtpVariables} from '../../generated/VerifyOtp';
-import {SET_INITIAL_SCREEN} from '../../graphql/mutation';
 import request_otp from '../../graphql/types/mutations/request_otp';
+import set_config from '../../graphql/types/mutations/set_config';
 import verify_otp from '../../graphql/types/mutations/verify_otp';
+import get_config from '../../graphql/types/queries/get_config';
+import screens from '../../libs/screens';
+import DeviceInfo from 'react-native-device-info';
 
 const Otp = (props: any) => {
+  const device_id = DeviceInfo.getUniqueId();
+
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
   const [serverOtp, setServerOtp] = useState('');
-
-  const [setInitialScreen] = useMutation(SET_INITIAL_SCREEN);
 
   const [processRequestOtp, {loading: loadingRequestOtp}] = useMutation<
     RequestOtp,
@@ -26,10 +31,27 @@ const Otp = (props: any) => {
     VerifyOtpVariables
   >(verify_otp);
 
+  const {data: config} = useQuery<GetConfig, GetConfigVariables>(get_config, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      device_id,
+    },
+  });
+
+  const [setConfig] = useMutation<SetConfig, SetConfigVariables>(set_config);
+
   const setAuth = async ({user, token}: any, props: any) => {
-    const initialScreen = user.language ? 'Home' : 'SelectLanguage';
-    await setInitialScreen({variables: {initialScreen}});
     await AsyncStorage.setItem('token', token);
+
+    const initialScreen = user.language ? screens.Home : screens.SelectLanguage;
+
+    await setConfig({
+      variables: {
+        id: config?.getConfig?.id,
+        initial_screen: initialScreen,
+      },
+    });
+
     props.navigation.replace(initialScreen);
   };
 

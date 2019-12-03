@@ -14,11 +14,19 @@ import set_config from '../../graphql/types/mutations/set_config';
 import get_config from '../../graphql/types/queries/get_config';
 import load_countries from '../../graphql/types/queries/load_countries';
 import screens from '../../libs/screens';
+import DeviceInfo from 'react-native-device-info';
 
 const SignUp = (props: any) => {
+  const device_id = DeviceInfo.getUniqueId();
+
   const {data}: any = useQuery<LoadCountries, {}>(load_countries);
 
-  const {data: config} = useQuery<GetConfig, GetConfigVariables>(get_config);
+  const {data: config} = useQuery<GetConfig, GetConfigVariables>(get_config, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      device_id,
+    },
+  });
 
   const [processRegister] = useMutation<Register, RegisterVariables>(register);
 

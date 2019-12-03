@@ -22,6 +22,7 @@ const SignIn = (props: any) => {
   const [secure, setSecure] = useState(true);
 
   const {data: config} = useQuery<GetConfig, GetConfigVariables>(get_config, {
+    fetchPolicy: 'cache-and-network',
     variables: {
       device_id,
     },

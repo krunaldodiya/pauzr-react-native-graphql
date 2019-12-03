@@ -1,30 +1,23 @@
 import {ApolloProvider} from '@apollo/react-hooks';
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator} from 'react-native';
-import {offixClient} from '../../src/graphql/offix';
+import React from 'react';
+import {client} from '../../src/graphql/client';
 import InitialScreen from '../../src/screens/InitialScreen';
+import QueueLink from 'apollo-link-queue';
+import NetInfo from '@react-native-community/netinfo';
+
+const queueLink = new QueueLink();
 
 const App = () => {
-  const [apolloClient, setApolloClientClient] = useState();
-
-  useEffect(() => {
-    offixClient.init().then((apolloClient: any) => {
-      setApolloClientClient(apolloClient);
-    });
-  }, []);
-
-  if (!apolloClient) {
-    return (
-      <ActivityIndicator
-        size="small"
-        color="black"
-        style={{flex: 1, justifyContent: 'center'}}
-      />
-    );
-  }
+  NetInfo.addEventListener('connectionChange', connectionInfo => {
+    if (!connectionInfo) {
+      queueLink.open();
+    } else {
+      queueLink.close();
+    }
+  });
 
   return (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={client}>
       <InitialScreen />
     </ApolloProvider>
   );

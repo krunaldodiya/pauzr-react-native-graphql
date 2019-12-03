@@ -11,11 +11,13 @@ const InitialScreen = () => {
   const device_id = DeviceInfo.getUniqueId();
 
   const {data: config} = useQuery<GetConfig, GetConfigVariables>(get_config, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
     variables: {
       device_id,
     },
   });
+
+  console.log(config);
 
   if (!config) {
     return (
