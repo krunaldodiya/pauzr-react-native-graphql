@@ -54,7 +54,7 @@ const Search = (props: any) => {
               or select the category:
             </Text>
             {categories.categories.map((category: any, index: number) => (
-              <Category key={index} {...category} />
+              <Category key={index} category={category} {...props} />
             ))}
           </View>
         </View>
@@ -63,26 +63,26 @@ const Search = (props: any) => {
   );
 };
 
-const _tempQuotient = name => {
+// todo ts interface instead of destructuring
+const Category = ({category, navigation}) => {
+  const {name, background_image, background_color} = category;
+
   return (
-    (8 / name.length) * ((name.match(/\n/g) && name.match(/\n/g).length) || 1)
+    <TouchableOpacity
+      style={ss.Category}
+      onPress={() => navigation.push(screens.SearchCategories, {category})}>
+      <Image
+        source={{uri: background_image}}
+        style={[
+          ss.Category__bg,
+          !background_image && {backgroundColor: background_color},
+        ]}
+        resizeMethod="auto"
+        resizeMode="cover"
+      />
+      <Text style={ss.Category__name}>{name.replace(/ /g, '\n')}</Text>
+    </TouchableOpacity>
   );
 };
-
-// todo ts interface instead of destructuring
-const Category = ({name, background_image, background_color}) => (
-  <View style={ss.Category}>
-    <Image
-      source={{uri: background_image}}
-      style={[
-        ss.Category__bg,
-        !background_image && {backgroundColor: background_color},
-      ]}
-      resizeMode="cover"
-    />
-    {/* todo fit size */}
-    <Text style={ss.Category__name}>{name.replace(/ /g, '\n')}</Text>
-  </View>
-);
 
 export default React.memo(Search);

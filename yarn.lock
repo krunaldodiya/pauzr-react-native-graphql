@@ -5940,6 +5940,13 @@ react-native-loading-spinner-overlay@^1.0.1:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-masonry-list@^2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-masonry-list/-/react-native-masonry-list-2.13.0.tgz#dce8c1096d59f538716556b08a4f77ee105cb2b4"
+  integrity sha512-hXzUDZ0gmnAJoReXqSBjU0YZm+ETuI8+44ckhiBdnZpPxvyT//9LwLQIOzK43tavbG655C9F8BritmqwdCcgLA==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-pages@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-native-pages/-/react-native-pages-0.9.0.tgz#1e673eda2e8b64419e69a3dd6688ba4ca3255689"

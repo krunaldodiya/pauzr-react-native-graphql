@@ -1,34 +1,32 @@
-import {useLazyQuery, useQuery} from '@apollo/react-hooks';
-import React, {Fragment, Suspense, useState} from 'react';
+import {useQuery} from '@apollo/react-hooks';
+import React, {Fragment, Suspense} from 'react';
 import {
   ActivityIndicator,
-  FlatList,
   SafeAreaView,
   StatusBar,
-  TextInput,
+  Text,
   View,
 } from 'react-native';
-import {Icon, ListItem} from 'react-native-elements';
-import FollowButton from '../../components/User/FollowButton';
-import {GetAuthUser} from '../../generated/GetAuthUser';
 import {
-  SearchUsers as SearchUsersType,
-  SearchUsersVariables,
-} from '../../generated/SearchUsers';
-import get_auth_user from '../../graphql/types/queries/get_auth_user';
-import search_users from '../../graphql/types/queries/search_users';
-import screens from '../../libs/screens';
+  GetPostsByCategory,
+  GetPostsByCategoryVariables,
+} from 'src/generated/GetPostsByCategory';
+import get_posts_by_category from '../../graphql/types/queries/get_posts_by_category';
+import MasonryList from 'react-native-masonry-list';
+import {Header} from 'react-native-elements';
 
 const SearchCategories = (props: any) => {
-  const [keywords, setKeywords] = useState('');
+  const {category} = props.navigation.state.params;
 
-  const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user);
-
-  const [searchUsers, {data}] = useLazyQuery<
-    SearchUsersType,
-    SearchUsersVariables
-  >(search_users, {
+  const {data: posts, error} = useQuery<
+    GetPostsByCategory,
+    GetPostsByCategoryVariables
+  >(get_posts_by_category, {
     fetchPolicy: 'cache-and-network',
+    variables: {
+      category_id: category.id,
+      first: 100,
+    },
   });
 
   return (
@@ -37,73 +35,47 @@ const SearchCategories = (props: any) => {
         <ActivityIndicator style={{justifyContent: 'center', flex: 1}} />
       }>
       <Fragment>
-        <StatusBar barStyle="light-content" backgroundColor="#0D62A2" />
+        <Header
+          style={{flex: 1}}
+          statusBarProps={{
+            backgroundColor: '#0D62A2',
+            translucent: true,
+          }}
+          backgroundColor="#0D62A2"
+          placement="center"
+          leftContainerStyle={{
+            alignItems: 'center',
+          }}
+          leftComponent={{
+            icon: 'arrow-back',
+            color: '#fff',
+            onPress: () => {
+              props.navigation.pop();
+            },
+          }}
+          centerComponent={
+            <Text style={{color: 'white', fontSize: 18}}>{category.name}</Text>
+          }
+        />
 
         <SafeAreaView style={{flex: 1}}>
           <View style={{flex: 1}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderBottomWidth: 1,
-                borderColor: '#ccc',
-              }}>
-              <Icon
-                name="search"
-                type="evilicon"
-                color="hsl(0, 0%, 24%)"
-                size={30}
-                containerStyle={{marginLeft: 5}}
-              />
+            <MasonryList
+              backgroundColor="#ccc"
+              columns={3}
+              spacing={2}
+              images={posts?.getPostsByCategory?.data.map(post => {
+                const attachment = post.attachments[0];
 
-              <TextInput
-                autoFocus
-                placeholder="find people"
-                value={keywords}
-                onChangeText={value => {
-                  setKeywords(value);
-
-                  if (keywords.length) {
-                    searchUsers({variables: {keywords: value, first: 10}});
-                  }
-                }}
-                style={{width: '100%', padding: 10}}
-              />
-            </View>
-
-            <View style={{marginTop: 5}}>
-              <FlatList
-                keyboardShouldPersistTaps="handled"
-                data={data ? data?.searchUsers?.data : []}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={(data: any) => {
-                  return (
-                    <ListItem
-                      onPress={() => {
-                        return props.navigation.push(screens.Profile, {
-                          user_id: data.item.id,
-                        });
-                      }}
-                      key={data.id}
-                      leftAvatar={{
-                        source: {
-                          uri: data.item.avatar,
-                        },
-                      }}
-                      title={data.item.name}
-                      subtitle={`@${data.item.username}`}
-                      bottomDivider
-                      rightElement={
-                        <FollowButton
-                          guestUser={data.item}
-                          authUser={authUser?.me}
-                        />
-                      }
-                    />
-                  );
-                }}
-              />
-            </View>
+                return {
+                  uri: attachment.path,
+                  dimensions: {
+                    width: attachment.width,
+                    height: attachment.height,
+                  },
+                };
+              })}
+            />
           </View>
         </SafeAreaView>
       </Fragment>
