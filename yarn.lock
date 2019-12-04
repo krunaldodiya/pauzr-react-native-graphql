@@ -5264,45 +5264,54 @@ object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
-offix-cache@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/offix-cache/-/offix-cache-0.9.0.tgz#4fe69711a590dbe084948372e01b04a2c9788a87"
-  integrity sha512-wdsUK/ZGvqVGk5wsdHFv7sGhOs9tCUkJArzeHEon9u3Boul62O7+Qj0tY2lii00ZADvLLHSK7fnRudkf1O1gBQ==
+offix-cache@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/offix-cache/-/offix-cache-0.11.0.tgz#815f8c5d10719ce8b96bc65e89b62b519ec9f97b"
+  integrity sha512-Jx43yVV5SmgAVAnbKq4xPnoj1n0UbeepnOu2fUY6cwi9Z2Yj2hwxjYXdnlvw/97oSEMIPNOLyhC+pZDt/G7ZCw==
   dependencies:
     apollo-client "2.6.4"
     apollo-link "1.2.13"
     apollo-utilities "1.3.2"
     util "0.12.1"
 
-offix-client@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/offix-client/-/offix-client-0.9.0.tgz#ec9e52775c22d122862c3a1384d33dbaf98293ce"
-  integrity sha512-AB+jf0k9sivAuFEL7sDKGGBg/rcOPaBiJwp9ITL6xxzJqyX/bzocGUSO1p5z4Xz/VTpsdb3ArKj+K+1Wd1jE5g==
+offix-client@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/offix-client/-/offix-client-0.11.0.tgz#2d72979b5d234831aae456d05a027905d0645fb7"
+  integrity sha512-UX8GMDMo3dKOZTkS6NRVNY0A+ssSSVB4ZZzoefOM8wU5kWjjlcldTJK1kwfDW4/sbhGQoPR90ho09QHrgpLDyg==
   dependencies:
     apollo-cache-inmemory "1.6.3"
     apollo-cache-persist "0.1.1"
     apollo-client "2.6.4"
     apollo-link "1.2.13"
     apollo-link-context "1.0.19"
+    apollo-link-error "1.1.12"
     apollo-link-http "1.5.16"
     apollo-link-retry "2.2.15"
     debug "4.1.1"
     idb-localstorage "0.2.0"
-    offix-cache "0.9.0"
-    offix-offline "0.9.0"
+    offix-cache "0.11.0"
+    offix-conflicts-client "0.11.0"
+    offix-offline "0.11.0"
+    offix-scheduler "0.11.0"
 
-offix-offline@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/offix-offline/-/offix-offline-0.9.0.tgz#c253ba94537973e16c2f8e4998227b2e8072f4c5"
-  integrity sha512-dxmJJFCqdbBmXfku0QafloA7FinWkOqgjInHP1e3Vqh5/3C1bJg3tSOIf6UEfDYB27AgMMC0bkzLx4RJY5OO/A==
+offix-conflicts-client@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/offix-conflicts-client/-/offix-conflicts-client-0.11.0.tgz#a94749a2dbeafc25e7f1ad270060b657b1cf9a13"
+  integrity sha512-fXr6u+rs3fmV+/rcjDsR5diORHYPhe6yjWKG0WaOspPDG3ysddPxvcdY54gZVI2UDB1snbpdv3kOVa/ekGD8ew==
+
+offix-offline@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/offix-offline/-/offix-offline-0.11.0.tgz#5d894ae2f2ef93ec49167126c8200b344925c291"
+  integrity sha512-YHqV/av+zGpbhmKIfFepw4z3aWkQZXP8bcOHMemqvavu9SRnB6QtojQvS1qnqR5ZTNCMsr7jWASwH48n2LpHrA==
+
+offix-scheduler@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/offix-scheduler/-/offix-scheduler-0.11.0.tgz#09d9d190759e520ba47d42d9ea36674c5714f68c"
+  integrity sha512-3+Qms3PPslKxeuVcd76/FLWISXj4nPVdmlBlomPpAgF9W8vp/X4aB0IRlHASbIhuN3GKlfScW2oHgGr+o5J1EQ==
   dependencies:
-    apollo-cache-inmemory "1.6.3"
-    apollo-client "2.6.4"
-    apollo-link "1.2.13"
-    apollo-link-error "1.1.12"
-    debug "4.1.1"
     idb-localstorage "0.2.0"
-    offix-cache "0.9.0"
+    offix-cache "0.11.0"
+    offix-offline "0.11.0"
 
 on-finished@~2.3.0:
   version "2.3.0"

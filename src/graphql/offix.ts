@@ -2,12 +2,31 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {HttpLink, InMemoryCache} from 'apollo-boost';
 import {ApolloLink} from 'apollo-link';
 import {setContext} from 'apollo-link-context';
-import {OfflineClient} from 'offix-client';
+import {ApolloOfflineClient} from 'offix-client';
 import Pusher from 'pusher-js/react-native';
 import PusherLink from '../libs/pusher';
 import {httpUrlProd} from '../libs/vars';
 import ReactNativeNetworkStatus from './network';
-import NetInfo from '@react-native-community/netinfo';
+
+const cacheStorage = {
+  getItem: async (key: any) => {
+    const data = await AsyncStorage.getItem(key);
+    if (typeof data === 'string') {
+      return JSON.parse(data);
+    }
+    return data;
+  },
+  setItem: (key: any, value: any) => {
+    let valueStr = value;
+    if (typeof valueStr === 'object') {
+      valueStr = JSON.stringify(value);
+    }
+    return AsyncStorage.setItem(key, valueStr);
+  },
+  removeItem: (key: any) => {
+    return AsyncStorage.removeItem(key);
+  },
+};
 
 const authLink = setContext(async (req, {headers}) => {
   const token = await AsyncStorage.getItem('token');
@@ -35,24 +54,17 @@ const httpLink = new HttpLink({
 
 const link = ApolloLink.from([authLink, pusherLink, httpLink]);
 
-export const offixClient = new OfflineClient({
+export const offixClient = new ApolloOfflineClient({
   cache: new InMemoryCache(),
-  terminatingLink: link,
-  storage: {
-    getItem: async key => {
-      return AsyncStorage.getItem(key).then(data => data);
-    },
-    setItem: (key, value) => {
-      return AsyncStorage.setItem(key, JSON.stringify(value));
-    },
-    removeItem: key => AsyncStorage.removeItem(key),
-  },
+  link,
+  offlineStorage: cacheStorage,
+  cacheStorage,
   networkStatus: new ReactNativeNetworkStatus(),
   retryOptions: {
     attempts: {max: Infinity},
   },
   offlineQueueListener: {
-    onOperationEnqueued: entry => {
+    onOperationEnqueued: (entry: any) => {
       console.log(entry);
     },
   },
