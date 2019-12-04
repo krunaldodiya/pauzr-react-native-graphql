@@ -54,7 +54,7 @@ const httpLink = new HttpLink({
 
 const link = ApolloLink.from([authLink, pusherLink, httpLink]);
 
-export const offixClient = new ApolloOfflineClient({
+export default new ApolloOfflineClient({
   cache: new InMemoryCache(),
   link,
   offlineStorage: cacheStorage,
