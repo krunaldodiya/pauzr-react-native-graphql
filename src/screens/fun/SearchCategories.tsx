@@ -11,22 +11,25 @@ import {
 import {Icon, ListItem} from 'react-native-elements';
 import FollowButton from '../../components/User/FollowButton';
 import {GetAuthUser} from '../../generated/GetAuthUser';
-import {SearchUsers, SearchUsersVariables} from '../../generated/SearchUsers';
+import {
+  SearchUsers as SearchUsersType,
+  SearchUsersVariables,
+} from '../../generated/SearchUsers';
 import get_auth_user from '../../graphql/types/queries/get_auth_user';
 import search_users from '../../graphql/types/queries/search_users';
 import screens from '../../libs/screens';
 
-const SearchResults = (props: any) => {
+const SearchCategories = (props: any) => {
   const [keywords, setKeywords] = useState('');
 
   const {data: authUser} = useQuery<GetAuthUser, {}>(get_auth_user);
 
-  const [searchUsers, {data}] = useLazyQuery<SearchUsers, SearchUsersVariables>(
-    search_users,
-    {
-      fetchPolicy: 'cache-and-network',
-    },
-  );
+  const [searchUsers, {data}] = useLazyQuery<
+    SearchUsersType,
+    SearchUsersVariables
+  >(search_users, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   return (
     <Suspense
@@ -108,4 +111,4 @@ const SearchResults = (props: any) => {
   );
 };
 
-export default SearchResults;
+export default SearchCategories;

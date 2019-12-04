@@ -36,7 +36,7 @@ const Search = (props: any) => {
         <View style={[ss.mainContainer, ss.mainContainer_clay]}>
           <TouchableOpacity
             style={ss.inputContainer}
-            onPress={() => props.navigation.push(screens.SearchResults)}>
+            onPress={() => props.navigation.push(screens.SearchUsers)}>
             <Icon
               name="search"
               type="evilicon"
@@ -78,12 +78,10 @@ const Category = ({name, background_image, background_color}) => (
         ss.Category__bg,
         !background_image && {backgroundColor: background_color},
       ]}
-      resizeMode='cover'
+      resizeMode="cover"
     />
     {/* todo fit size */}
-    <Text style={ss.Category__name}>
-      {name.replace(/ /g, '\n')}
-    </Text>
+    <Text style={ss.Category__name}>{name.replace(/ /g, '\n')}</Text>
   </View>
 );
 

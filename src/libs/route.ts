@@ -7,7 +7,8 @@ import Feeds from '../screens/fun/Feeds';
 import TotalLikes from '../screens/fun/post/TotalLikes';
 import Profile from '../screens/fun/Profile';
 import ProfileEdit from '../screens/fun/ProfileEdit';
-import SearchResults from '../screens/fun/SearchResults';
+import SearchCategories from '../screens/fun/SearchCategories';
+import SearchUsers from '../screens/fun/SearchUsers';
 import Home from '../screens/Home';
 import SelectCountry from '../screens/SelectCountry';
 import SelectLanguage from '../screens/SelectLanguage';
@@ -24,7 +25,8 @@ const getStackNavigator = (initialRouteName: string) => {
       Feeds: {screen: Feeds},
       CreatePost: {screen: CreatePost},
       TotalLikes: {screen: TotalLikes},
-      SearchResults: {screen: SearchResults},
+      SearchUsers: {screen: SearchUsers},
+      SearchCategories: {screen: SearchCategories},
       Chat: {screen: Chat},
     },
     {
