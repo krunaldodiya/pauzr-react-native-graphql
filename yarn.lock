@@ -1077,6 +1077,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.3.tgz#bdfd69d61e464dcc81b25159c270d75a73c1a636"
   integrity sha512-Il2DtDVRGDcqjDtE+rF8iqg1CArehSK84HZJCT7AMITlyXRBpuPhqGLDQMowraqqu1coEaimg4ZOqggt6L6L+A==
 
+"@types/lodash@4.14.149":
+  version "4.14.149"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.149.tgz#1342d63d948c6062838fbf961012f74d4e638440"
+  integrity sha512-ijGqzZt/b7BfzcK9vTrS6MFljQRPn5BFWOx8oE0GYxribu6uV+aA9zZuXI1zc/etK9E8nrgdoF2+LgUw7+9tJQ==
+
 "@types/lodash@^4.14.144":
   version "4.14.144"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.144.tgz#12e57fc99064bce45e5ab3c8bc4783feb75eab8e"
@@ -4525,7 +4530,7 @@ lodash.unescape@4.0.1:
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
-lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
+lodash@4.17.15, lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -5274,6 +5279,36 @@ offix-cache@0.11.0:
     apollo-utilities "1.3.2"
     util "0.12.1"
 
+offix-cache@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/offix-cache/-/offix-cache-0.12.0.tgz#936b7c9406aa2cdbaef6ebceaad777f056b84a87"
+  integrity sha512-6tHwMKmHP3WU+93r5kwTaLUz8UVsS5amtuf+iAJtn53Eqp1v064J3/4LshPSA/w3ahj4ubA/hOlRCQF2iucW0Q==
+  dependencies:
+    apollo-client "2.6.4"
+    apollo-link "1.2.13"
+    apollo-utilities "1.3.2"
+    util "0.12.1"
+
+offix-client@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/offix-client/-/offix-client-0.12.0.tgz#bb499bcaaf340104d6ca7736c44ff124795c540b"
+  integrity sha512-BVLtpUvIDItt5qxr0ourOPPxhnSi6ob9ENfdAOcDC1unlaMiaEzXUk5xiSHyqUVURfHFejhJNKm125dKvb4neg==
+  dependencies:
+    apollo-cache-inmemory "1.6.3"
+    apollo-cache-persist "0.1.1"
+    apollo-client "2.6.4"
+    apollo-link "1.2.13"
+    apollo-link-context "1.0.19"
+    apollo-link-error "1.1.12"
+    apollo-link-http "1.5.16"
+    apollo-link-retry "2.2.15"
+    debug "4.1.1"
+    idb-localstorage "0.2.0"
+    offix-cache "0.12.0"
+    offix-conflicts-client "0.12.0"
+    offix-offline "0.12.0"
+    offix-scheduler "0.12.0"
+
 offix-client@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/offix-client/-/offix-client-0.11.0.tgz#2d72979b5d234831aae456d05a027905d0645fb7"
@@ -5299,10 +5334,20 @@ offix-conflicts-client@0.11.0:
   resolved "https://registry.yarnpkg.com/offix-conflicts-client/-/offix-conflicts-client-0.11.0.tgz#a94749a2dbeafc25e7f1ad270060b657b1cf9a13"
   integrity sha512-fXr6u+rs3fmV+/rcjDsR5diORHYPhe6yjWKG0WaOspPDG3ysddPxvcdY54gZVI2UDB1snbpdv3kOVa/ekGD8ew==
 
+offix-conflicts-client@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/offix-conflicts-client/-/offix-conflicts-client-0.12.0.tgz#9068167567d873167aaf183610fe0f6dab471d4d"
+  integrity sha512-4JYkDsCahplFtEKyadZGo3st28cjHwJDg1tt3W/sfp7aGrPv0UjkAsjeMvY5Xg1tIG8ZqzHrdgNVJfZqgORGnw==
+
 offix-offline@0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/offix-offline/-/offix-offline-0.11.0.tgz#5d894ae2f2ef93ec49167126c8200b344925c291"
   integrity sha512-YHqV/av+zGpbhmKIfFepw4z3aWkQZXP8bcOHMemqvavu9SRnB6QtojQvS1qnqR5ZTNCMsr7jWASwH48n2LpHrA==
+
+offix-offline@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/offix-offline/-/offix-offline-0.12.0.tgz#255295945982fc238baf6cb1cd0481987f010602"
+  integrity sha512-Pydy0VIsg3d1oxaatE2sWI8o4XsT0klsFoA4VsfUaJh1IS+juto4F+6l2QUoDZX5xHZWm2cq3Ra2fVvZ10mYKQ==
 
 offix-scheduler@0.11.0:
   version "0.11.0"
@@ -5312,6 +5357,15 @@ offix-scheduler@0.11.0:
     idb-localstorage "0.2.0"
     offix-cache "0.11.0"
     offix-offline "0.11.0"
+
+offix-scheduler@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/offix-scheduler/-/offix-scheduler-0.12.0.tgz#6da0e566b148f5a748a83ba300113e759755ebc8"
+  integrity sha512-Y5z0VlfI5OsO6YJF6NY+TVuLpkPQRVWk+hUFlp0LcvJKMU73dajs4GHBQ4IFkGjXsqk1BWofOT9XVbkIz/+FCw==
+  dependencies:
+    idb-localstorage "0.2.0"
+    offix-cache "0.12.0"
+    offix-offline "0.12.0"
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -5788,6 +5842,13 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-apollo-hooks@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-apollo-hooks/-/react-apollo-hooks-0.5.0.tgz#49607fbe9cdfd0be08ea5defd39085bf5f42e10e"
+  integrity sha512-Us5KqFe7/c6vY1NaiyfhnD2Pz4lPLTojQXLppShaBVYU/vYvJrRjmj4MzIPXnExXaSfnQ+K2bWDr4lP4efbsRQ==
+  dependencies:
+    lodash "^4.17.11"
+
 react-devtools-core@^3.6.3:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-3.6.3.tgz#977d95b684c6ad28205f0c62e1e12c5f16675814"
@@ -6126,6 +6187,15 @@ react-navigation@^4.0.10:
   dependencies:
     "@react-navigation/core" "^3.5.1"
     "@react-navigation/native" "^3.6.2"
+
+react-offix-hooks@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/react-offix-hooks/-/react-offix-hooks-0.12.0.tgz#8eded3ebcbecb263c94ce4a9ad5fef77c3387912"
+  integrity sha512-wTU7KtFo51BM09PXwUckMWUioC8IXhyRvuYLvEU1JhxF20mPzXy95wJbhWnKNilOXFRlB6jVM6Gz17eQlvrVQQ==
+  dependencies:
+    "@types/lodash" "4.14.149"
+    lodash "4.17.15"
+    offix-client "0.12.0"
 
 react-refresh@^0.4.0:
   version "0.4.2"

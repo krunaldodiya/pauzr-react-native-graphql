@@ -64,23 +64,9 @@ const FunTabNavigator = createBottomTabNavigator(
         ),
       },
     },
-    // Notifications: {
-    //   screen: Notifications,
-    //   navigationOptions: {
-    //     tabBarIcon: ({tintColor}: any) => (
-    //       <Icon
-    //         type="SimpleLineIcons"
-    //         name="favorite"
-    //         style={{color: tintColor, fontSize: 36}}
-    //       />
-    //     ),
-    //   },
-    // },
-
     Notifications: {
-      screen: TotalLikes, // temp
+      screen: Notifications,
       navigationOptions: {
-        tabBarLabel: '3k total likes',
         tabBarIcon: ({tintColor}: any) => (
           <Icon
             type="SimpleLineIcons"
