@@ -17,8 +17,6 @@ const InitialScreen = () => {
     },
   });
 
-  console.log(config);
-
   if (!config) {
     return (
       <ActivityIndicator
